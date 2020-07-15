@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
-
-import Users from './Users';
+import withAuthentication, {
+  AuthenticationStatus,
+} from 'hocs/withAuthentication';
 
 const Home = () => (
-  <Fragment>
-    <Users />
-  </Fragment>
+  <Fragment>Hello, this is the Home Page. Go to link maybe</Fragment>
 );
 
-export default Home;
+export default withAuthentication(AuthenticationStatus.AUTHENTICATED)(Home);

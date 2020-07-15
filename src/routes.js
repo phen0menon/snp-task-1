@@ -1,22 +1,27 @@
+import React from 'react';
+import Page from 'hocs/page';
 import Home from 'pages/Home';
-import UserInfo from 'pages/UserInfo';
-
-import { fetchUsers, fetchUser } from 'models/users/sagas';
+import Auth from 'pages/Auth';
 
 export default [
   {
     path: '/',
     exact: true,
     cache: false,
-    component: Home,
-    sagasToRun: [fetchUsers],
-    title: 'Home',
+    render: props => (
+      <Page title="Quizer">
+        <Home {...props} />
+      </Page>
+    ),
   },
   {
-    path: '/users/:id',
+    path: '/auth/',
+    exact: false,
     cache: false,
-    component: UserInfo,
-    sagasToRun: [[fetchUser, ({ id }) => ({ payload: { id } })]],
-    title: 'User',
+    render: props => (
+      <Page title="Auth | Quizer">
+        <Auth {...props} />
+      </Page>
+    ),
   },
 ];

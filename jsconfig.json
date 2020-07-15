@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "baseUrl": "./src",
+    "paths": {
+      "models/*": ["./models/*"],
+      "utils/*": ["./utils/*"],
+      "api/*": ["./api/*"],
+      "hooks/*": ["./hooks/*"],
+      "config/*": ["./config/*"],
+      "store/*": ["./store/*"],
+      "pages/*": ["./pages/*"],
+      "components/*": ["./components/*"],
+      "styles/*": ["./styles/*"],
+      "images/*": ["./assets/images/*"],
+      "stubs/*": ["./stubs/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
