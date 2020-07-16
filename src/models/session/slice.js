@@ -10,19 +10,37 @@ const sessionSlice = createSlice({
       userName: null,
     },
     initialFetching: false,
+
     loginFetching: false,
+    loginFailed: false,
+
     registerFetching: false,
   },
   reducers: {
     fetchLogin: state => {
       state.loginFetching = true;
+      state.loginFailed = false;
     },
+    fetchLoginSuccess(state, { payload }) {
+      state.loginFetching = false;
+      state.userData = payload;
+    },
+    fetchLoginFailed(state) {
+      state.loginFetching = false;
+      state.loginFailed = true;
+    },
+
     fetchRegister: state => {
       state.registerFetching = true;
     },
-    fetchCurrentUser: state => {
+    fetchRegisterSuccess(state, { payload }) {
+      state.registerFetching = false;
+      state.userData = payload;
+    },
+    fetchRegisterFailed(state, { payload }) {
       state.registerFetching = false;
     },
+
     fetchInitialSession: state => {
       state.initialFetching = true;
     },
@@ -32,13 +50,6 @@ const sessionSlice = createSlice({
     },
     fetchInitialSessionFailed(state) {
       state.initialFetching = false;
-    },
-    fetchRegisterSuccess(state, payload) {
-      state.registerFetching = false;
-    },
-    fetchLoginSuccess(state, { payload }) {
-      state.loginFetching = false;
-      state.userData = payload;
     },
 
     fetchLogout: state => {

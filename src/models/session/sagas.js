@@ -14,19 +14,24 @@ export function* fetchLogin({ payload }) {
       });
     }
   } catch (err) {
-    console.error(err);
+    yield put({
+      type: actions.fetchLoginFailed,
+    });
   }
 }
 
 export function* fetchRegister({ payload }) {
   try {
     const response = yield call(api.fetchRegister, payload);
+    const { id, is_admin, username } = response.data;
     yield put({
       type: actions.fetchRegisterSuccess,
-      payload: { token: response },
+      payload: { id, isAdmin: is_admin, userName: username },
     });
   } catch (err) {
-    console.error(err);
+    yield put({
+      type: actions.fetchRegisterFailed,
+    });
   }
 }
 
@@ -34,13 +39,11 @@ export function* fetchInitialSession() {
   try {
     yield put({ type: actions.fetchInitialSession });
     const response = yield call(api.fetchCurrentUser);
-    if (response.status === 200) {
-      const { id, is_admin, username } = response.data;
-      yield put({
-        type: actions.fetchInitialSessionSuccess,
-        payload: { id, is_admin, username },
-      });
-    }
+    const { id, is_admin, username } = response.data;
+    yield put({
+      type: actions.fetchInitialSessionSuccess,
+      payload: { id, isAdmin: is_admin, userName: username },
+    });
   } catch (err) {
     yield put({
       type: actions.fetchInitialSessionFailed,

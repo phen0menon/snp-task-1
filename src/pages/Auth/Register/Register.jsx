@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormData } from '../utils';
 import AuthInputGroup from 'components/AuthInputGroup/AuthInputGroup';
-import authStyles from '../Auth.module.css';
+import authStyles from '../Auth.scss';
 import { Link } from 'react-router-dom';
 import useAction from 'hooks/useAction';
 import { actions } from 'models/session/slice';
@@ -95,7 +95,7 @@ const Register = () => {
           </button>
         </div>
         <div>
-          <Link to="login">Login?</Link>
+          <Link to="/auth/login">Login?</Link>
         </div>
       </div>
     </form>

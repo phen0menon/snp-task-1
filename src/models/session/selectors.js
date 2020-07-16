@@ -24,3 +24,8 @@ export const isInitialSessionFetchingSelector = createSelector(
   sessionSelector,
   ({ initialFetching }) => initialFetching
 );
+
+export const isLoginFailedSelector = createSelector(
+  sessionSelector,
+  ({ loginFailed }) => loginFailed
+);

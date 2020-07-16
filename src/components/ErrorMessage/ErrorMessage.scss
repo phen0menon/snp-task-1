@@ -1,0 +1,10 @@
+.error {
+  text-align: center;
+  width: 100%;
+  padding: 20px 0;
+
+  &-inner {
+    color: red;
+    font-size: 1.125rem;
+  }
+}

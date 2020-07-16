@@ -5,9 +5,13 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import AuthInputGroup from 'components/AuthInputGroup';
 import { useFormData } from '../utils';
-import authStyles from '../Auth.module.css';
+import authStyles from '../Auth.scss';
 import { useSelector } from 'react-redux';
-import { isLoginFetchingSelector } from 'models/session/selectors';
+import {
+  isLoginFetchingSelector,
+  isLoginFailedSelector,
+} from 'models/session/selectors';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 const inputs = [
   {
@@ -27,6 +31,7 @@ const inputs = [
 const Login = () => {
   const onFetchLogin = useAction(actions.fetchLogin);
   const fetching = useSelector(isLoginFetchingSelector);
+  const loginFailed = useSelector(isLoginFailedSelector);
 
   const { formData, onFormDataChange } = useFormData(['userName', 'password']);
 
@@ -74,9 +79,11 @@ const Login = () => {
           </button>
         </div>
         <div>
-          <Link to="register">Register?</Link>
+          <Link to="/auth/register">Register?</Link>
         </div>
       </div>
+
+      {loginFailed && <ErrorMessage>Invalid username or password</ErrorMessage>}
     </form>
   );
 };
