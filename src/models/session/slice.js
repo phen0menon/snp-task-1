@@ -4,17 +4,47 @@ import actionTypes from 'utils/actionTypes';
 const sessionSlice = createSlice({
   name: 'session',
   initialState: {
-    token: null,
-    fetching: false,
+    userData: {
+      id: null,
+      isAdmin: null,
+      userName: null,
+    },
+    initialFetching: true,
+    loginFetching: false,
+    registerFetching: false,
   },
   reducers: {
     fetchLogin: state => {
-      state.fetching = true;
+      state.loginFetching = true;
+    },
+    fetchRegister: state => {
+      state.registerFetching = true;
+    },
+    fetchCurrentUser: state => {
+      state.registerFetching = false;
+    },
+    fetchInitialSession: state => {
+      state.initialFetching = true;
+    },
+    fetchInitialSessionSuccess(state, { payload }) {
+      state.initialFetching = false;
+      state.userData = payload;
+    },
+    fetchInitialSessionFailed(state) {
+      state.initialFetching = false;
+    },
+    fetchRegisterSuccess(state, payload) {
+      state.registerFetching = false;
     },
     fetchLoginSuccess(state, { payload }) {
-      state.fetching = false;
-      state.token = payload.token;
+      state.loginFetching = false;
+      state.userData = payload;
     },
+
+    fetchLogout: state => {
+      state.logoutFetching = true;
+    },
+    fetchLogoutSuccess(state) {},
   },
 });
 

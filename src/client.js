@@ -11,8 +11,7 @@ import configureStore from './store';
 
 import './components/App';
 
-/* Get initial state from server side rendering */
-const initialState = window.__INITIAL_STATE__;
+const initialState = {};
 
 const history = createBrowserHistory();
 const store = configureStore(history, initialState);

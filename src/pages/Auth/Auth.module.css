@@ -1,0 +1,30 @@
+.login-form {
+  display: flex;
+  justify-content: center;
+}
+
+.login-form form {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  margin-top: 1.5rem;
+}
+
+.form-group {
+  margin-top: 1rem;
+}
+
+.form-button {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 8px;
+  background: #1479ff;
+  color: white;
+}
+
+.form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

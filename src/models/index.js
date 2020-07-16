@@ -5,7 +5,7 @@ import usersReducer from './users/slice';
 import usersSagas from './users/sagas';
 
 import sessionReducer from './session/slice';
-import sessionSagas from './session/sagas';
+import sessionSagas, { fetchInitialSession } from './session/sagas';
 
 export const createRootReducer = history => ({
   router: connectRouter(history),
@@ -14,5 +14,10 @@ export const createRootReducer = history => ({
 });
 
 export const rootSaga = function* rootSaga() {
-  yield all([usersSagas(), sessionSagas()]);
+  yield all([
+    // Check for user session existence
+    fetchInitialSession(),
+    usersSagas(),
+    sessionSagas(),
+  ]);
 };

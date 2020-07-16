@@ -7,5 +7,20 @@ export const sessionSelector = createSelector(
 
 export const isAuthenticatedSelector = createSelector(
   sessionSelector,
-  ({ token }) => !!token
+  ({ userData }) => userData.id != null
+);
+
+export const isLoginFetchingSelector = createSelector(
+  sessionSelector,
+  ({ loginFetching }) => loginFetching
+);
+
+export const isRegisterFetchingSelector = createSelector(
+  sessionSelector,
+  ({ registerFetching }) => registerFetching
+);
+
+export const isInitialSessionFetchingSelector = createSelector(
+  sessionSelector,
+  ({ initialFetching }) => initialFetching
 );

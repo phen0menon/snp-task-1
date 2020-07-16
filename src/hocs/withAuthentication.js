@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { isAuthenticatedSelector } from 'models/session/selectors';
 
 export const AuthenticationStatus = {
   ANY: 0,
@@ -11,7 +12,7 @@ export const AuthenticationStatus = {
 export const REDIRECT_AFTER_ACCESS_LC = 'RA:redirectAfterAccessURL';
 
 const withAuthentication = authenticationStatus => Component => props => {
-  const authenticated = useSelector(state => state.authenticated);
+  const authenticated = useSelector(isAuthenticatedSelector);
   switch (authenticationStatus) {
     case AuthenticationStatus.NOT_AUTHENTICATED: {
       if (!authenticated) {

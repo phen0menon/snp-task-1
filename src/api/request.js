@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+axios.defaults.withCredentials = true;
 
 const BASE_URL = 'https://snp-tests.herokuapp.com/api/v1/';
 const STUB_DELAY = 1000;
@@ -10,6 +11,7 @@ const sidedRequest = opts => {
 
   const headers = {
     'scope-key': 'pKWuy7/7=uN3!X.g',
+    'Content-Type': 'application/json',
     ...ownHeaders,
   };
 
