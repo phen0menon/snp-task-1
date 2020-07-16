@@ -9,7 +9,7 @@ const sessionSlice = createSlice({
       isAdmin: null,
       userName: null,
     },
-    initialFetching: true,
+    initialFetching: false,
     loginFetching: false,
     registerFetching: false,
   },
@@ -45,9 +45,11 @@ const sessionSlice = createSlice({
       state.logoutFetching = true;
     },
     fetchLogoutSuccess(state) {},
+    logout() {},
   },
 });
 
 export const actions = actionTypes(sessionSlice.actions);
+export const logoutAction = actions.logout;
 
 export default sessionSlice.reducer;

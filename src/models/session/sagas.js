@@ -32,6 +32,7 @@ export function* fetchRegister({ payload }) {
 
 export function* fetchInitialSession() {
   try {
+    yield put({ type: actions.fetchInitialSession });
     const response = yield call(api.fetchCurrentUser);
     if (response.status === 200) {
       const { id, is_admin, username } = response.data;
@@ -52,6 +53,7 @@ export function* fetchLogout() {
     const response = yield call(api.fetchLogout);
     if (response.status === 200) {
       yield put({ type: actions.fetchLogoutSuccess });
+      yield put({ type: actions.logout });
     }
   } catch (err) {
     // TODO: Handle case when logout errored
