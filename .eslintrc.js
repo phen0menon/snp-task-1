@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     'global-require': 'off',
     'no-console': 'off',
+    camelcase: 'off',
     'no-underscore-dangle': 'off',
     'function-paren-newline': 'off',
     'import/first': 'off',

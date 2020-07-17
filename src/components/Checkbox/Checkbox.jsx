@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Checkbox.scss';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 const Checkbox = props => {
-  const input = React.createRef(null);
+  const input = React.useRef();
 
   const {
     id,
@@ -14,7 +15,6 @@ const Checkbox = props => {
     tabIndex,
     autoFocus,
     value,
-    label,
     style,
     value: checked,
     children,
@@ -55,9 +55,35 @@ const Checkbox = props => {
         />
         <span className={styles['cbox-inner']} />
       </span>
-      {children !== undefined && <span>{children}</span>}
+      {children && <span>{children}</span>}
     </label>
   );
+};
+
+Checkbox.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
+  required: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  disabled: PropTypes.bool,
+  tabIndex: PropTypes.number,
+  autoFocus: PropTypes.bool,
+  style: PropTypes.object,
+  children: PropTypes.element,
+  onClick: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+};
+
+Checkbox.defaultProps = {
+  required: false,
+  readOnly: false,
+  disabled: false,
+  autoFocus: false,
+  children: undefined,
+  style: {},
+  tabIndex: -1,
+  onClick: null,
 };
 
 export default Checkbox;

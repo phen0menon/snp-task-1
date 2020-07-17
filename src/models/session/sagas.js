@@ -6,13 +6,11 @@ import { actions } from './slice';
 export function* fetchLogin({ payload }) {
   try {
     const response = yield call(api.fetchLogin, payload);
-    if (response.status === 200) {
-      const { id, is_admin, username } = response.data;
-      yield put({
-        type: actions.fetchLoginSuccess,
-        payload: { id, isAdmin: is_admin, userName: username },
-      });
-    }
+    const { id, is_admin, username } = response.data;
+    yield put({
+      type: actions.fetchLoginSuccess,
+      payload: { id, isAdmin: is_admin, userName: username },
+    });
   } catch (err) {
     yield put({
       type: actions.fetchLoginFailed,
@@ -54,10 +52,8 @@ export function* fetchInitialSession() {
 export function* fetchLogout() {
   try {
     const response = yield call(api.fetchLogout);
-    if (response.status === 200) {
-      yield put({ type: actions.fetchLogoutSuccess });
-      yield put({ type: actions.logout });
-    }
+    yield put({ type: actions.fetchLogoutSuccess });
+    yield put({ type: actions.logout });
   } catch (err) {
     // TODO: Handle case when logout errored
     console.error(err);

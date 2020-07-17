@@ -35,13 +35,16 @@ const Login = () => {
 
   const { formData, onFormDataChange } = useFormData(['userName', 'password']);
 
-  const handleLogin = event => {
-    event.preventDefault();
+  const handleLogin = React.useCallback(
+    event => {
+      event.preventDefault();
 
-    const { userName, password } = formData;
-    if (!userName || !password || fetching) return;
-    onFetchLogin({ userName, password });
-  };
+      const { userName, password } = formData;
+      if (!userName || !password || fetching) return;
+      onFetchLogin({ userName, password });
+    },
+    [formData, onFetchLogin]
+  );
 
   const renderedInputs = React.useMemo(
     () =>
@@ -62,7 +65,7 @@ const Login = () => {
 
   return (
     <form onSubmit={handleLogin}>
-      <>{renderedInputs}</>
+      {renderedInputs}
       <div
         className={classnames(
           authStyles['form-group'],

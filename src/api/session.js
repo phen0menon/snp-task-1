@@ -5,7 +5,7 @@ export const fetchLogin = ({ userName, password }) =>
     url: '/signin',
     data: {
       username: userName,
-      password: password,
+      password,
     },
   });
 

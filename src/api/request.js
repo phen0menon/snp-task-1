@@ -1,5 +1,6 @@
 import axios from 'axios';
 import config from 'config';
+
 axios.defaults.withCredentials = true;
 
 const BASE_URL = 'https://snp-tests.herokuapp.com/api/v1/';

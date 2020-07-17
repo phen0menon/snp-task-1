@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
 
