@@ -1,84 +1,67 @@
 import React from 'react';
-import { useFormData } from '../utils';
+import { useFormData } from '../utils/utils';
 import AuthInputGroup from 'components/AuthInputGroup/AuthInputGroup';
 import authStyles from '../Auth.scss';
 import { Link } from 'react-router-dom';
 import useAction from 'hooks/useAction';
-import { actions } from 'models/session/slice';
-import { AuthFormErrors } from '../contants';
-import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
-
-const inputs = [
-  {
-    name: 'userName',
-    type: 'text',
-    defaultValue: '',
-    label: 'Username',
-    required: true,
-  },
-  {
-    name: 'password',
-    type: 'password',
-    defaultValue: '',
-    label: 'Password',
-    required: true,
-  },
-  {
-    name: 'passwordConfirm',
-    type: 'password',
-    defaultValue: '',
-    label: 'Confirm password',
-    required: true,
-  },
-  {
-    name: 'isAdmin',
-    type: 'checkbox',
-    defaultValue: false,
-    label: 'Admin rights?',
-    required: false,
-  },
-];
-
-const initialState = inputs.reduce(
-  (res, curr) => ({
-    ...res,
-    [curr.name]: curr.defaultValue,
-  }),
-  {}
-);
+import { sessionActions } from 'models/session/slice';
+import { useSelector } from 'react-redux';
+import { registerErrorsSelector } from 'models/session/selectors';
+import {
+  registerFormErrorsInitialState,
+  registerFormInitialState,
+  registerFormInputs,
+} from './constants';
+import { AuthFormErrors } from '../utils/contants';
 
 const Register = () => {
-  const onFetchRegister = useAction(actions.fetchRegister);
+  const onFetchRegister = useAction(sessionActions.fetchRegister);
 
-  const [formError, setFormError] = React.useState();
+  // Remote register errors (server-side)
+  const registerErrors = useSelector(registerErrorsSelector);
+
+  // Local validation errors
+  const [formErrors, setFormErrors] = React.useState(
+    registerFormErrorsInitialState
+  );
+
   const { formData, handleChange, handleSubmit } = useFormData({
-    fields: initialState,
+    fields: registerFormInitialState,
     onSubmit: React.useCallback(
       values => {
-        setFormError('');
+        setFormErrors(registerFormErrorsInitialState);
 
-        const { userName, password, passwordConfirm, isAdmin } = values;
+        const { username, password, passwordConfirm, isAdmin } = values;
 
-        if (!userName || !password || !passwordConfirm) return;
+        if (!username || !password || !passwordConfirm) return;
 
         if (password !== passwordConfirm) {
-          setFormError(AuthFormErrors.PASSWORDS_DONT_MATCH);
+          setFormErrors({
+            ...formErrors,
+            passwordConfirm: [AuthFormErrors.PASSWORDS_DONT_MATCH],
+          });
+          return;
         }
 
         onFetchRegister({
-          userName,
+          username,
           password,
           passwordConfirm,
           isAdmin,
         });
       },
-      [onFetchRegister]
+      [onFetchRegister, setFormErrors]
     ),
   });
 
+  const getRegisterErrorsByInput = React.useCallback(
+    inputName => formErrors[inputName].concat(registerErrors[inputName] || []),
+    [registerErrors, formErrors]
+  );
+
   const renderedInputs = React.useMemo(
     () =>
-      inputs.map(input => (
+      registerFormInputs.map(input => (
         <AuthInputGroup
           id={input.name}
           key={input.name}
@@ -86,11 +69,12 @@ const Register = () => {
           label={input.label}
           required={input.required}
           value={formData[input.name]}
+          errors={getRegisterErrorsByInput(input.name)}
           data-input-name={input.name}
           onChange={handleChange}
         />
       )),
-    [formData, handleChange]
+    [formData, handleChange, getRegisterErrorsByInput]
   );
 
   return (
@@ -106,8 +90,6 @@ const Register = () => {
           <Link to="/auth/login">Login?</Link>
         </div>
       </div>
-
-      {formError && <ErrorMessage>{formError}</ErrorMessage>}
     </form>
   );
 };

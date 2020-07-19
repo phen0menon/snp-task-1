@@ -1,53 +1,32 @@
 import React from 'react';
-import { actions } from 'models/session/slice';
+import { sessionActions } from 'models/session/slice';
 import useAction from 'hooks/useAction';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import AuthInputGroup from 'components/AuthInputGroup';
-import { useFormData } from '../utils';
+import { useFormData } from '../utils/utils';
 import authStyles from '../Auth.scss';
+import { loginFormInitialState, loginFormInputs } from './constants';
 import { useSelector } from 'react-redux';
 import {
   isLoginFetchingSelector,
-  isLoginFailedSelector,
+  loginErrorSelector,
 } from 'models/session/selectors';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
-const inputs = [
-  {
-    name: 'userName',
-    type: 'text',
-    defaultValue: '',
-    label: 'Username',
-  },
-  {
-    name: 'password',
-    type: 'password',
-    defaultValue: '',
-    label: 'Password',
-  },
-];
-
-const formInitialState = inputs.reduce(
-  (result, current) => ({
-    ...result,
-    [current.name]: current.defaultValue,
-  }),
-  {}
-);
-
 const Login = () => {
-  const onFetchLogin = useAction(actions.fetchLogin);
+  const onFetchLogin = useAction(sessionActions.fetchLogin);
+
   const fetching = useSelector(isLoginFetchingSelector);
-  const loginFailed = useSelector(isLoginFailedSelector);
+  const loginError = useSelector(loginErrorSelector);
 
   const { formData, handleChange, handleSubmit } = useFormData({
-    fields: formInitialState,
+    fields: loginFormInitialState,
     onSubmit: React.useCallback(
       values => {
-        const { userName, password } = values;
-        if (!userName || !password || fetching) return;
-        onFetchLogin({ userName, password });
+        const { username, password } = values;
+        if (!username || !password || fetching) return;
+        onFetchLogin({ username, password });
       },
       [fetching, onFetchLogin]
     ),
@@ -55,7 +34,7 @@ const Login = () => {
 
   const renderedInputs = React.useMemo(
     () =>
-      inputs.map(input => (
+      loginFormInputs.map(input => (
         <AuthInputGroup
           id={input.name}
           key={input.name}
@@ -92,8 +71,7 @@ const Login = () => {
           <Link to="/auth/register">Register?</Link>
         </div>
       </div>
-
-      {loginFailed && <ErrorMessage>Invalid username or password</ErrorMessage>}
+      {loginError && <ErrorMessage>{loginError}</ErrorMessage>}
     </form>
   );
 };

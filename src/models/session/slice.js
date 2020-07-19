@@ -9,37 +9,41 @@ const sessionSlice = createSlice({
     userData: {
       id: null,
       isAdmin: null,
-      userName: null,
+      username: null,
     },
     initialFetching: false,
 
     loginFetching: false,
-    loginFailed: false,
+    loginError: null,
 
+    registerErrors: {},
     registerFetching: false,
   },
   reducers: {
     fetchLogin: state => {
       state.loginFetching = true;
       state.loginFailed = false;
+      state.loginError = null;
     },
     fetchLoginSuccess(state, { payload }) {
       state.loginFetching = false;
       state.userData = payload;
     },
-    fetchLoginFailed(state) {
+    fetchLoginFailed(state, { payload }) {
       state.loginFetching = false;
-      state.loginFailed = true;
+      state.loginError = payload.error;
     },
 
     fetchRegister: state => {
       state.registerFetching = true;
+      state.registerErrors = {};
     },
     fetchRegisterSuccess(state, { payload }) {
       state.registerFetching = false;
       state.userData = payload;
     },
     fetchRegisterFailed(state, { payload }) {
+      state.registerErrors = payload.errors;
       state.registerFetching = false;
     },
 
@@ -62,7 +66,7 @@ const sessionSlice = createSlice({
   },
 });
 
-export const actions = actionTypes(sessionSlice.actions);
-export const logoutAction = actions.logout;
+export const sessionActions = actionTypes(sessionSlice.actions);
+export const logoutAction = sessionActions.logout;
 
 export default sessionSlice.reducer;

@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './AuthInputGroup.module.css';
 import Checkbox from 'components/Checkbox/Checkbox';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 const AuthInputGroup = props => {
-  const { wrapperClassName, label, ...restProps } = props;
+  const { wrapperClassName, label, errors, ...restProps } = props;
+
+  const errorMessage = React.useMemo(
+    () => (errors.length ? errors.join('; ') : ''),
+    [errors]
+  );
 
   return (
     <div className={classNames(styles['input-group'], wrapperClassName)}>
@@ -15,6 +21,7 @@ const AuthInputGroup = props => {
             {label}
           </label>
           <input className={styles['input-group-input']} {...restProps} />
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </>
       ) : (
         <Checkbox {...restProps}>{label}</Checkbox>
@@ -35,12 +42,14 @@ AuthInputGroup.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   wrapperClassName: PropTypes.string,
+  errors: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
 };
 
 AuthInputGroup.defaultProps = {
   type: 'text',
   placeholder: '',
   wrapperClassName: '',
+  errors: '',
 };
 
 export default AuthInputGroup;
