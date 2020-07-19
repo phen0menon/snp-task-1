@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import styles from './AuthInputGroup.module.css';
 import Checkbox from 'components/Checkbox/Checkbox';
 
@@ -8,7 +8,7 @@ const AuthInputGroup = props => {
   const { wrapperClassName, label, ...restProps } = props;
 
   return (
-    <div className={classnames(styles['input-group'], wrapperClassName)}>
+    <div className={classNames(styles['input-group'], wrapperClassName)}>
       {restProps.type !== 'checkbox' ? (
         <>
           <label htmlFor={restProps.id} className={styles['input-group-label']}>

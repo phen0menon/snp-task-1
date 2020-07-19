@@ -1,16 +1,15 @@
 import { useState, useCallback } from 'react';
 
-export const useFormData = fields => {
-  const initialState = Array.isArray(fields)
-    ? fields.reduce((result, current) => ({ ...result, [current]: '' }), {})
-    : fields;
+export const useFormData = ({ fields, onSubmit }) => {
+  const [formData, setFormData] = useState(fields);
 
-  const [formData, setFormData] = useState(initialState);
-
-  const onFormDataChange = useCallback(
+  const handleChange = useCallback(
     event => {
-      const { value, dataset, type } = event.target;
-      const { inputName } = dataset;
+      const {
+        value,
+        dataset: { inputName },
+        type,
+      } = event.target;
 
       if (!inputName) {
         throw new Error('inputName should be defined as dataset attr');
@@ -24,5 +23,13 @@ export const useFormData = fields => {
     [formData, setFormData]
   );
 
-  return { formData, setFormData, onFormDataChange };
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault();
+      onSubmit(formData);
+    },
+    [onSubmit, formData]
+  );
+
+  return { formData, handleChange, handleSubmit };
 };

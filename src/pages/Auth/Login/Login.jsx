@@ -28,23 +28,30 @@ const inputs = [
   },
 ];
 
+const formInitialState = inputs.reduce(
+  (result, current) => ({
+    ...result,
+    [current.name]: current.defaultValue,
+  }),
+  {}
+);
+
 const Login = () => {
   const onFetchLogin = useAction(actions.fetchLogin);
   const fetching = useSelector(isLoginFetchingSelector);
   const loginFailed = useSelector(isLoginFailedSelector);
 
-  const { formData, onFormDataChange } = useFormData(['userName', 'password']);
-
-  const handleLogin = React.useCallback(
-    event => {
-      event.preventDefault();
-
-      const { userName, password } = formData;
-      if (!userName || !password || fetching) return;
-      onFetchLogin({ userName, password });
-    },
-    [formData, onFetchLogin]
-  );
+  const { formData, handleChange, handleSubmit } = useFormData({
+    fields: formInitialState,
+    onSubmit: React.useCallback(
+      values => {
+        const { userName, password } = values;
+        if (!userName || !password || fetching) return;
+        onFetchLogin({ userName, password });
+      },
+      [fetching, onFetchLogin]
+    ),
+  });
 
   const renderedInputs = React.useMemo(
     () =>
@@ -56,15 +63,15 @@ const Login = () => {
           label={input.label}
           data-input-name={input.name}
           value={formData[input.name]}
-          onChange={onFormDataChange}
+          onChange={handleChange}
           required
         />
       )),
-    [inputs, formData, onFormDataChange]
+    [formData, handleChange]
   );
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleSubmit}>
       {renderedInputs}
       <div
         className={classnames(

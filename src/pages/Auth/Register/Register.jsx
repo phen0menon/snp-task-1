@@ -5,6 +5,8 @@ import authStyles from '../Auth.scss';
 import { Link } from 'react-router-dom';
 import useAction from 'hooks/useAction';
 import { actions } from 'models/session/slice';
+import { AuthFormErrors } from '../contants';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 const inputs = [
   {
@@ -37,36 +39,42 @@ const inputs = [
   },
 ];
 
+const initialState = inputs.reduce(
+  (res, curr) => ({
+    ...res,
+    [curr.name]: curr.defaultValue,
+  }),
+  {}
+);
+
 const Register = () => {
   const onFetchRegister = useAction(actions.fetchRegister);
-  const { formData, onFormDataChange } = useFormData(
-    inputs.reduce(
-      (res, curr) => ({
-        ...res,
-        [curr.name]: curr.defaultValue,
-      }),
-      {}
-    )
-  );
 
-  const handleRegister = event => {
-    event.preventDefault();
+  const [formError, setFormError] = React.useState();
+  const { formData, handleChange, handleSubmit } = useFormData({
+    fields: initialState,
+    onSubmit: React.useCallback(
+      values => {
+        setFormError('');
 
-    const { userName, password, passwordConfirm, isAdmin } = formData;
+        const { userName, password, passwordConfirm, isAdmin } = values;
 
-    if (!userName || !password || !passwordConfirm) return;
-    if (password !== passwordConfirm) {
-      alert("Passwords don't match!");
-      return;
-    }
+        if (!userName || !password || !passwordConfirm) return;
 
-    onFetchRegister({
-      userName,
-      password,
-      passwordConfirm,
-      isAdmin,
-    });
-  };
+        if (password !== passwordConfirm) {
+          setFormError(AuthFormErrors.PASSWORDS_DONT_MATCH);
+        }
+
+        onFetchRegister({
+          userName,
+          password,
+          passwordConfirm,
+          isAdmin,
+        });
+      },
+      [onFetchRegister]
+    ),
+  });
 
   const renderedInputs = React.useMemo(
     () =>
@@ -79,14 +87,14 @@ const Register = () => {
           required={input.required}
           value={formData[input.name]}
           data-input-name={input.name}
-          onChange={onFormDataChange}
+          onChange={handleChange}
         />
       )),
-    [inputs, formData]
+    [formData, handleChange]
   );
 
   return (
-    <form onSubmit={handleRegister}>
+    <form onSubmit={handleSubmit}>
       <>{renderedInputs}</>
       <div className={authStyles['form-submit']}>
         <div>
@@ -98,6 +106,8 @@ const Register = () => {
           <Link to="/auth/login">Login?</Link>
         </div>
       </div>
+
+      {formError && <ErrorMessage>{formError}</ErrorMessage>}
     </form>
   );
 };

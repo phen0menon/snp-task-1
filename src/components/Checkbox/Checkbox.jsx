@@ -23,6 +23,7 @@ const Checkbox = props => {
     ...restProps
   } = props;
 
+  /* eslint-disable no-param-reassign */
   const controlProps = React.useMemo(
     () =>
       Object.keys(restProps).reduce((result, current) => {
@@ -34,8 +35,9 @@ const Checkbox = props => {
       }, {}),
     [restProps]
   );
+  /* eslint-enable no-param-reassign */
 
-  const cboxClassNames = classNames(styles['cbox'], {
+  const cboxClassNames = classNames(styles.cbox, {
     [styles['cbox-checked']]: checked,
     [styles['cbox-disabled']]: disabled,
   });
