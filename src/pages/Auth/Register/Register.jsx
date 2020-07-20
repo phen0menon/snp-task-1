@@ -50,7 +50,7 @@ const Register = () => {
           isAdmin,
         });
       },
-      [onFetchRegister, setFormErrors]
+      [formErrors, onFetchRegister, setFormErrors]
     ),
   });
 
