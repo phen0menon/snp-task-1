@@ -82,7 +82,7 @@ Checkbox.defaultProps = {
   readOnly: false,
   disabled: false,
   autoFocus: false,
-  children: undefined,
+  children: '',
   style: {},
   tabIndex: -1,
   onClick: null,

@@ -1,0 +1,43 @@
+$inner-paddings: 1rem 1.75rem;
+$border-color: rgba(170, 168, 168, 0.3);
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &-window {
+    background: #fff;
+    min-width: 560px;
+    min-height: 50px;
+    border-radius: 16px;
+    box-shadow: 0 5px 10px 2px rgba(140, 140, 140, 0.5);
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: $inner-paddings;
+    border-bottom: 1px solid $border-color;
+  }
+
+  &-body {
+    padding: $inner-paddings;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    border-top: 1px solid $border-color;
+    padding: $inner-paddings;
+  }
+}

@@ -54,7 +54,7 @@ export function* fetchInitialSession() {
 
 export function* fetchLogout() {
   try {
-    const response = yield call(api.fetchLogout);
+    yield call(api.fetchLogout);
     yield put({ type: sessionActions.fetchLogoutSuccess });
     yield put({ type: sessionActions.logout });
   } catch (err) {
