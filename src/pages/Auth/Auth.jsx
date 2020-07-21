@@ -7,7 +7,6 @@ import withAuthentication, {
 } from 'hocs/withAuthentication';
 import withSceneUrl from 'hocs/withSceneUrl';
 import styles from './Auth.scss';
-import globalStyles from 'styles/global.scss';
 import PropTypes from 'prop-types';
 
 const Auth = props => {

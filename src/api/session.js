@@ -1,11 +1,11 @@
 import Req from './request';
 
-export const fetchLogin = ({ userName, password }) =>
+export const fetchLogin = ({ username, password }) =>
   Req.POST({
     url: '/signin',
     data: {
-      username: userName,
-      password: password,
+      username,
+      password,
     },
   });
 
@@ -15,7 +15,7 @@ export const fetchLogout = () =>
   });
 
 export const fetchRegister = ({
-  userName,
+  username,
   password,
   passwordConfirm,
   isAdmin,
@@ -23,7 +23,7 @@ export const fetchRegister = ({
   Req.POST({
     url: '/signup',
     data: {
-      username: userName,
+      username,
       password,
       password_confirmation: passwordConfirm,
       is_admin: isAdmin,

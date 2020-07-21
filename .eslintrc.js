@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     'global-require': 'off',
     'no-console': 'off',
+    camelcase: 'off',
     'no-underscore-dangle': 'off',
     'function-paren-newline': 'off',
     'import/first': 'off',
@@ -43,6 +44,8 @@ module.exports = {
     ],
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/label-has-for': 'off',
+    'jsx-a11y/label-has-associated-control': 'on',
     'react/forbid-prop-types': 'off',
     'prettier/prettier': [
       'error',

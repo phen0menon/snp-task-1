@@ -1,24 +1,19 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import withAuthentication, {
   AuthenticationStatus,
 } from 'hocs/withAuthentication';
-import { Link } from 'react-router-dom';
 import useAction from 'hooks/useAction';
-import { actions } from 'models/session/slice';
+import { sessionActions } from 'models/session/slice';
 
 const Home = () => {
-  const onFetchLogout = useAction(actions.fetchLogout);
-  const onLogoutClick = () => {
-    onFetchLogout();
-  };
+  const onFetchLogout = useAction(sessionActions.fetchLogout);
   return (
-    <Fragment>
-      Hello, this is the Home Page. Go to
-      <Link to="/auth/login"> link maybe</Link>
-      <button type="button" onClick={onLogoutClick}>
+    <div>
+      Home
+      <button type="button" onClick={onFetchLogout}>
         Logout
       </button>
-    </Fragment>
+    </div>
   );
 };
 

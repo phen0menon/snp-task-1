@@ -1,21 +1,21 @@
 import { takeLatest, all, put, call } from 'redux-saga/effects';
 import * as api from 'api';
 
-import { actions } from './slice';
+import { sessionActions } from './slice';
 
 export function* fetchLogin({ payload }) {
   try {
     const response = yield call(api.fetchLogin, payload);
-    if (response.status === 200) {
-      const { id, is_admin, username } = response.data;
-      yield put({
-        type: actions.fetchLoginSuccess,
-        payload: { id, isAdmin: is_admin, userName: username },
-      });
-    }
-  } catch (err) {
+    const { id, is_admin, username } = response.data;
     yield put({
-      type: actions.fetchLoginFailed,
+      type: sessionActions.fetchLoginSuccess,
+      payload: { id, isAdmin: is_admin, username },
+    });
+  } catch (err) {
+    const { error } = err.response.data;
+    yield put({
+      type: sessionActions.fetchLoginFailed,
+      payload: { error },
     });
   }
 }
@@ -25,28 +25,29 @@ export function* fetchRegister({ payload }) {
     const response = yield call(api.fetchRegister, payload);
     const { id, is_admin, username } = response.data;
     yield put({
-      type: actions.fetchRegisterSuccess,
-      payload: { id, isAdmin: is_admin, userName: username },
+      type: sessionActions.fetchRegisterSuccess,
+      payload: { id, isAdmin: is_admin, username },
     });
   } catch (err) {
     yield put({
-      type: actions.fetchRegisterFailed,
+      type: sessionActions.fetchRegisterFailed,
+      payload: { errors: err.response.data },
     });
   }
 }
 
 export function* fetchInitialSession() {
   try {
-    yield put({ type: actions.fetchInitialSession });
+    yield put({ type: sessionActions.fetchInitialSession });
     const response = yield call(api.fetchCurrentUser);
     const { id, is_admin, username } = response.data;
     yield put({
-      type: actions.fetchInitialSessionSuccess,
-      payload: { id, isAdmin: is_admin, userName: username },
+      type: sessionActions.fetchInitialSessionSuccess,
+      payload: { id, isAdmin: is_admin, username },
     });
   } catch (err) {
     yield put({
-      type: actions.fetchInitialSessionFailed,
+      type: sessionActions.fetchInitialSessionFailed,
     });
   }
 }
@@ -54,10 +55,8 @@ export function* fetchInitialSession() {
 export function* fetchLogout() {
   try {
     const response = yield call(api.fetchLogout);
-    if (response.status === 200) {
-      yield put({ type: actions.fetchLogoutSuccess });
-      yield put({ type: actions.logout });
-    }
+    yield put({ type: sessionActions.fetchLogoutSuccess });
+    yield put({ type: sessionActions.logout });
   } catch (err) {
     // TODO: Handle case when logout errored
     console.error(err);
@@ -66,8 +65,8 @@ export function* fetchLogout() {
 
 export default function*() {
   yield all([
-    takeLatest(actions.fetchLogin, fetchLogin),
-    takeLatest(actions.fetchLogout, fetchLogout),
-    takeLatest(actions.fetchRegister, fetchRegister),
+    takeLatest(sessionActions.fetchLogin, fetchLogin),
+    takeLatest(sessionActions.fetchLogout, fetchLogout),
+    takeLatest(sessionActions.fetchRegister, fetchRegister),
   ]);
 }
