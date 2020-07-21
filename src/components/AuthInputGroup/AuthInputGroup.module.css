@@ -1,13 +1,13 @@
-.input-group {
+.inputGroup {
   margin-bottom: 1rem;
 }
 
-.input-group-label {
+.inputGroupLabel {
   display: block;
   margin-bottom: 0.5rem;
 }
 
-.input-group-input {
+.inputGroupInput {
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
   border: 1px solid #1479ff;

@@ -14,13 +14,13 @@ const AuthInputGroup = props => {
   );
 
   return (
-    <div className={classNames(styles['input-group'], wrapperClassName)}>
+    <div className={classNames(styles.inputGroup, wrapperClassName)}>
       {restProps.type !== 'checkbox' ? (
         <>
-          <label htmlFor={restProps.id} className={styles['input-group-label']}>
+          <label htmlFor={restProps.id} className={styles.inputGroupLabel}>
             {label}
           </label>
-          <input className={styles['input-group-input']} {...restProps} />
+          <input className={styles.inputGroupInput} {...restProps} />
           {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </>
       ) : (

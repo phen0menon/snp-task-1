@@ -1,4 +1,4 @@
-.cbox-wrapper {
+.cboxWrapper {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -15,7 +15,7 @@
   }
 }
 
-.cbox-input {
+.cboxInput {
   position: absolute;
   top: 0;
   right: 0;
@@ -29,7 +29,7 @@
   padding: 0;
 }
 
-.cbox-inner {
+.cboxInner {
   position: relative;
   top: 0;
   left: 0;
@@ -81,7 +81,7 @@
     padding-left: 0.75rem;
   }
 
-  &-checked {
+  &Checked {
     &::after {
       position: absolute;
       top: 0;
@@ -94,7 +94,7 @@
       content: '';
     }
 
-    .cbox-inner {
+    .cboxInner {
       background-color: #1890ff;
       border-color: #1890ff;
 
@@ -112,18 +112,18 @@
     }
   }
 
-  &-disabled {
+  &Disabled {
     cursor: not-allowed;
 
-    .cbox-inner {
+    .cboxInner {
       background-color: #f5f5f5;
       border-color: #d9d9d9 !important;
     }
   }
 }
 
-.cbox-wrapper:hover .cbox-inner,
-.cbox-wrapper:focus .cbox-inner,
-.cbox-input:focus + .cbox-inner {
+.cboxWrapper:hover .cboxInner,
+.cboxWrapper:focus .cboxInner,
+.cboxInput:focus + .cboxInner {
   border-color: #1890ff;
 }

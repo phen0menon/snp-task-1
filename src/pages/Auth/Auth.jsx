@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 const Auth = props => {
   const { sceneUrl } = props;
   return (
-    <div className={styles['login-form']}>
+    <div className={styles.loginForm}>
       <Switch>
         <Route path={sceneUrl('register')} component={Register} />
         <Route path={sceneUrl('login')} component={Login} />

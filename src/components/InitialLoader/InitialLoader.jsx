@@ -5,7 +5,7 @@ import preloader from 'images/preloader.svg';
 const InitialLoader = () => {
   return (
     <div className={styles.loader}>
-      <div className={styles['loader-inner']}>
+      <div className={styles.loaderInner}>
         <img src={preloader} alt="loading..." />
       </div>
     </div>
