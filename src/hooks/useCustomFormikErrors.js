@@ -2,10 +2,10 @@ import { useMemo, useCallback, useEffect } from 'react';
 import { toCapitalCase } from 'utils/common';
 
 /**
- * Sets an array of errors to formik form via a ref
+ * Sets an array of errors to formik form via formik's setError
  *
  * @param errors
- * @param ref - reference to formik component
+ * @param setErrors - a function that passes an object of errors
  * @param map - map error keys to the appropriate fields
  */
 export default (errors, setErrors, map = {}) => {
