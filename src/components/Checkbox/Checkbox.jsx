@@ -71,7 +71,7 @@ Checkbox.propTypes = {
   tabIndex: PropTypes.number,
   autoFocus: PropTypes.bool,
   style: PropTypes.object,
-  children: PropTypes.element,
+  children: PropTypes.node,
   onClick: PropTypes.func,
   onChange: PropTypes.func.isRequired,
 };
