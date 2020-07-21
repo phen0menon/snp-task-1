@@ -52,16 +52,11 @@ const Login = () => {
   return (
     <form onSubmit={handleSubmit}>
       {renderedInputs}
-      <div
-        className={classnames(
-          authStyles['form-group'],
-          authStyles['form-submit']
-        )}
-      >
+      <div className={classnames(authStyles.formGroup, authStyles.formSubmit)}>
         <div>
           <button
             type="submit"
-            className={authStyles['form-button']}
+            className={authStyles.formButton}
             disabled={fetching}
           >
             Sign in

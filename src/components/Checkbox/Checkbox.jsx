@@ -37,12 +37,12 @@ const Checkbox = props => {
   );
 
   const cboxClassNames = classNames(styles.cbox, {
-    [styles['cbox-checked']]: checked,
-    [styles['cbox-disabled']]: disabled,
+    [styles.cboxChecked]: checked,
+    [styles.cboxDisabled]: disabled,
   });
 
   return (
-    <label className={styles['cbox-wrapper']} style={style}>
+    <label className={styles.cboxWrapper} style={style}>
       <span className={cboxClassNames}>
         <input
           name={name}
@@ -51,10 +51,10 @@ const Checkbox = props => {
           required={required}
           onChange={onChange}
           ref={input}
-          className={styles['cbox-input']}
+          className={styles.cboxInput}
           {...controlProps}
         />
-        <span className={styles['cbox-inner']} />
+        <span className={styles.cboxInner} />
       </span>
       {children && <span>{children}</span>}
     </label>

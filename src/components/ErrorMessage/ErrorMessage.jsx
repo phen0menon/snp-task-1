@@ -6,10 +6,10 @@ import classNames from 'classnames';
 const ErrorMessage = ({ children, centered }) => (
   <div
     className={classNames(styles.error, {
-      [styles['error-centered']]: centered,
+      [styles.errorCentered]: centered,
     })}
   >
-    <div className={styles['error-inner']}>{children}</div>
+    <div className={styles.errorInner}>{children}</div>
   </div>
 );
 

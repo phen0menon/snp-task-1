@@ -80,9 +80,9 @@ const Register = () => {
   return (
     <form onSubmit={handleSubmit}>
       <>{renderedInputs}</>
-      <div className={authStyles['form-submit']}>
+      <div className={authStyles.formSubmit}>
         <div>
-          <button type="submit" className={authStyles['form-button']}>
+          <button type="submit" className={authStyles.formButton}>
             Register
           </button>
         </div>
