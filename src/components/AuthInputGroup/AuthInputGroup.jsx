@@ -1,31 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import styles from './AuthInputGroup.module.css';
 import Checkbox from 'components/Checkbox/Checkbox';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
-const AuthInputGroup = props => {
-  const { wrapperClassName, label, errors, ...restProps } = props;
-
-  const errorMessage = React.useMemo(
-    () => (errors.length ? errors.join('; ') : ''),
-    [errors]
-  );
-
+const AuthInputGroup = ({ label, error, ...restProps }) => {
   return (
-    <div className={classNames(styles.inputGroup, wrapperClassName)}>
+    <div className={styles.inputGroup}>
       {restProps.type !== 'checkbox' ? (
         <>
           <label htmlFor={restProps.id} className={styles.inputGroupLabel}>
             {label}
           </label>
           <input className={styles.inputGroupInput} {...restProps} />
-          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </>
       ) : (
         <Checkbox {...restProps}>{label}</Checkbox>
       )}
+
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </div>
   );
 };
@@ -41,15 +34,13 @@ AuthInputGroup.propTypes = {
   ]).isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  wrapperClassName: PropTypes.string,
-  errors: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  error: PropTypes.string,
 };
 
 AuthInputGroup.defaultProps = {
   type: 'text',
   placeholder: '',
-  wrapperClassName: '',
-  errors: '',
+  error: null,
 };
 
 export default AuthInputGroup;
