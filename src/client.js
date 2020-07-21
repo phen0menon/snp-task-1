@@ -22,6 +22,11 @@ store.runSaga(rootSaga);
 const renderDom = process.env.APP_ENV === 'development' ? render : hydrate;
 const mountNode = document.getElementById('react-view');
 
+/* Create node for modal portals */
+const modalPortalsNode = document.createElement('div');
+modalPortalsNode.id = 'modals-view';
+mountNode.parentNode.insertBefore(modalPortalsNode, mountNode.nextSibling);
+
 const renderApp = () => {
   unmountComponentAtNode(mountNode);
   const App = require('./components/App').default;

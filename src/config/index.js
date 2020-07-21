@@ -25,7 +25,7 @@ export default {
   },
   app: {
     htmlAttributes: { lang: 'en' },
-    title: 'React Starter Boilerplate',
+    title: 'Quizer',
     link: [
       {
         rel: 'shortcut icon',

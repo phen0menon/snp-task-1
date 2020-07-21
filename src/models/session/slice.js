@@ -61,7 +61,7 @@ const sessionSlice = createSlice({
     fetchLogout: state => {
       state.logoutFetching = true;
     },
-    fetchLogoutSuccess(state) {},
+    fetchLogoutSuccess() {},
     logout() {},
   },
 });
