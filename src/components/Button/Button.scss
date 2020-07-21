@@ -1,0 +1,16 @@
+.button {
+  padding: 0.375rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: 0.15s ease-in;
+
+  & + .button {
+    margin-left: 1rem;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}

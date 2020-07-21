@@ -1,22 +1,25 @@
+import React from 'react';
+import Page from 'hocs/page';
 import Home from 'pages/Home';
-import UserInfo from 'pages/UserInfo';
+import Auth from 'pages/Auth';
 
-import { fetchUsers, fetchUser } from 'models/users/sagas';
+const createRoutePage = (Component, title, additionalProps = {}) => props => (
+  <Page title={title}>
+    <Component {...props} {...additionalProps} />
+  </Page>
+);
 
 export default [
   {
     path: '/',
     exact: true,
     cache: false,
-    component: Home,
-    sagasToRun: [fetchUsers],
-    title: 'Home',
+    render: createRoutePage(Home, 'Quizer'),
   },
   {
-    path: '/users/:id',
+    path: '/auth/',
+    exact: false,
     cache: false,
-    component: UserInfo,
-    sagasToRun: [[fetchUser, ({ id }) => ({ payload: { id } })]],
-    title: 'User',
+    render: createRoutePage(Auth, 'Auth | Quizer'),
   },
 ];

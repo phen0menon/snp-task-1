@@ -11,8 +11,7 @@ import configureStore from './store';
 
 import './components/App';
 
-/* Get initial state from server side rendering */
-const initialState = window.__INITIAL_STATE__;
+const initialState = {};
 
 const history = createBrowserHistory();
 const store = configureStore(history, initialState);
@@ -22,6 +21,11 @@ store.runSaga(rootSaga);
 
 const renderDom = process.env.APP_ENV === 'development' ? render : hydrate;
 const mountNode = document.getElementById('react-view');
+
+/* Create node for modal portals */
+const modalPortalsNode = document.createElement('div');
+modalPortalsNode.id = 'modals-view';
+mountNode.parentNode.insertBefore(modalPortalsNode, mountNode.nextSibling);
 
 const renderApp = () => {
   unmountComponentAtNode(mountNode);

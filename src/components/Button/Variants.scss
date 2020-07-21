@@ -1,0 +1,42 @@
+/* stylelint-disable block-closing-brace-newline-after */
+/* stylelint-disable at-rule-empty-line-before */
+
+@function set-color($color) {
+  @if (lightness($color) > 50) {
+    @return #000;
+  } @else {
+    @return #fff;
+  }
+}
+
+$variants: (
+  default: (
+    #fefefe,
+    #f5f5f5,
+  ),
+  secondary: (
+    #ececec,
+    #e4e3e3,
+  ),
+  success: (
+    #62d867,
+    #54bf59,
+  ),
+);
+
+@each $variant, $states in $variants {
+  $normal: nth($states, 1);
+  $hover: nth($states, 2);
+
+  .#{$variant} {
+    background: $normal;
+    border-color: $normal;
+    color: set-color($normal);
+
+    &:hover {
+      background: $hover;
+      border-color: $hover;
+      color: set-color($hover);
+    }
+  }
+}
