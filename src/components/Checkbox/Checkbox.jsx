@@ -23,19 +23,18 @@ const Checkbox = props => {
     ...restProps
   } = props;
 
-  /* eslint-disable no-param-reassign */
   const controlProps = React.useMemo(
     () =>
       Object.keys(restProps).reduce((result, current) => {
         const subkey = current.substr(0, 5);
         if (subkey === 'aria-' || subkey === 'data-' || current === 'role') {
+          // eslint-disable-next-line no-param-reassign
           result[current] = restProps[current];
         }
         return result;
       }, {}),
     [restProps]
   );
-  /* eslint-enable no-param-reassign */
 
   const cboxClassNames = classNames(styles.cbox, {
     [styles['cbox-checked']]: checked,
