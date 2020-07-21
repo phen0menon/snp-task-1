@@ -152,6 +152,7 @@
     "compression": "^1.7.2",
     "connected-react-router": "^6.3.1",
     "express": "^4.16.3",
+    "formik": "^2.1.5",
     "helmet": "^3.12.0",
     "history": "^4.9.0",
     "hpp": "^0.2.2",
@@ -174,7 +175,8 @@
     "reselect": "^4.0.0",
     "sass": "^1.23.3",
     "serialize-javascript": "^2.1.1",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
