@@ -1,22 +1,24 @@
-export const loginFormInputs = [
+import * as Yup from 'yup';
+
+export const loginInputs = [
   {
     name: 'username',
     type: 'text',
-    defaultValue: '',
     label: 'Username',
   },
   {
     name: 'password',
-    type: 'password',
-    defaultValue: '',
+    type: 'text',
     label: 'Password',
   },
 ];
 
-export const loginFormInitialState = loginFormInputs.reduce(
-  (result, current) => ({
-    ...result,
-    [current.name]: current.defaultValue,
-  }),
+export const loginInputsInitialState = loginInputs.reduce(
+  (result, current) => ({ ...result, [current.name]: '' }),
   {}
 );
+
+export const loginValidationSchema = Yup.object({
+  username: Yup.string().required('Username is required'),
+  password: Yup.string().required('Password is required'),
+});

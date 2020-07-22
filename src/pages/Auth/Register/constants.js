@@ -1,46 +1,50 @@
+import * as Yup from 'yup';
+
 export const registerFormInputs = [
   {
     name: 'username',
     type: 'text',
-    defaultValue: '',
+    value: '',
     label: 'Username',
-    required: true,
   },
   {
     name: 'password',
     type: 'password',
-    defaultValue: '',
+    value: '',
     label: 'Password',
-    required: true,
   },
   {
     name: 'passwordConfirm',
     type: 'password',
-    defaultValue: '',
+    value: '',
     label: 'Confirm password',
-    required: true,
   },
   {
     name: 'isAdmin',
     type: 'checkbox',
-    defaultValue: false,
+    value: false,
     label: 'Admin rights?',
-    required: false,
   },
 ];
 
 export const registerFormInitialState = registerFormInputs.reduce(
   (res, curr) => ({
     ...res,
-    [curr.name]: curr.defaultValue,
+    [curr.name]: curr.value,
   }),
   {}
 );
 
-export const registerFormErrorsInitialState = registerFormInputs.reduce(
-  (res, curr) => ({
-    ...res,
-    [curr.name]: [],
-  }),
-  {}
-);
+export const registerFormValidationSchema = Yup.object({
+  username: Yup.string().required('Username is required'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(6, 'Short password: minimum 6 symbols'),
+  passwordConfirm: Yup.string()
+    .required('Password confirmation is required')
+    /* eslint-disable func-names */
+    .test('passwords-match', 'Passwords dont match', function(value) {
+      return this.parent.password === value;
+    }),
+  /* eslint-enable func-names */
+});

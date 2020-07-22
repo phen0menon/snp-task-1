@@ -4,15 +4,20 @@ import useAction from 'hooks/useAction';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import AuthInputGroup from 'components/AuthInputGroup';
-import { useFormData } from '../utils/utils';
 import authStyles from '../Auth.scss';
-import { loginFormInitialState, loginFormInputs } from './constants';
 import { useSelector } from 'react-redux';
 import {
   isLoginFetchingSelector,
   loginErrorSelector,
 } from 'models/session/selectors';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import { useFormik } from 'formik';
+import Button from 'components/Button/Button';
+import {
+  loginInputsInitialState,
+  loginInputs,
+  loginValidationSchema,
+} from './constants';
 
 const Login = () => {
   const onFetchLogin = useAction(sessionActions.fetchLogin);
@@ -20,33 +25,40 @@ const Login = () => {
   const fetching = useSelector(isLoginFetchingSelector);
   const loginError = useSelector(loginErrorSelector);
 
-  const { formData, handleChange, handleSubmit } = useFormData({
-    fields: loginFormInitialState,
-    onSubmit: React.useCallback(
-      values => {
-        const { username, password } = values;
-        if (!username || !password || fetching) return;
-        onFetchLogin({ username, password });
-      },
-      [fetching, onFetchLogin]
-    ),
+  const {
+    handleChange,
+    handleSubmit,
+    values: formValues,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues: loginInputsInitialState,
+    validationSchema: loginValidationSchema,
+    onSubmit: values => {
+      onFetchLogin(values);
+    },
   });
+
+  const getInputErrors = React.useCallback(
+    name => (errors[name] && touched[name] ? errors[name] : null),
+    [errors, touched]
+  );
 
   const renderedInputs = React.useMemo(
     () =>
-      loginFormInputs.map(input => (
+      loginInputs.map(input => (
         <AuthInputGroup
-          id={input.name}
           key={input.name}
+          id={input.name}
+          name={input.name}
           type={input.text}
           label={input.label}
-          data-input-name={input.name}
-          value={formData[input.name]}
           onChange={handleChange}
-          required
+          value={formValues[input.name]}
+          error={getInputErrors(input.name)}
         />
       )),
-    [formData, handleChange]
+    [handleChange, formValues, getInputErrors]
   );
 
   return (
@@ -54,13 +66,13 @@ const Login = () => {
       {renderedInputs}
       <div className={classnames(authStyles.formGroup, authStyles.formSubmit)}>
         <div>
-          <button
+          <Button
             type="submit"
             className={authStyles.formButton}
             disabled={fetching}
           >
             Sign in
-          </button>
+          </Button>
         </div>
         <div>
           <Link to="/auth/register">Register?</Link>
