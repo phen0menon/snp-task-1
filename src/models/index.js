@@ -2,15 +2,27 @@
 
 import { connectRouter } from 'connected-react-router';
 import { all } from 'redux-saga/effects';
+import { combineReducers } from 'redux-starter-kit';
 
 import sessionReducer, { logoutAction } from './session/slice';
 import sessionSagas, { fetchInitialSession } from './session/sagas';
-import { combineReducers } from 'redux-starter-kit';
+
+import quizzesReducer from './quizzes/slice';
+import quizzesSagas from './quizzes/sagas';
+
+import answersReducer from './answers/slice';
+
+import questionsReducer from './questions/slice';
 
 export const createCombinedReducer = history =>
   combineReducers({
     router: connectRouter(history),
     session: sessionReducer,
+    tests: combineReducers({
+      quizzes: quizzesReducer,
+      questions: questionsReducer,
+      answers: answersReducer,
+    }),
   });
 
 export const createRootReducer = history => {
@@ -28,5 +40,6 @@ export const rootSaga = function* rootSaga() {
     // Check for user session existence
     fetchInitialSession(),
     sessionSagas(),
+    quizzesSagas(),
   ]);
 };
