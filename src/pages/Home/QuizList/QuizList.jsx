@@ -1,6 +1,6 @@
 import React from 'react';
 import { quizListSelector, quizAllIdsSelector } from 'models/quizzes/selectors';
-import { useSelector } from 'react-redux';
+import useSelector from 'hooks/useSelector';
 import QuizCard from 'components/QuizCard';
 
 import styles from './QuizList.scss';
