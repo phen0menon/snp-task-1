@@ -14,9 +14,14 @@ const answersSlice = createSlice({
   extraReducers: {
     [quizzesExtraActions.fetchQuizzesSuccess](state, { payload }) {
       const { answers } = payload.data;
-
       state.byId = answers;
       state.allIds = Object.keys(answers);
+    },
+    [quizzesExtraActions.fetchQuizSuccess](state, { payload }) {
+      const { answers } = payload;
+      const keys = Object.keys(answers);
+      state.byId = { ...state.byId, ...answers };
+      state.allIds = [...state.allIds, ...keys];
     },
   },
 });

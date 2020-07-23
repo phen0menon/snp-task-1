@@ -23,6 +23,26 @@ export function* fetchQuizzes() {
   }
 }
 
+export function* fetchQuiz({ payload: { id } }) {
+  try {
+    const { data: quiz } = yield call(api.fetchQuiz, id);
+    const { entities: data } = normalizeQuizzes([quiz]);
+    yield put({
+      type: quizzesActions.fetchQuizSuccess,
+      payload: data,
+    });
+  } catch (err) {
+    const { error } = err.response.data;
+    yield put({
+      type: quizzesActions.fetchQuizFailed,
+      payload: { error },
+    });
+  }
+}
+
 export default function*() {
-  yield all([takeLatest(quizzesActions.fetchQuizzes, fetchQuizzes)]);
+  yield all([
+    takeLatest(quizzesActions.fetchQuizzes, fetchQuizzes),
+    takeLatest(quizzesActions.fetchQuiz, fetchQuiz),
+  ]);
 }

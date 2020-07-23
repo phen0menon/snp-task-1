@@ -18,6 +18,12 @@ const questionsSlice = createSlice({
       state.byId = questions;
       state.allIds = Object.keys(questions);
     },
+    [quizzesExtraActions.fetchQuizSuccess](state, { payload }) {
+      const { questions } = payload;
+      const keys = Object.keys(questions);
+      state.byId = { ...state.byId, ...questions };
+      state.allIds = [...state.allIds, ...keys];
+    },
   },
 });
 

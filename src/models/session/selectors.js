@@ -10,6 +10,11 @@ export const isAuthenticatedSelector = createSelector(
   ({ userData }) => userData.id != null
 );
 
+export const isUserAdminSelector = createSelector(
+  sessionSelector,
+  ({ userData }) => userData.isAdmin
+);
+
 export const isLoginFetchingSelector = createSelector(
   sessionSelector,
   ({ loginFetching }) => loginFetching
