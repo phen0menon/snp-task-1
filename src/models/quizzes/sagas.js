@@ -9,31 +9,16 @@ export function* fetchQuizzes() {
   try {
     const response = yield call(api.fetchQuizzes);
     const { tests, meta } = response.data;
-    const {
-      entities: { answers, questions, quizzes },
-    } = normalizeQuizzes(tests);
-
-    yield put({
-      type: quizzesActions.setQuizzes,
-      payload: { quizzes },
-    });
-    yield put({
-      type: questionsActions.setQuestions,
-      payload: { questions },
-    });
-    yield put({
-      type: answersActions.setAnswers,
-      payload: { answers },
-    });
+    const { entities: data } = normalizeQuizzes(tests);
     yield put({
       type: quizzesActions.fetchQuizzesSuccess,
-      payload: { meta },
+      payload: { data, meta },
     });
   } catch (err) {
     const { error } = err.response.data;
     yield put({
       type: quizzesActions.fetchQuizzesFailed,
-      payload: error,
+      payload: { error },
     });
   }
 }

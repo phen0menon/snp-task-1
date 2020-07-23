@@ -2,6 +2,7 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
+import { quizzesExtraActions } from 'models/quizzes/slice';
 
 const answersSlice = createSlice({
   name: 'answers',
@@ -9,13 +10,11 @@ const answersSlice = createSlice({
     byId: {},
     allIds: [],
   },
-  reducers: {
-    setAnswers(
-      state,
-      {
-        payload: { answers },
-      }
-    ) {
+  reducers: {},
+  extraReducers: {
+    [quizzesExtraActions.fetchQuizzesSuccess](state, { payload }) {
+      const { answers } = payload.data;
+
       state.byId = answers;
       state.allIds = Object.keys(answers);
     },

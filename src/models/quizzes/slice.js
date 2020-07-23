@@ -8,33 +8,35 @@ const quizzesSlice = createSlice({
   initialState: {
     byId: {},
     allIds: [],
-    loading: false,
+    meta: {},
+    status: null,
   },
   reducers: {
     fetchQuizzes(state) {
-      state.loading = true;
+      state.status = 'pending';
     },
 
-    fetchQuizzesSuccess(state) {
-      state.loading = false;
-    },
+    fetchQuizzesSuccess(state, { payload }) {
+      const {
+        data: { quizzes },
+        meta,
+      } = payload;
 
-    fetchQuizzesFailed(state, { payload }) {
-      console.log(payload);
-    },
-
-    setQuizzes(
-      state,
-      {
-        payload: { quizzes },
-      }
-    ) {
+      state.status = 'success';
       state.byId = quizzes;
       state.allIds = Object.keys(quizzes);
+      state.meta = meta;
+    },
+
+    fetchQuizzesFailed(state) {
+      state.status = 'failure';
     },
   },
 });
 
 export const quizzesActions = actionTypes(quizzesSlice.actions);
+export const quizzesExtraActions = {
+  fetchQuizzesSuccess: quizzesActions.fetchQuizzesSuccess,
+};
 
 export default quizzesSlice.reducer;
