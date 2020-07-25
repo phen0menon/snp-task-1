@@ -27,7 +27,7 @@
 $sidebar-width: 280px;
 
 .sidebar {
-  position: absolute;
+  position: fixed;
   width: $sidebar-width;
   left: 0;
   height: 100%;
