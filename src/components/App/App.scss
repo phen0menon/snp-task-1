@@ -1,8 +1,27 @@
 @use '~styles/variables' as *;
 
+@font-face {
+  font-family: 'Barlow';
+  src: url('assets/fonts/Barlow/Barlow-Regular.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url('assets/fonts/Barlow/Barlow-Medium.ttf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src: url('assets/fonts/Barlow/Barlow-Semibold.ttf');
+  font-weight: 600;
+}
+
 body {
   background-color: $color-white;
-  font-family: 'Helvetica-Light', Helvetica, Arial, sans-serif;
+  font-family: 'Barlow', Helvetica, Arial, sans-serif;
+  font-size: 18px;
 }
 
 button,
