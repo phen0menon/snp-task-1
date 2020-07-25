@@ -10,7 +10,12 @@ const questionsSlice = createSlice({
     byId: {},
     allIds: [],
   },
-  reducers: {},
+  reducers: {
+    changeQuestionData(state, { payload }) {
+      const { id, title } = payload;
+      state.byId[id].title = title;
+    },
+  },
   extraReducers: {
     [quizzesExtraActions.fetchQuizzesSuccess](state, { payload }) {
       const { questions } = payload.data;
