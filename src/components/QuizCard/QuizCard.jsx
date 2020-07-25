@@ -40,6 +40,8 @@ const QuizCard = ({ id, title, created_at }) => {
 
 QuizCard.propTypes = {
   title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  created_at: PropTypes.string.isRequired,
 };
 
 export default React.memo(QuizCard);

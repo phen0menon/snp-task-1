@@ -1,4 +1,4 @@
-@use "styles/variables/colors" as *;
+@use 'styles/variables/colors' as *;
 
 .root {
   display: flex;
@@ -75,7 +75,6 @@
   transition: 0.2s ease-in;
   text-transform: uppercase;
   padding: 0.5rem 1rem;
-  transition: 0.2s;
   font-weight: 600;
   letter-spacing: 0.75px;
 }
@@ -109,20 +108,4 @@
   align-items: center;
   justify-content: center;
   margin-top: 4rem;
-}
-
-//  ANSWER
-
-.answer {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.answerCheckbox {
-}
-
-.answerContent {
-  width: 100%;
-  margin-left: 1rem;
 }

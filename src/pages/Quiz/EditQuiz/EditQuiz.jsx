@@ -2,14 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './EditQuiz.scss';
-import globalStyles from 'styles/global.scss';
-import Button from 'components/Button/Button';
 import QuizQuestion from './QuizQuestion';
-import { Link } from 'react-router-dom';
-import usePaginatedState from 'hooks/usePaginatedState';
 import useSelector from 'hooks/useSelector';
 import { getQuestionsByIdsSelector } from 'models/questions/selectors';
-import QuestionsSidebar from './QuestionsSidebar';
+import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
 
 const EditQuiz = ({ id, questions, title }) => {
   const questionList = useSelector(getQuestionsByIdsSelector, questions);
@@ -42,6 +38,8 @@ const EditQuiz = ({ id, questions, title }) => {
 
 EditQuiz.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  questions: PropTypes.arrayOf(PropTypes.number).isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default EditQuiz;
