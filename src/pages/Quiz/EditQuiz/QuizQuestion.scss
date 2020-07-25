@@ -1,0 +1,128 @@
+@use "styles/variables/colors" as *;
+
+.root {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.inner {
+  flex: 0 0 80%;
+
+  @media screen and (max-width: 991px) {
+    flex: 0 0 100%;
+  }
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.answers {
+  margin-top: 1rem;
+}
+
+.question {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 0.75rem;
+}
+
+.types {
+  display: flex;
+  margin: 1rem 0;
+}
+
+.type {
+  color: $secondary;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: 0.25s ease-in;
+  letter-spacing: 0.75px;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  + .type {
+    margin-left: 1rem;
+  }
+
+  &Active,
+  &:active,
+  &:focus,
+  &:hover {
+    color: $purple;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+
+  > * + * {
+    margin-left: 1rem;
+  }
+}
+
+@mixin defaultBtnStyles {
+  font-size: 1.1rem;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  transition: 0.2s ease-in;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  transition: 0.2s;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}
+
+.btnAddAnswer {
+  @include defaultBtnStyles;
+
+  color: #fff;
+  border-color: #fff;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+  }
+}
+
+.btnSave {
+  @include defaultBtnStyles;
+
+  color: $green;
+  border-color: $green;
+
+  &:hover {
+    background: $green;
+    color: white;
+  }
+}
+
+.floating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+//  ANSWER
+
+.answer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.answerCheckbox {
+}
+
+.answerContent {
+  width: 100%;
+  margin-left: 1rem;
+}

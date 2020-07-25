@@ -7,44 +7,34 @@ import Button from 'components/Button/Button';
 import QuizQuestion from './QuizQuestion';
 import { Link } from 'react-router-dom';
 import usePaginatedState from 'hooks/usePaginatedState';
+import useSelector from 'hooks/useSelector';
+import { getQuestionsByIdsSelector } from 'models/questions/selectors';
+import QuestionsSidebar from './QuestionsSidebar';
 
 const EditQuiz = ({ id, questions, title }) => {
-  const {
-    page: currentQuestionIndex,
-    gotoPreviousPage: gotoPrevQuestion,
-    gotoNextPage: gotoNextquestion,
-    isFirstPage: isFirstQuestion,
-    isLastPage: isLastQuestion,
-  } = usePaginatedState(questions.length);
+  const questionList = useSelector(getQuestionsByIdsSelector, questions);
 
-  const currentQuestionId = React.useMemo(
-    () => (questions && questions[currentQuestionIndex]) || undefined,
-    [questions, currentQuestionIndex]
+  const [currentQuestionId, setCurrentQuestionId] = React.useState(
+    questionList[0].id
+  );
+
+  const onQuestionSidebarItemClick = React.useCallback(
+    questionId => setCurrentQuestionId(questionId),
+    [setCurrentQuestionId]
   );
 
   return (
-    <div className={globalStyles.container}>
-      <div className={styles.inner}>
-        <div className={styles.nav}>
-          <div className={styles.header}>
-            <div className={styles.backButton}>
-              <Link to="/">&lt;</Link>
-            </div>
-            <div className={styles.title}>{title}</div>
-          </div>
-          <div className={styles.navButtons}>
-            <Button onClick={gotoPrevQuestion} disabled={isFirstQuestion}>
-              &lt;
-            </Button>
-            {currentQuestionIndex + 1} of {questions.length}
-            <Button onClick={gotoNextquestion} disabled={isLastQuestion}>
-              &gt;
-            </Button>
-          </div>
-        </div>
-        <div className={styles.content}>
-          <QuizQuestion id={currentQuestionId} />
-        </div>
+    <div className={styles.root}>
+      <div className={styles.sidebar}>
+        <QuestionsSidebar
+          currentQuestionId={currentQuestionId}
+          questions={questionList}
+          onItemClick={onQuestionSidebarItemClick}
+        />
+      </div>
+
+      <div className={styles.content}>
+        <QuizQuestion id={currentQuestionId} />
       </div>
     </div>
   );
