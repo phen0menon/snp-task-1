@@ -14,6 +14,6 @@ export const answersByIdSelector = createSelector(
 
 export const getAnswersByIdsSelector = createSelector(
   [answersByIdSelector, (_, ids) => ids],
-  (answersByid, ids) =>
-    denormalize(ids, [new schema.Entity('answers')], { answers: answersByid })
+  (answersById, ids) =>
+    denormalize(ids, [new schema.Entity('answers')], { answers: answersById })
 );
