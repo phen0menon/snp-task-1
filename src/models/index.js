@@ -11,6 +11,7 @@ import quizzesReducer from './quizzes/slice';
 import quizzesSagas from './quizzes/sagas';
 
 import answersReducer from './answers/slice';
+import answersSagas from './answers/sagas';
 
 import questionsReducer from './questions/slice';
 
@@ -41,5 +42,6 @@ export const rootSaga = function* rootSaga() {
     fetchInitialSession(),
     sessionSagas(),
     quizzesSagas(),
+    answersSagas(),
   ]);
 };

@@ -17,3 +17,13 @@ export const getAnswersByIdsSelector = createSelector(
   (answersById, ids) =>
     denormalize(ids, [new schema.Entity('answers')], { answers: answersById })
 );
+
+export const createdAnswerSuccessSelector = createSelector(
+  [answersSelector],
+  ({ newAnswerCreatingStatus }) => newAnswerCreatingStatus === 'success'
+);
+
+export const createdAnswerLoadingSelector = createSelector(
+  [answersSelector],
+  ({ newAnswerCreatingStatus }) => newAnswerCreatingStatus === 'pending'
+);

@@ -2,8 +2,6 @@ import { takeLatest, all, put, call } from 'redux-saga/effects';
 import * as api from 'api';
 import { quizzesActions } from './slice';
 import { normalizeQuizzes } from './utils';
-import { questionsActions } from 'models/questions/slice';
-import { answersActions } from 'models/answers/slice';
 
 export function* fetchQuizzes() {
   try {
