@@ -1,5 +1,5 @@
 import React from 'react';
-import { quizListSelector } from 'models/quizzes/selectors';
+import { quizListSelector } from 'models/tests/quizzes/selectors';
 import useSelector from 'hooks/useSelector';
 import QuizCard from 'components/QuizCard';
 

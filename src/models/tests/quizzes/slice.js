@@ -2,6 +2,7 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
+import { testsCommonActions } from 'models/tests/commonActions';
 
 const quizzesSlice = createSlice({
   name: 'quizzes',
@@ -15,25 +16,28 @@ const quizzesSlice = createSlice({
     fetchQuizzes(state) {
       state.status = 'pending';
     },
-    fetchQuizzesSuccess(state, { payload }) {
-      const {
-        data: { quizzes },
+    fetchQuizzesFailed(state) {
+      state.status = 'failure';
+    },
+    fetchQuiz(state) {
+      state.status = 'pending';
+    },
+  },
+  extraReducers: {
+    [testsCommonActions.fetchQuizzesSuccess](
+      state,
+      {
+        payload: { quizzes },
         meta,
-      } = payload;
-
+      }
+    ) {
       state.status = 'success';
       state.byId = quizzes;
       state.allIds = Object.keys(quizzes);
       state.meta = meta;
     },
-    fetchQuizzesFailed(state) {
-      state.status = 'failure';
-    },
 
-    fetchQuiz(state) {
-      state.status = 'pending';
-    },
-    fetchQuizSuccess(state, { payload }) {
+    [testsCommonActions.fetchQuizSuccess](state, { payload }) {
       const quiz = payload.quizzes;
       const quizId = Object.keys(quiz)[0];
       state.byId[quizId] = quiz[quizId];
@@ -43,9 +47,5 @@ const quizzesSlice = createSlice({
 });
 
 export const quizzesActions = actionTypes(quizzesSlice.actions);
-export const quizzesExtraActions = {
-  fetchQuizSuccess: quizzesActions.fetchQuizSuccess,
-  fetchQuizzesSuccess: quizzesActions.fetchQuizzesSuccess,
-};
 
 export default quizzesSlice.reducer;

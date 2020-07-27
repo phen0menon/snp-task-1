@@ -1,12 +1,13 @@
-import { takeLatest, all, put, call } from 'redux-saga/effects';
 import * as api from 'api';
-import { answersActions } from 'models/answers/slice';
+import { takeLatest, all, put, call } from 'redux-saga/effects';
+import { answersActions } from './slice';
+import { testsCommonActions } from 'models/tests/commonActions';
 
 export function* fetchCreateAnswer({ payload: data }) {
   try {
     const response = yield call(api.fetchCreateAnswer, data);
     yield put({
-      type: answersActions.createNewAnswerSuccess,
+      type: testsCommonActions.createAnswerSuccess,
       payload: { questionId: data.questionId, answer: response.data },
     });
   } catch (err) {

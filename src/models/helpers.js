@@ -1,13 +1,11 @@
-export const putNormalizedModifications = ({ state, id, props, temprary }) => {
-  ['byId', 'modifiedById', ...(temprary ? ['tempraryItems'] : [])].forEach(
-    requiredProp => {
-      if (!Object.getOwnPropertyDescriptor(state, requiredProp)) {
-        throw new Error(
-          `putNormalizedModifications: Missing prop in state: ${requiredProp}`
-        );
-      }
+export const putNormalizedModifications = (state, id, props) => {
+  ['byId', 'modifiedById'].forEach(requiredProp => {
+    if (!Object.getOwnPropertyDescriptor(state, requiredProp)) {
+      throw new Error(
+        `putNormalizedModifications: Missing prop in state: ${requiredProp}`
+      );
     }
-  );
+  });
   /* eslint-disable no-param-reassign */
   // If there's no modified item with specified id, put it to modified
   if (!Object.getOwnPropertyDescriptor(state.modifiedById, id)) {

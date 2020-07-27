@@ -2,8 +2,8 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
-import { quizzesExtraActions } from 'models/quizzes/slice';
 import { putNormalizedModifications } from 'models/helpers';
+import { testsCommonActions } from 'models/tests/commonActions';
 
 const answersSlice = createSlice({
   name: 'answers',
@@ -19,36 +19,46 @@ const answersSlice = createSlice({
     createNewAnswer(state) {
       state.newAnswerCreatingStatus = 'pending';
     },
-    createNewAnswerSuccess(state, { payload }) {
-      const { answer } = payload;
-      state.allIds.push(answer.id);
-      state.byId[answer.id] = answer;
-      state.newAnswerCreatingStatus = 'success';
-    },
 
     changeAnswerData(state, { payload }) {
-      const { id, temprary, ...restProps } = payload;
-      putNormalizedModifications({ state, id, restProps });
+      const { id, ...props } = payload;
+      putNormalizedModifications(state, id, props);
     },
   },
   extraReducers: {
-    [quizzesExtraActions.fetchQuizzesSuccess](state, { payload }) {
-      const { answers } = payload;
+    [testsCommonActions.fetchQuizzesSuccess](
+      state,
+      {
+        payload: { answers },
+      }
+    ) {
       state.byId = answers;
       state.allIds = Object.keys(answers);
     },
-    [quizzesExtraActions.fetchQuizSuccess](state, { payload }) {
-      const { answers } = payload;
-      const keys = Object.keys(answers);
+
+    [testsCommonActions.fetchQuizSuccess](
+      state,
+      {
+        payload: { answers },
+      }
+    ) {
       state.byId = { ...state.byId, ...answers };
-      state.allIds = [...state.allIds, ...keys];
+      state.allIds = [...state.allIds, ...Object.keys(answers)];
+    },
+
+    [testsCommonActions.createAnswerSuccess](
+      state,
+      {
+        payload: { answer },
+      }
+    ) {
+      state.allIds.push(answer.id);
+      state.byId[answer.id] = answer;
+      state.newAnswerCreatingStatus = 'success';
     },
   },
 });
 
 export const answersActions = actionTypes(answersSlice.actions);
-export const answersExtraActions = {
-  createNewAnswerSuccess: answersActions.createNewAnswerSuccess,
-};
 
 export default answersSlice.reducer;

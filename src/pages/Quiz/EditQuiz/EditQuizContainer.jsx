@@ -1,7 +1,7 @@
 import React from 'react';
-import { quizzesActions } from 'models/quizzes/slice';
+import { quizzesActions } from 'models/tests/quizzes/slice';
 import useSelector from 'hooks/useSelector';
-import { getQuizDataByIdSelector } from 'models/quizzes/selectors';
+import { getQuizDataByIdSelector } from 'models/tests/quizzes/selectors';
 import PropTypes from 'prop-types';
 import useAction from 'hooks/useAction';
 import EditQuiz from './EditQuiz';

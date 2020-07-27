@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './EditQuiz.scss';
 import QuizQuestion from './QuizQuestion';
 import useSelector from 'hooks/useSelector';
-import { getQuestionsByIdsSelector } from 'models/questions/selectors';
+import { getQuestionsByIdsSelector } from 'models/tests/questions/selectors';
 import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
 
 const EditQuiz = ({ id, questions, title }) => {

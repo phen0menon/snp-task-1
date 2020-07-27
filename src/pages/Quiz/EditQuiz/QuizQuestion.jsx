@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import useSelector from 'hooks/useSelector';
-import { getQuestionByIdSelector } from 'models/questions/selectors';
+import { getQuestionByIdSelector } from 'models/tests/questions/selectors';
 import {
   getAnswersByIdsSelector,
   createdAnswerLoadingSelector,
   createdAnswerSuccessSelector,
-} from 'models/answers/selectors';
+} from 'models/tests/answers/selectors';
 
 import styles from './QuizQuestion.scss';
 import globalStyles from 'styles/global.scss';
 import useAction from 'hooks/useAction';
-import { answersActions } from 'models/answers/slice';
-import { questionsActions } from 'models/questions/slice';
+import { answersActions } from 'models/tests/answers/slice';
+import { questionsActions } from 'models/tests/questions/slice';
 import { QUIZ_TYPES } from '../constants';
 import QuestionAnswerEdit from 'components/QuestionAnswerEdit';
 

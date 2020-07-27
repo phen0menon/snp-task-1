@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
-import { testsSelector } from 'models/quizzes/selectors';
 import { denormalize, schema } from 'normalizr';
+
+import { testsSelector } from 'models/tests/selectors';
 
 export const questionsSelector = createSelector(
   [testsSelector],

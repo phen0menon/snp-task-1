@@ -3,7 +3,7 @@ import withAuthentication, {
   AuthenticationStatus,
 } from 'hocs/withAuthentication';
 import useAction from 'hooks/useAction';
-import { quizzesActions } from 'models/quizzes/slice';
+import { quizzesActions } from 'models/tests/quizzes/slice';
 import QuizList from './QuizList';
 import Button from 'components/Button';
 

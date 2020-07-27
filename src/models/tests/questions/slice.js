@@ -2,9 +2,8 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
-import { quizzesExtraActions } from 'models/quizzes/slice';
 import { putNormalizedModifications } from 'models/helpers';
-import { answersExtraActions } from 'models/answers/slice';
+import { testsCommonActions } from 'models/tests/commonActions';
 
 const questionsSlice = createSlice({
   name: 'questions',
@@ -22,24 +21,30 @@ const questionsSlice = createSlice({
     },
   },
   extraReducers: {
-    [quizzesExtraActions.fetchQuizzesSuccess](state, { payload }) {
-      const { questions } = payload.data;
-
+    [testsCommonActions.fetchQuizzesSuccess](
+      state,
+      {
+        payload: { questions },
+      }
+    ) {
       state.byId = questions;
       state.allIds = Object.keys(questions);
     },
-    [quizzesExtraActions.fetchQuizSuccess](state, { payload }) {
+
+    [testsCommonActions.fetchQuizSuccess](state, { payload }) {
       const { questions } = payload;
       const keys = Object.keys(questions);
       state.byId = { ...state.byId, ...questions };
       state.allIds = [...state.allIds, ...keys];
     },
-    [answersExtraActions.createNewAnswerSuccess](state, { payload }) {
-      const {
-        questionId,
-        answer: { id },
-      } = payload;
-      state.byId[questionId].answers.push(id);
+
+    [testsCommonActions.createAnswerSuccess](
+      state,
+      {
+        payload: { questionId, answer },
+      }
+    ) {
+      state.byId[questionId].answers.push(answer.id);
     },
   },
 });

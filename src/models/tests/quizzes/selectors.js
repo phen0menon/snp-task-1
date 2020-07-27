@@ -1,9 +1,5 @@
 import { createSelector } from 'reselect';
-
-export const testsSelector = createSelector(
-  [state => state],
-  state => state.tests
-);
+import { testsSelector } from 'models/tests/selectors';
 
 export const quizzesSelector = createSelector(
   [testsSelector],
