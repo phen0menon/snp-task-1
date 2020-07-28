@@ -8,6 +8,9 @@ import dragIcon from 'assets/images/drag-icon.svg';
 
 import styles from './QuestionAnswerEdit.scss';
 import AnswerInput from 'components/AnswerInput/AnswerInput';
+import useSelector from 'hooks/useSelector';
+import spinnerAnimated from 'assets/images/spinner-animated.svg';
+import { isAnswerDeletingSelector } from 'models/tests/answers/selectors';
 
 const QuestionAnswerEdit = ({
   answer,
@@ -17,6 +20,8 @@ const QuestionAnswerEdit = ({
   questionId,
 }) => {
   const { id } = answer;
+
+  const isAnswerDeleting = useSelector(isAnswerDeletingSelector, id);
 
   const onInputChange = React.useCallback(
     event => {
@@ -59,8 +64,16 @@ const QuestionAnswerEdit = ({
         />
 
         <div className={styles.actions}>
-          <button className={styles.action} onClick={onAnswerDelete}>
-            <img src={timesIcon} alt="Delete" width="16" />
+          <button
+            className={styles.action}
+            onClick={onAnswerDelete}
+            disabled={isAnswerDeleting}
+          >
+            <img
+              src={isAnswerDeleting ? spinnerAnimated : timesIcon}
+              alt="Delete"
+              width={isAnswerDeleting ? 18 : 16}
+            />
           </button>
           <button className={styles.action}>
             <img src={dragIcon} alt="Drag" width="20" />

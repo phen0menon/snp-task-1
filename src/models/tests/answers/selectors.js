@@ -27,3 +27,10 @@ export const createdAnswerLoadingSelector = createSelector(
   [answersSelector],
   ({ newAnswerCreatingStatus }) => newAnswerCreatingStatus === 'pending'
 );
+
+export const isAnswerDeletingSelector = createSelector(
+  [answersSelector, (_, id) => id],
+  ({ answersDeletingIds }, id) => {
+    return answersDeletingIds.includes(id);
+  }
+);
