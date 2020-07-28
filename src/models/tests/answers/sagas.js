@@ -7,7 +7,7 @@ export function* fetchCreateAnswer({ payload: data }) {
   try {
     const response = yield call(api.fetchCreateAnswer, data);
     yield put({
-      type: testsCommonActions.createAnswerSuccess,
+      type: testsCommonActions.answerCreated,
       payload: { questionId: data.questionId, answer: response.data },
     });
   } catch (err) {
@@ -16,6 +16,23 @@ export function* fetchCreateAnswer({ payload: data }) {
   }
 }
 
+export function* fetchDeleteAnswer({ payload: { questionId, id } }) {
+  try {
+    yield call(api.fetchDeleteAnswer, { id });
+    yield put({
+      type: testsCommonActions.answerDeleted,
+      payload: { questionId, id },
+    });
+  } catch (err) {
+    console.log(err);
+    const { error } = err.response.data;
+    console.error(error);
+  }
+}
+
 export default function*() {
-  yield all([takeLatest(answersActions.createNewAnswer, fetchCreateAnswer)]);
+  yield all([
+    takeLatest(answersActions.createNewAnswer, fetchCreateAnswer),
+    takeLatest(answersActions.deleteAnswer, fetchDeleteAnswer),
+  ]);
 }

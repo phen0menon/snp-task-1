@@ -10,7 +10,7 @@ export function* fetchQuizzes() {
     const { tests, meta } = response.data;
     const { entities: data } = normalizeQuizzes(tests);
     yield put({
-      type: testsCommonActions.fetchQuizzesSuccess,
+      type: testsCommonActions.quizzesFetched,
       payload: data,
       meta,
     });
@@ -28,7 +28,7 @@ export function* fetchQuiz({ payload: { id } }) {
     const { data: quiz } = yield call(api.fetchQuiz, id);
     const { entities: data } = normalizeQuizzes([quiz]);
     yield put({
-      type: testsCommonActions.fetchQuizSuccess,
+      type: testsCommonActions.quizFetched,
       payload: data,
     });
   } catch (err) {

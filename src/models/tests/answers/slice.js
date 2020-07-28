@@ -2,7 +2,11 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
-import { putNormalizedModifications } from 'models/helpers';
+import {
+  putNormalizedModifications,
+  removeFromNormalized,
+  removeFromArray,
+} from 'models/helpers';
 import { testsCommonActions } from 'models/tests/commonActions';
 
 const answersSlice = createSlice({
@@ -11,9 +15,9 @@ const answersSlice = createSlice({
     byId: {},
     allIds: [],
     modifiedById: {},
-    createdItems: {},
 
     newAnswerCreatingStatus: null,
+    answersDeletingIds: [],
   },
   reducers: {
     createNewAnswer(state) {
@@ -24,9 +28,18 @@ const answersSlice = createSlice({
       const { id, ...props } = payload;
       putNormalizedModifications(state, id, props);
     },
+
+    deleteAnswer(
+      state,
+      {
+        payload: { id },
+      }
+    ) {
+      state.answersDeletingIds.push(id);
+    },
   },
   extraReducers: {
-    [testsCommonActions.fetchQuizzesSuccess](
+    [testsCommonActions.quizzesFetched](
       state,
       {
         payload: { answers },
@@ -36,7 +49,7 @@ const answersSlice = createSlice({
       state.allIds = Object.keys(answers);
     },
 
-    [testsCommonActions.fetchQuizSuccess](
+    [testsCommonActions.quizFetched](
       state,
       {
         payload: { answers },
@@ -46,7 +59,7 @@ const answersSlice = createSlice({
       state.allIds = [...state.allIds, ...Object.keys(answers)];
     },
 
-    [testsCommonActions.createAnswerSuccess](
+    [testsCommonActions.answerCreated](
       state,
       {
         payload: { answer },
@@ -55,6 +68,16 @@ const answersSlice = createSlice({
       state.allIds.push(answer.id);
       state.byId[answer.id] = answer;
       state.newAnswerCreatingStatus = 'success';
+    },
+
+    [testsCommonActions.answerDeleted](
+      state,
+      {
+        payload: { id },
+      }
+    ) {
+      removeFromNormalized(state, id);
+      removeFromArray(state.answersDeletingIds, id);
     },
   },
 });

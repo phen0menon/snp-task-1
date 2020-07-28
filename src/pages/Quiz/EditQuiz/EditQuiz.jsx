@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import styles from './EditQuiz.scss';
-import QuizQuestion from './QuizQuestion';
 import useSelector from 'hooks/useSelector';
 import { getQuestionsByIdsSelector } from 'models/tests/questions/selectors';
 import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
+import QuizQuestion from '../components/QuizQuestion';
+
+import styles from './EditQuiz.scss';
 
 const EditQuiz = ({ id, questions, title }) => {
   const questionList = useSelector(getQuestionsByIdsSelector, questions);

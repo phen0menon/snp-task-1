@@ -24,7 +24,7 @@ const quizzesSlice = createSlice({
     },
   },
   extraReducers: {
-    [testsCommonActions.fetchQuizzesSuccess](
+    [testsCommonActions.quizzesFetched](
       state,
       {
         payload: { quizzes },
@@ -37,7 +37,7 @@ const quizzesSlice = createSlice({
       state.meta = meta;
     },
 
-    [testsCommonActions.fetchQuizSuccess](state, { payload }) {
+    [testsCommonActions.quizFetched](state, { payload }) {
       const quiz = payload.quizzes;
       const quizId = Object.keys(quiz)[0];
       state.byId[quizId] = quiz[quizId];

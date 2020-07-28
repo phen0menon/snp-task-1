@@ -5,3 +5,8 @@ export const fetchCreateAnswer = ({ questionId, text }) =>
     url: `/questions/${questionId}/answers`,
     data: { text },
   });
+
+export const fetchDeleteAnswer = ({ id }) =>
+  Req.DELETE({
+    url: `/answers/${id}`,
+  });

@@ -9,8 +9,10 @@ const createTestsAction = action => {
 };
 
 export const testsCommonActions = actionTypes({
-  ...createTestsAction('fetchQuizzesSuccess'),
-  ...createTestsAction('fetchQuizSuccess'),
-  ...createTestsAction('createQuestionSuccess'),
-  ...createTestsAction('createAnswerSuccess'),
+  ...createTestsAction('quizzesFetched'),
+  ...createTestsAction('quizFetched'),
+  ...createTestsAction('questionCreated'),
+
+  ...createTestsAction('answerCreated'),
+  ...createTestsAction('answerDeleted'),
 });

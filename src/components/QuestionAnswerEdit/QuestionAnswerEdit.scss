@@ -4,10 +4,37 @@
   width: 100%;
 }
 
+.input {
+  padding-right: 3.5rem;
+}
+
 .answerContent {
   width: 100%;
+  position: relative;
 
   &Gutter {
     margin-left: 1rem;
+  }
+}
+
+.actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.action {
+  opacity: 0.2;
+  transition: 0.2s ease-in;
+
+  & + .action {
+    margin-left: 1rem;
+  }
+
+  &:hover {
+    opacity: 1;
   }
 }

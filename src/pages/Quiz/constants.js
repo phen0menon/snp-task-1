@@ -1,4 +1,4 @@
-export const QUIZ_TYPES = {
+export const QUIZ_KINDS = {
   single: {
     label: 'Single select',
   },

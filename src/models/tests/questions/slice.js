@@ -2,7 +2,7 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
-import { putNormalizedModifications } from 'models/helpers';
+import { putNormalizedModifications, removeFromArray } from 'models/helpers';
 import { testsCommonActions } from 'models/tests/commonActions';
 
 const questionsSlice = createSlice({
@@ -21,7 +21,7 @@ const questionsSlice = createSlice({
     },
   },
   extraReducers: {
-    [testsCommonActions.fetchQuizzesSuccess](
+    [testsCommonActions.quizzesFetched](
       state,
       {
         payload: { questions },
@@ -31,20 +31,29 @@ const questionsSlice = createSlice({
       state.allIds = Object.keys(questions);
     },
 
-    [testsCommonActions.fetchQuizSuccess](state, { payload }) {
+    [testsCommonActions.quizFetched](state, { payload }) {
       const { questions } = payload;
       const keys = Object.keys(questions);
       state.byId = { ...state.byId, ...questions };
       state.allIds = [...state.allIds, ...keys];
     },
 
-    [testsCommonActions.createAnswerSuccess](
+    [testsCommonActions.answerCreated](
       state,
       {
         payload: { questionId, answer },
       }
     ) {
       state.byId[questionId].answers.push(answer.id);
+    },
+
+    [testsCommonActions.answerDeleted](
+      state,
+      {
+        payload: { questionId, id },
+      }
+    ) {
+      removeFromArray(state.byId[questionId].answers, id);
     },
   },
 });
