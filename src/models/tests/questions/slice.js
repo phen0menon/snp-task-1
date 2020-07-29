@@ -2,7 +2,11 @@
 
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
-import { putNormalizedModifications, removeFromArray } from 'models/helpers';
+import {
+  putNormalizedModifications,
+  removeFromArray,
+  removeFromNormalized,
+} from 'models/helpers';
 import { testsCommonActions } from 'models/tests/commonActions';
 
 const questionsSlice = createSlice({
@@ -14,6 +18,8 @@ const questionsSlice = createSlice({
     // Map { id : item } of modified items
     modifiedById: {},
 
+    questionsDeletingIds: [],
+
     questionCreatingStatus: null,
   },
   reducers: {
@@ -24,6 +30,15 @@ const questionsSlice = createSlice({
     changeQuestionData(state, { payload }) {
       const { id, ...restProps } = payload;
       putNormalizedModifications(state, id, restProps);
+    },
+
+    deleteQuestion(
+      state,
+      {
+        payload: { questionId },
+      }
+    ) {
+      state.questionsDeletingIds.push(questionId);
     },
   },
   extraReducers: {
@@ -71,6 +86,16 @@ const questionsSlice = createSlice({
       state.byId[question.id] = question;
       state.allIds.push(question.id);
       state.questionCreatingStatus = 'success';
+    },
+
+    [testsCommonActions.questionDeleted](
+      state,
+      {
+        payload: { questionId },
+      }
+    ) {
+      removeFromNormalized(state, questionId);
+      removeFromArray(state.questionsDeletingIds, questionId);
     },
   },
 });

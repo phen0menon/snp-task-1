@@ -8,6 +8,12 @@
   transition: 0.25s ease-in;
   color: #fefefe;
   cursor: pointer;
+  transition: opacity 0.25s;
+}
+
+.deleting {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .active,

@@ -3,6 +3,7 @@
 import { createSlice } from 'redux-starter-kit';
 import actionTypes from 'utils/actionTypes';
 import { testsCommonActions } from 'models/tests/commonActions';
+import { removeFromArray } from 'models/helpers';
 
 const quizzesSlice = createSlice({
   name: 'quizzes',
@@ -51,6 +52,15 @@ const quizzesSlice = createSlice({
       }
     ) {
       state.byId[quizId].questions.push(question.id);
+    },
+
+    [testsCommonActions.questionDeleted](
+      state,
+      {
+        payload: { quizId, questionId },
+      }
+    ) {
+      removeFromArray(state.byId[quizId].questions, questionId);
     },
   },
 });

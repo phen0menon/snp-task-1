@@ -67,6 +67,7 @@ const QuestionsSidebar = ({
       questions.map((question, index) => (
         <QuestionsSidebarItem
           key={question.id}
+          quizId={currentQuizId}
           questionItem={question}
           isActive={currentQuestionId === question.id}
           onClick={onItemClick}

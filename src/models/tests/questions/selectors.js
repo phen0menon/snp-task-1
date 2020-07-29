@@ -26,6 +26,11 @@ export const getQuestionsByIdsSelector = createSelector(
     })
 );
 
+export const isQuestionDeletingSelector = createSelector(
+  [questionsSelector, (_, id) => id],
+  ({ questionsDeletingIds }, id) => questionsDeletingIds.includes(id)
+);
+
 export const questionCreatingPendingSelector = createSelector(
   [questionsSelector],
   ({ questionCreatingStatus }) => questionCreatingStatus === 'pending'

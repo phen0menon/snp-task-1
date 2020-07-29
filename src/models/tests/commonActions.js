@@ -17,4 +17,5 @@ export const testsCommonActions = actionTypes({
   ...createTestsAction('answerDeleted'),
 
   ...createTestsAction('questionCreated'),
+  ...createTestsAction('questionDeleted'),
 });
