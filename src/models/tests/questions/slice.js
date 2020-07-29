@@ -70,6 +70,7 @@ const questionsSlice = createSlice({
     ) {
       state.byId[question.id] = question;
       state.allIds.push(question.id);
+      state.questionCreatingStatus = 'success';
     },
   },
 });

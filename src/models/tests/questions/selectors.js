@@ -25,3 +25,13 @@ export const getQuestionsByIdsSelector = createSelector(
       questions: questionsByid,
     })
 );
+
+export const questionCreatingPendingSelector = createSelector(
+  [questionsSelector],
+  ({ questionCreatingStatus }) => questionCreatingStatus === 'pending'
+);
+
+export const questionCreatingSuccessSelector = createSelector(
+  [questionsSelector],
+  ({ questionCreatingStatus }) => questionCreatingStatus === 'success'
+);

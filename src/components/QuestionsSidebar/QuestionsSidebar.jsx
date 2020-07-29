@@ -11,6 +11,12 @@ import Dropdown from 'components/Dropdown/Dropdown';
 import { QUIZ_KINDS } from 'pages/Quiz/constants';
 import DropdownItem from 'components/Dropdown/DropdownItem';
 import AnswerInput from 'components/AnswerInput/AnswerInput';
+import useSelector from 'hooks/useSelector';
+import {
+  questionCreatingPendingSelector,
+  questionCreatingSuccessSelector,
+} from 'models/tests/questions/selectors';
+import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
 const quizKinds = Object.keys(QUIZ_KINDS);
 
@@ -20,6 +26,9 @@ const QuestionsSidebar = ({
   currentQuizId,
   onItemClick,
 }) => {
+  const isQuestionCreating = useSelector(questionCreatingPendingSelector);
+  const isQuestionCreated = useSelector(questionCreatingSuccessSelector);
+
   const onQuestionCreate = useAction(questionsActions.createQuestion);
   const [newQuestionData, setNewQuestionData] = useState(null);
   const createNewQuestion = useCallback(
@@ -43,10 +52,15 @@ const QuestionsSidebar = ({
         },
         quizId: currentQuizId,
       });
-      setNewQuestionData(null);
     },
     [setNewQuestionData, onQuestionCreate, newQuestionData, currentQuizId]
   );
+
+  React.useEffect(() => {
+    if (isQuestionCreated) {
+      setNewQuestionData(null);
+    }
+  }, [isQuestionCreated, setNewQuestionData]);
 
   const renderedQuestionList = useMemo(
     () =>
@@ -89,9 +103,12 @@ const QuestionsSidebar = ({
                 value={newQuestionData.title}
                 onChange={onNewQuestionTitleChange}
                 placeholder="Enter new question"
+                disabled={isQuestionCreating}
               />
               <button className={styles.saveBtn} type="submit">
-                <img src={checkIcon} width="22" alt="check" />
+                <SpinnerLoader loading={isQuestionCreating} size={22}>
+                  <img src={checkIcon} width="22" alt="check" />
+                </SpinnerLoader>
               </button>
             </div>
             <div className={styles.inputGroupCaption}>

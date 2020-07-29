@@ -9,8 +9,8 @@ import dragIcon from 'assets/images/drag-icon.svg';
 import styles from './QuestionAnswerEdit.scss';
 import AnswerInput from 'components/AnswerInput/AnswerInput';
 import useSelector from 'hooks/useSelector';
-import spinnerAnimated from 'assets/images/spinner-animated.svg';
 import { isAnswerDeletingSelector } from 'models/tests/answers/selectors';
+import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
 const QuestionAnswerEdit = ({
   answer,
@@ -69,11 +69,9 @@ const QuestionAnswerEdit = ({
             onClick={onAnswerDelete}
             disabled={isAnswerDeleting}
           >
-            <img
-              src={isAnswerDeleting ? spinnerAnimated : timesIcon}
-              alt="Delete"
-              width={isAnswerDeleting ? 18 : 16}
-            />
+            <SpinnerLoader loading={isAnswerDeleting} size={18}>
+              <img src={timesIcon} alt="Delete" width={16} />
+            </SpinnerLoader>
           </button>
           <button className={styles.action}>
             <img src={dragIcon} alt="Drag" width="20" />

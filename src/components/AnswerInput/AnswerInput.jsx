@@ -24,12 +24,14 @@ AnswerInput.propTypes = {
   onKeyDown: PropTypes.func,
   className: PropTypes.string,
   placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 AnswerInput.defaultProps = {
   onKeyDown: null,
   className: null,
   placeholder: '',
+  disabled: false,
 };
 
 export default React.memo(AnswerInput);

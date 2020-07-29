@@ -16,6 +16,7 @@ import SelectQuizKind from 'components/SelectQuizKind/SelectQuizKind';
 import styles from './QuizQuestion.scss';
 import globalStyles from 'styles/global.scss';
 import QuizInput from 'components/QuizInput/QuizInput';
+import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
 const QuizQuestion = ({ id }) => {
   const question = useSelector(getQuestionByIdSelector, id);
@@ -101,7 +102,9 @@ const QuizQuestion = ({ id }) => {
             onClick={createOrSubmitInput}
             disabled={createdAnswerLoading}
           >
-            {createdAnswerInputDisplayed ? 'Save' : 'Add'} answer
+            <SpinnerLoader loading={createdAnswerLoading} size={26}>
+              {createdAnswerInputDisplayed ? 'Save answer' : 'Add answer'}
+            </SpinnerLoader>
           </button>
           <button className={styles.btnSave}>Save</button>
         </div>
