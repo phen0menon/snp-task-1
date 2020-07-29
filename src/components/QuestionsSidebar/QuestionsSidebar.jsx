@@ -85,7 +85,7 @@ const QuestionsSidebar = ({
   const renderedDropdownQuizKinds = React.useMemo(
     () =>
       quizKinds.map((quizKind, index) => (
-        <DropdownItem key={index} onClick={onDropdownKindSelect(quizKind)}>
+        <DropdownItem key={quizKind} onClick={onDropdownKindSelect(quizKind)}>
           {QUIZ_KINDS[quizKind].label}
         </DropdownItem>
       )),
@@ -139,4 +139,4 @@ QuestionsSidebar.propTypes = {
   onItemClick: PropTypes.func.isRequired,
 };
 
-export default memo(QuestionsSidebar);
+export default QuestionsSidebar;
