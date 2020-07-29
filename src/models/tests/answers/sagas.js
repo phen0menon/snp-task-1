@@ -1,5 +1,5 @@
 import * as api from 'api';
-import { takeLatest, all, put, call } from 'redux-saga/effects';
+import { takeLatest, takeEvery, all, put, call } from 'redux-saga/effects';
 import { answersActions } from './slice';
 import { testsCommonActions } from 'models/tests/commonActions';
 
@@ -33,6 +33,6 @@ export function* fetchDeleteAnswer({ payload: { questionId, id } }) {
 export default function*() {
   yield all([
     takeLatest(answersActions.createNewAnswer, fetchCreateAnswer),
-    takeLatest(answersActions.deleteAnswer, fetchDeleteAnswer),
+    takeEvery(answersActions.deleteAnswer, fetchDeleteAnswer),
   ]);
 }
