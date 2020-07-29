@@ -6,7 +6,13 @@ import { testsCommonActions } from 'models/tests/commonActions';
 export function* fetchCreateQuestion({ payload }) {
   try {
     const response = yield call(api.fetchCreateQuestion, payload);
-    console.log(response);
+    yield put({
+      type: testsCommonActions.questionCreated,
+      payload: {
+        quizId: payload.quizId,
+        question: response.data,
+      },
+    });
   } catch (err) {
     return console.error(err);
     const { error } = err.response.data;

@@ -43,6 +43,15 @@ const quizzesSlice = createSlice({
       state.byId[quizId] = quiz[quizId];
       state.allIds.push(quizId);
     },
+
+    [testsCommonActions.questionCreated](
+      state,
+      {
+        payload: { quizId, question },
+      }
+    ) {
+      state.byId[quizId].questions.push(question.id);
+    },
   },
 });
 

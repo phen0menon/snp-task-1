@@ -28,8 +28,22 @@
 
 .inputGroup {
   display: flex;
+  flex-direction: column;
   padding: 0 1rem;
   color: #fff;
+
+  &Inner {
+    display: flex;
+  }
+
+  &Caption {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    letter-spacing: 0.5px;
+    color: $secondary;
+    font-weight: 500;
+  }
 
   input {
     min-width: 0;

@@ -10,6 +10,7 @@ import { questionsActions } from 'models/tests/questions/slice';
 import Dropdown from 'components/Dropdown/Dropdown';
 import { QUIZ_KINDS } from 'pages/Quiz/constants';
 import DropdownItem from 'components/Dropdown/DropdownItem';
+import AnswerInput from 'components/AnswerInput/AnswerInput';
 
 const quizKinds = Object.keys(QUIZ_KINDS);
 
@@ -27,11 +28,19 @@ const QuestionsSidebar = ({
     },
     [setNewQuestionData]
   );
+  const onNewQuestionTitleChange = useCallback(
+    event =>
+      setNewQuestionData({ ...newQuestionData, title: event.target.value }),
+    [newQuestionData, setNewQuestionData]
+  );
   const onNewQuestionSubmit = useCallback(
     event => {
       event.preventDefault();
       onQuestionCreate({
-        data: { title: newQuestionData },
+        data: {
+          title: newQuestionData.title,
+          question_type: newQuestionData.kind,
+        },
         quizId: currentQuizId,
       });
       setNewQuestionData(null);
@@ -75,15 +84,19 @@ const QuestionsSidebar = ({
 
         {newQuestionData != null && (
           <form className={styles.inputGroup} onSubmit={onNewQuestionSubmit}>
-            <QuizInput
-              text={newQuestionData}
-              setText={setNewQuestionData}
-              created={false}
-              placeholder="Enter new question"
-            />
-            <button className={styles.saveBtn} type="submit">
-              <img src={checkIcon} width="22" alt="check" />
-            </button>
+            <div className={styles.inputGroupInner}>
+              <AnswerInput
+                value={newQuestionData.title}
+                onChange={onNewQuestionTitleChange}
+                placeholder="Enter new question"
+              />
+              <button className={styles.saveBtn} type="submit">
+                <img src={checkIcon} width="22" alt="check" />
+              </button>
+            </div>
+            <div className={styles.inputGroupCaption}>
+              {newQuestionData.kind}
+            </div>
           </form>
         )}
       </div>
