@@ -13,8 +13,14 @@ const questionsSlice = createSlice({
 
     // Map { id : item } of modified items
     modifiedById: {},
+
+    questionCreatingStatus: null,
   },
   reducers: {
+    createQuestion(state) {
+      state.questionCreatingStatus = 'pending';
+    },
+
     changeQuestionData(state, { payload }) {
       const { id, ...restProps } = payload;
       putNormalizedModifications(state, id, restProps);
@@ -54,6 +60,16 @@ const questionsSlice = createSlice({
       }
     ) {
       removeFromArray(state.byId[questionId].answers, id);
+    },
+
+    [testsCommonActions.questionCreated](
+      state,
+      {
+        payload: { question },
+      }
+    ) {
+      state.byId[question.id] = question;
+      state.allIds.push(question.id);
     },
   },
 });

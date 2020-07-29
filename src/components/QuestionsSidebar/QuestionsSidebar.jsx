@@ -1,11 +1,45 @@
-import React from 'react';
+import React, { useState, useMemo, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
+import checkIcon from 'images/check-icon.svg';
 
 import styles from './QuestionsSidebar.scss';
 import QuestionsSidebarItem from '../QuestionsSidebarItem';
+import QuizInput from 'components/QuizInput/QuizInput';
+import useAction from 'hooks/useAction';
+import { questionsActions } from 'models/tests/questions/slice';
+import Dropdown from 'components/Dropdown/Dropdown';
+import { QUIZ_KINDS } from 'pages/Quiz/constants';
+import DropdownItem from 'components/Dropdown/DropdownItem';
 
-const QuestionsSidebar = ({ questions, currentQuestionId, onItemClick }) => {
-  const renderedQuestionList = React.useMemo(
+const quizKinds = Object.keys(QUIZ_KINDS);
+
+const QuestionsSidebar = ({
+  questions,
+  currentQuestionId,
+  currentQuizId,
+  onItemClick,
+}) => {
+  const onQuestionCreate = useAction(questionsActions.createQuestion);
+  const [newQuestionData, setNewQuestionData] = useState(null);
+  const createNewQuestion = useCallback(
+    kind => {
+      setNewQuestionData({ title: '', kind });
+    },
+    [setNewQuestionData]
+  );
+  const onNewQuestionSubmit = useCallback(
+    event => {
+      event.preventDefault();
+      onQuestionCreate({
+        data: { title: newQuestionData },
+        quizId: currentQuizId,
+      });
+      setNewQuestionData(null);
+    },
+    [setNewQuestionData, onQuestionCreate, newQuestionData, currentQuizId]
+  );
+
+  const renderedQuestionList = useMemo(
     () =>
       questions.map((question, index) => (
         <QuestionsSidebarItem
@@ -19,12 +53,49 @@ const QuestionsSidebar = ({ questions, currentQuestionId, onItemClick }) => {
     [questions, currentQuestionId, onItemClick]
   );
 
+  const onDropdownKindSelect = React.useCallback(
+    type => () => createNewQuestion(type),
+    [createNewQuestion]
+  );
+
+  const renderedDropdownQuizKinds = React.useMemo(
+    () =>
+      quizKinds.map((quizKind, index) => (
+        <DropdownItem key={index} onClick={onDropdownKindSelect(quizKind)}>
+          {QUIZ_KINDS[quizKind].label}
+        </DropdownItem>
+      )),
+    [quizKinds, onDropdownKindSelect, QUIZ_KINDS]
+  );
+
   return (
     <div className={styles.root}>
-      <div className={styles.items}>{renderedQuestionList}</div>
+      <div className={styles.items}>
+        {renderedQuestionList}
+
+        {newQuestionData != null && (
+          <form className={styles.inputGroup} onSubmit={onNewQuestionSubmit}>
+            <QuizInput
+              text={newQuestionData}
+              setText={setNewQuestionData}
+              created={false}
+              placeholder="Enter new question"
+            />
+            <button className={styles.saveBtn} type="submit">
+              <img src={checkIcon} width="22" alt="check" />
+            </button>
+          </form>
+        )}
+      </div>
 
       <div className={styles.floating}>
-        <button className={styles.floatingButton}>+</button>
+        <Dropdown
+          togglerClassName={styles.floatingButton}
+          togglerContent="+"
+          offsetY={10}
+        >
+          {renderedDropdownQuizKinds}
+        </Dropdown>
       </div>
     </div>
   );
@@ -33,7 +104,8 @@ const QuestionsSidebar = ({ questions, currentQuestionId, onItemClick }) => {
 QuestionsSidebar.propTypes = {
   questions: PropTypes.array.isRequired,
   currentQuestionId: PropTypes.number.isRequired,
+  currentQuizId: PropTypes.number.isRequired,
   onItemClick: PropTypes.func.isRequired,
 };
 
-export default React.memo(QuestionsSidebar);
+export default memo(QuestionsSidebar);

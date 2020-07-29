@@ -23,6 +23,7 @@ const EditQuiz = ({ id, questions, title }) => {
     <div className={styles.root}>
       <div className={styles.sidebar}>
         <QuestionsSidebar
+          currentQuizId={id}
           currentQuestionId={currentQuestionId}
           questions={questionList}
           onItemClick={onQuestionSidebarItemClick}

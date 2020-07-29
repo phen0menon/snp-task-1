@@ -5,6 +5,7 @@ import { getQuestionByIdSelector } from 'models/tests/questions/selectors';
 import {
   getAnswersByIdsSelector,
   createdAnswerLoadingSelector,
+  createdAnswerSuccessSelector,
 } from 'models/tests/answers/selectors';
 import useAction from 'hooks/useAction';
 import { answersActions } from 'models/tests/answers/slice';
@@ -14,12 +15,13 @@ import SelectQuizKind from 'components/SelectQuizKind/SelectQuizKind';
 
 import styles from './QuizQuestion.scss';
 import globalStyles from 'styles/global.scss';
-import QuestionAnswerCreate from 'components/QuestionAnswerCreate/QuestionAnswerCreate';
+import QuizInput from 'components/QuizInput/QuizInput';
 
 const QuizQuestion = ({ id }) => {
   const question = useSelector(getQuestionByIdSelector, id);
   const answers = useSelector(getAnswersByIdsSelector, question.answers);
 
+  const isAnswerCreated = useSelector(createdAnswerSuccessSelector);
   const onAnswerCreate = useAction(answersActions.createNewAnswer);
   const createdAnswerLoading = useSelector(createdAnswerLoadingSelector);
   const [createdAnswerText, setCreatedAnswerText] = React.useState(null);
@@ -84,10 +86,12 @@ const QuizQuestion = ({ id }) => {
         <div className={styles.answers}>
           {renderedAnswers}
           {createdAnswerText != null && (
-            <QuestionAnswerCreate
+            <QuizInput
               text={createdAnswerText}
               setText={setCreatedAnswerText}
               onSubmit={createOrSubmitInput}
+              created={isAnswerCreated}
+              placeholder="Enter new answer"
             />
           )}
         </div>

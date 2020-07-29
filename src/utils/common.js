@@ -2,6 +2,8 @@ export const triggerEscAction = (e, action) => {
   if (e.keyCode === 27) action();
 };
 
+export const isEnter = event => event.keyCode === 13 || event.which === 13;
+
 export const toCapitalCase = str => {
   if (!str) {
     console.error('toCapitalCase: passed string is empty');
