@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './QuestionsSidebarItem.scss';
 import Dropdown from 'components/Dropdown/Dropdown';
+import DropdownItem from 'components/Dropdown/DropdownItem';
 
 const QuestionsSidebarItem = ({ index, questionItem, isActive, onClick }) => {
   const rootClassName = classNames(styles.root, {
@@ -14,17 +15,6 @@ const QuestionsSidebarItem = ({ index, questionItem, isActive, onClick }) => {
     questionItem,
   ]);
 
-  const [isOpen, setOpen] = useState(false);
-  const toggleDropdown = useCallback(
-    event => {
-      event.stopPropagation();
-      setOpen(true);
-    },
-    [isOpen, setOpen]
-  );
-  const openDropdown = useCallback(() => setOpen(true), [setOpen]);
-  const closeDropdown = useCallback(() => setOpen(false), [setOpen]);
-
   return (
     <div className={rootClassName} onClick={onSidebarQuestionClick}>
       <div className={styles.index}>{index + 1}</div>
@@ -32,27 +22,20 @@ const QuestionsSidebarItem = ({ index, questionItem, isActive, onClick }) => {
         <div className={styles.titleInner}>
           <div className={styles.titleText}>{questionItem.title}</div>
         </div>
-        <Dropdown isOpen={isOpen} open={openDropdown} close={closeDropdown}>
-          <button className={styles.titleActions} onClick={toggleDropdown}>
-            ...
-          </button>
 
-          <Dropdown.Items>
-            <Dropdown.Item
-              onClick={() => {
-                console.log(questionItem);
-              }}
-            >
-              Delete
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => {
-                console.log(questionItem);
-              }}
-            >
-              Delete Qweq
-            </Dropdown.Item>
-          </Dropdown.Items>
+        <Dropdown
+          togglerClassName={styles.titleActions}
+          togglerContent="..."
+          offsetY={10}
+          placement="bottom"
+        >
+          <DropdownItem
+            onClick={() => {
+              console.log(questionItem);
+            }}
+          >
+            Delete
+          </DropdownItem>
         </Dropdown>
       </div>
     </div>
