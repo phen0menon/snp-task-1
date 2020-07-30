@@ -1,1 +1,1 @@
-export { default } from './QuestionAnswerEdit';
+export { default } from './QuestionAnswerEditContainer';

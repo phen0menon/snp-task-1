@@ -1,6 +1,6 @@
 import { takeLatest, takeEvery, all, put, call } from 'redux-saga/effects';
 import * as api from 'api';
-import { quizzesActions, questionsActions } from './slice';
+import { questionsActions } from './slice';
 import { testsCommonActions } from 'models/tests/commonActions';
 
 export function* fetchCreateQuestion({ payload }) {

@@ -2,6 +2,9 @@ import { createSelector } from 'reselect';
 import { denormalize, schema } from 'normalizr';
 
 import { testsSelector } from 'models/tests/selectors';
+import { getModifiedAnswersIdsSelector } from '../answers/selectors';
+
+const getId = (_, id) => id;
 
 export const questionsSelector = createSelector(
   [testsSelector],
@@ -14,12 +17,12 @@ export const questionsByIdSelector = createSelector(
 );
 
 export const getQuestionByIdSelector = createSelector(
-  [questionsByIdSelector, (_, id) => id],
+  [questionsByIdSelector, getId],
   (questionsByid, id) => questionsByid[id]
 );
 
 export const getQuestionsByIdsSelector = createSelector(
-  [questionsByIdSelector, (_, ids) => ids],
+  [questionsByIdSelector, getId],
   (questionsByid, ids) =>
     denormalize(ids, [new schema.Entity('questions')], {
       questions: questionsByid,
@@ -27,7 +30,7 @@ export const getQuestionsByIdsSelector = createSelector(
 );
 
 export const isQuestionDeletingSelector = createSelector(
-  [questionsSelector, (_, id) => id],
+  [questionsSelector, getId],
   ({ questionsDeletingIds }, id) => questionsDeletingIds.includes(id)
 );
 
@@ -39,4 +42,41 @@ export const questionCreatingPendingSelector = createSelector(
 export const questionCreatingSuccessSelector = createSelector(
   [questionsSelector],
   ({ questionCreatingStatus }) => questionCreatingStatus === 'success'
+);
+
+export const getCurrentQuestionIdSelector = createSelector(
+  [questionsSelector],
+  ({ currentQuestionId }) => currentQuestionId
+);
+
+export const getCurrentQuestionEntity = createSelector(
+  [questionsByIdSelector, getCurrentQuestionIdSelector],
+  (byId, id) => byId[id]
+);
+
+export const getCurrentQuestionAnswersSelector = createSelector(
+  [getCurrentQuestionEntity],
+  entity => (entity ? entity.answers : [])
+);
+
+export const isCurrentQuestionInfoModifiedSelector = createSelector(
+  [questionsSelector, getCurrentQuestionIdSelector],
+  ({ modifiedById }, id) =>
+    id != null && !!Object.getOwnPropertyDescriptor(modifiedById, id)
+);
+
+export const isCurrentQuestionHasAnswersModifications = createSelector(
+  [getCurrentQuestionAnswersSelector, getModifiedAnswersIdsSelector],
+  (answerIds, modifiedAnswerIds) =>
+    answerIds.length
+      ? modifiedAnswerIds.some(id => answerIds.includes(id))
+      : false
+);
+
+export const isQuestionHasModificationsSelector = createSelector(
+  [
+    isCurrentQuestionInfoModifiedSelector,
+    isCurrentQuestionHasAnswersModifications,
+  ],
+  (infoModified, answersModified) => infoModified || answersModified
 );

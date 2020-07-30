@@ -21,6 +21,8 @@ const questionsSlice = createSlice({
     questionsDeletingIds: [],
 
     questionCreatingStatus: null,
+
+    currentQuestionId: null,
   },
   reducers: {
     createQuestion(state) {
@@ -32,6 +34,8 @@ const questionsSlice = createSlice({
       putNormalizedModifications(state, id, restProps);
     },
 
+    saveQuestionData(state, { payload }) {},
+
     deleteQuestion(
       state,
       {
@@ -39,6 +43,15 @@ const questionsSlice = createSlice({
       }
     ) {
       state.questionsDeletingIds.push(questionId);
+    },
+
+    openQuestion(
+      state,
+      {
+        payload: { id },
+      }
+    ) {
+      state.currentQuestionId = id || null;
     },
   },
   extraReducers: {

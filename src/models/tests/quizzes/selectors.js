@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 import { testsSelector } from 'models/tests/selectors';
 
+const getId = (_, id) => id;
+
 export const quizzesSelector = createSelector(
   [testsSelector],
   tests => tests.quizzes
@@ -22,8 +24,6 @@ export const quizAllIdsSelector = createSelector(
 );
 
 export const getQuizDataByIdSelector = createSelector(
-  [quizzesByIdSelector, (_, id) => id],
-  (quizzesById, id) => {
-    return quizzesById[id] || { fetched: false };
-  }
+  [quizzesByIdSelector, getId],
+  (quizzesById, id) => quizzesById[id] || { fetched: false }
 );

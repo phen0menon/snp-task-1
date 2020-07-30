@@ -9,47 +9,17 @@ import trashIcon from 'images/trash-icon.svg';
 
 import styles from './QuestionAnswerEdit.scss';
 import AnswerInput from 'components/AnswerInput/AnswerInput';
-import useSelector from 'hooks/useSelector';
-import { answersActions } from 'models/tests/answers/slice';
-import {
-  isAnswerDeletingSelector,
-  isAnswerChangedSelector,
-} from 'models/tests/answers/selectors';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
-import useAction from '../../hooks/useAction';
 
-const QuestionAnswerEdit = ({ answer, onDrag, questionId }) => {
-  const { id } = answer;
-
-  const onAnswerChange = useAction(answersActions.changeAnswerData);
-  const onAnswerDelete = useAction(answersActions.deleteAnswer);
-  const onAnswerUndoChanges = useAction(answersActions.undoAnswerChanges);
-
-  const isAnswerChanged = useSelector(isAnswerChangedSelector, id);
-  const isAnswerDeleting = useSelector(isAnswerDeletingSelector, id);
-
-  const onInputChange = React.useCallback(
-    event => {
-      onAnswerChange({ id, text: event.target.value });
-    },
-    [id, onAnswerChange]
-  );
-
-  const onDelete = React.useCallback(() => {
-    onAnswerDelete({ questionId, id });
-  }, [onAnswerDelete, questionId, id]);
-
-  const onUndo = React.useCallback(() => {
-    onAnswerUndoChanges({ id });
-  }, [onAnswerUndoChanges, id]);
-
-  const onCheckboxToggle = React.useCallback(
-    event => {
-      onAnswerChange({ id, is_right: event.target.checked });
-    },
-    [id, onAnswerChange]
-  );
-
+const QuestionAnswerEdit = ({
+  answer,
+  isChanged,
+  isDeleting,
+  onInputChange,
+  onCheckboxToggle,
+  onDelete,
+  onUndo,
+}) => {
   return (
     <div className={styles.answer}>
       <div className={styles.answerCheckbox}>
@@ -71,7 +41,7 @@ const QuestionAnswerEdit = ({ answer, onDrag, questionId }) => {
         />
 
         <div className={styles.actions}>
-          {isAnswerChanged && (
+          {isChanged && (
             <button
               className={classNames(styles.action, styles.actionUndo)}
               onClick={onUndo}
@@ -83,9 +53,9 @@ const QuestionAnswerEdit = ({ answer, onDrag, questionId }) => {
           <button
             className={styles.action}
             onClick={onDelete}
-            disabled={isAnswerDeleting}
+            disabled={isDeleting}
           >
-            <SpinnerLoader loading={isAnswerDeleting} size={18}>
+            <SpinnerLoader loading={isDeleting} size={18}>
               <img src={trashIcon} alt="Delete" width={16} />
             </SpinnerLoader>
           </button>
@@ -100,14 +70,12 @@ const QuestionAnswerEdit = ({ answer, onDrag, questionId }) => {
 
 QuestionAnswerEdit.propTypes = {
   answer: PropTypes.object.isRequired,
-  onDrag: PropTypes.func,
-  questionId: PropTypes.number,
-};
-
-QuestionAnswerEdit.defaultProps = {
-  onDrag: null,
-  onDelete: null,
-  questionId: null,
+  isChanged: PropTypes.bool.isRequired,
+  isDeleting: PropTypes.bool.isRequired,
+  onCheckboxToggle: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onUndo: PropTypes.func.isRequired,
 };
 
 export default React.memo(QuestionAnswerEdit);

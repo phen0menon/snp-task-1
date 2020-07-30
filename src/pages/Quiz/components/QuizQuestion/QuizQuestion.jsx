@@ -1,30 +1,41 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
-import { getQuestionByIdSelector } from 'models/tests/questions/selectors';
+
 import {
   getAnswersByIdsSelector,
   createdAnswerLoadingSelector,
   createdAnswerSuccessSelector,
 } from 'models/tests/answers/selectors';
-import useAction from 'hooks/useAction';
-import { answersActions } from 'models/tests/answers/slice';
 import { questionsActions } from 'models/tests/questions/slice';
+import { answersActions } from 'models/tests/answers/slice';
+import {
+  isQuestionHasModificationsSelector,
+  getCurrentQuestionEntity,
+} from 'models/tests/questions/selectors';
+
 import QuestionAnswerEdit from 'components/QuestionAnswerEdit';
 import SelectQuizKind from 'components/SelectQuizKind/SelectQuizKind';
-
-import styles from './QuizQuestion.scss';
-import globalStyles from 'styles/global.scss';
 import QuizInput from 'components/QuizInput/QuizInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
-const QuizQuestion = ({ id }) => {
-  const question = useSelector(getQuestionByIdSelector, id);
-  const answers = useSelector(getAnswersByIdsSelector, question.answers);
+import globalStyles from 'styles/global.scss';
+import styles from './QuizQuestion.scss';
 
+const QuizQuestion = () => {
+  const { id, ...question } = useSelector(getCurrentQuestionEntity);
+  const answers = useSelector(getAnswersByIdsSelector, question.answers);
   const isAnswerCreated = useSelector(createdAnswerSuccessSelector);
-  const onAnswerCreate = useAction(answersActions.createNewAnswer);
   const createdAnswerLoading = useSelector(createdAnswerLoadingSelector);
+  const questionHasModifications = useSelector(
+    isQuestionHasModificationsSelector
+  );
+
+  const onAnswerCreate = useAction(answersActions.createNewAnswer);
+  const onQuestionChange = useAction(questionsActions.changeQuestionData);
+  const onQuestionSave = useAction(questionsActions.saveQuestionData);
+
   const [createdAnswerText, setCreatedAnswerText] = React.useState(null);
   const createdAnswerInputDisplayed = createdAnswerText != null;
   const createOrSubmitInput = React.useCallback(() => {
@@ -40,8 +51,6 @@ const QuizQuestion = ({ id }) => {
     onAnswerCreate,
     createdAnswerLoading,
   ]);
-
-  const onQuestionChange = useAction(questionsActions.changeQuestionData);
 
   const onQuestionTitleChange = React.useCallback(
     event => {
@@ -60,7 +69,7 @@ const QuizQuestion = ({ id }) => {
           onDrag={() => console.log('drag')}
         />
       )),
-    [answers, , id]
+    [answers, id]
   );
 
   return (
@@ -102,15 +111,17 @@ const QuizQuestion = ({ id }) => {
               {createdAnswerInputDisplayed ? 'Save answer' : 'Add answer'}
             </SpinnerLoader>
           </button>
-          <button className={styles.btnSave}>Save</button>
+          {questionHasModifications && (
+            <button className={styles.btnSave} onClick={onQuestionSave}>
+              Save
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-QuizQuestion.propTypes = {
-  id: PropTypes.number.isRequired,
-};
+QuizQuestion.propTypes = {};
 
 export default React.memo(QuizQuestion);

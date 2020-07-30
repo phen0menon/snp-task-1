@@ -32,7 +32,7 @@ const QuizInput = ({ text, setText, onSubmit, placeholder, created }) => {
       onChange={onChange}
       onKeyDown={onEnterPress}
       placeholder={placeholder}
-      autoFocus={true}
+      autoFocus
       required
     />
   );

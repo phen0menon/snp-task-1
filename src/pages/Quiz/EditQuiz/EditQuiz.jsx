@@ -1,40 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import useSelector from 'hooks/useSelector';
-import { getQuestionsByIdsSelector } from 'models/tests/questions/selectors';
+import useAction from 'hooks/useAction';
+
+import {
+  getQuestionsByIdsSelector,
+  getCurrentQuestionIdSelector,
+} from 'models/tests/questions/selectors';
+import { questionsActions } from 'models/tests/questions/slice';
+
 import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
 import QuizQuestion from '../components/QuizQuestion';
 
 import styles from './EditQuiz.scss';
-import { QuizModifyContext } from './EditQuizContainer';
 
 const EditQuiz = ({ questions, title }) => {
-  const { quizId } = React.useContext(QuizModifyContext);
+  const questionId = useSelector(getCurrentQuestionIdSelector);
   const questionList = useSelector(getQuestionsByIdsSelector, questions);
+  const onQuestionOpen = useAction(questionsActions.openQuestion);
 
-  const [currentQuestionId, setCurrentQuestionId] = React.useState(
-    questionList[0].id
-  );
-
-  const onQuestionSidebarItemClick = React.useCallback(
-    questionId => setCurrentQuestionId(questionId),
-    [setCurrentQuestionId]
-  );
+  React.useEffect(() => {
+    onQuestionOpen({ id: questions[0] });
+  }, [onQuestionOpen]);
 
   return (
-    <div className={styles.root}>
-      <div className={styles.sidebar}>
-        <QuestionsSidebar
-          questions={questionList}
-          currentQuestionId={currentQuestionId}
-          onItemClick={onQuestionSidebarItemClick}
-        />
-      </div>
+    questionId != null && (
+      <div className={styles.root}>
+        <div className={styles.sidebar}>
+          {title}
+          <QuestionsSidebar questions={questionList} />
+        </div>
 
-      <div className={styles.content}>
-        <QuizQuestion id={currentQuestionId} />
+        <div className={styles.content}>
+          <QuizQuestion />
+        </div>
       </div>
-    </div>
+    )
   );
 };
 
