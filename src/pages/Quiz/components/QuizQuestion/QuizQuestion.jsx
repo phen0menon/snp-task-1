@@ -41,8 +41,6 @@ const QuizQuestion = ({ id }) => {
     createdAnswerLoading,
   ]);
 
-  const onAnswerChange = useAction(answersActions.changeAnswerData);
-  const onAnswerDelete = useAction(answersActions.deleteAnswer);
   const onQuestionChange = useAction(questionsActions.changeQuestionData);
 
   const onQuestionTitleChange = React.useCallback(
@@ -59,12 +57,10 @@ const QuizQuestion = ({ id }) => {
           key={answer.id}
           questionId={id}
           answer={answer}
-          onAnswerChange={onAnswerChange}
-          onDelete={onAnswerDelete}
           onDrag={() => console.log('drag')}
         />
       )),
-    [answers, onAnswerChange, onAnswerDelete, id]
+    [answers, , id]
   );
 
   return (

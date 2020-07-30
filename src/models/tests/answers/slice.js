@@ -24,6 +24,21 @@ const answersSlice = createSlice({
       state.newAnswerCreatingStatus = 'pending';
     },
 
+    undoAnswerChanges(
+      state,
+      {
+        payload: { id },
+      }
+    ) {
+      if (!Object.getOwnPropertyDescriptor(state.modifiedById, id)) {
+        throw new Error(
+          `undoAnswerChanges: there's no modified item with id ${id}`
+        );
+      }
+      state.byId[id] = state.modifiedById[id];
+      delete state.modifiedById[id];
+    },
+
     changeAnswerData(state, { payload }) {
       const { id, ...props } = payload;
       putNormalizedModifications(state, id, props);

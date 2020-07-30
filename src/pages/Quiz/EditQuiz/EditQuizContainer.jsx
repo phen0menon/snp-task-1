@@ -9,6 +9,10 @@ import withAuthentication, {
   AuthenticationStatus,
 } from 'hocs/withAuthentication';
 
+export const QuizModifyContext = React.createContext({
+  quizId: null,
+});
+
 const EditQuizContainer = ({ id }) => {
   const onFetchQuiz = useAction(quizzesActions.fetchQuiz);
   const quiz = useSelector(getQuizDataByIdSelector, id);
@@ -24,7 +28,13 @@ const EditQuizContainer = ({ id }) => {
     }
   }, [loading, onFetchQuiz, id]);
 
-  return loading ? 'loading...' : <EditQuiz {...quiz} />;
+  return !loading ? (
+    <QuizModifyContext.Provider value={{ quizId: id }}>
+      <EditQuiz {...quiz} />
+    </QuizModifyContext.Provider>
+  ) : (
+    'loading...'
+  );
 };
 
 EditQuizContainer.propTypes = {

@@ -3,24 +3,29 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Checkbox from 'components/Checkbox';
 
-import timesIcon from 'assets/images/times-icon.svg';
-import dragIcon from 'assets/images/drag-icon.svg';
+import timesIcon from 'images/times-icon.svg';
+import dragIcon from 'images/drag-icon.svg';
+import trashIcon from 'images/trash-icon.svg';
 
 import styles from './QuestionAnswerEdit.scss';
 import AnswerInput from 'components/AnswerInput/AnswerInput';
 import useSelector from 'hooks/useSelector';
-import { isAnswerDeletingSelector } from 'models/tests/answers/selectors';
+import { answersActions } from 'models/tests/answers/slice';
+import {
+  isAnswerDeletingSelector,
+  isAnswerChangedSelector,
+} from 'models/tests/answers/selectors';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
+import useAction from '../../hooks/useAction';
 
-const QuestionAnswerEdit = ({
-  answer,
-  onAnswerChange,
-  onDelete,
-  onDrag,
-  questionId,
-}) => {
+const QuestionAnswerEdit = ({ answer, onDrag, questionId }) => {
   const { id } = answer;
 
+  const onAnswerChange = useAction(answersActions.changeAnswerData);
+  const onAnswerDelete = useAction(answersActions.deleteAnswer);
+  const onAnswerUndoChanges = useAction(answersActions.undoAnswerChanges);
+
+  const isAnswerChanged = useSelector(isAnswerChangedSelector, id);
   const isAnswerDeleting = useSelector(isAnswerDeletingSelector, id);
 
   const onInputChange = React.useCallback(
@@ -30,13 +35,15 @@ const QuestionAnswerEdit = ({
     [id, onAnswerChange]
   );
 
-  const onAnswerDelete = React.useCallback(() => {
-    if (onDelete && questionId) {
-      onDelete({ questionId, id });
-    }
-  }, [onDelete, questionId, id]);
+  const onDelete = React.useCallback(() => {
+    onAnswerDelete({ questionId, id });
+  }, [onAnswerDelete, questionId, id]);
 
-  const toggleCheckbox = React.useCallback(
+  const onUndo = React.useCallback(() => {
+    onAnswerUndoChanges({ id });
+  }, [onAnswerUndoChanges, id]);
+
+  const onCheckboxToggle = React.useCallback(
     event => {
       onAnswerChange({ id, is_right: event.target.checked });
     },
@@ -50,7 +57,7 @@ const QuestionAnswerEdit = ({
           name="isRight"
           id="isRight"
           value={answer.is_right}
-          onChange={toggleCheckbox}
+          onChange={onCheckboxToggle}
         />
       </div>
       <div
@@ -64,13 +71,22 @@ const QuestionAnswerEdit = ({
         />
 
         <div className={styles.actions}>
+          {isAnswerChanged && (
+            <button
+              className={classNames(styles.action, styles.actionUndo)}
+              onClick={onUndo}
+            >
+              <img src={timesIcon} alt="Undo" width={16} />
+              <span>Undo</span>
+            </button>
+          )}
           <button
             className={styles.action}
-            onClick={onAnswerDelete}
+            onClick={onDelete}
             disabled={isAnswerDeleting}
           >
             <SpinnerLoader loading={isAnswerDeleting} size={18}>
-              <img src={timesIcon} alt="Delete" width={16} />
+              <img src={trashIcon} alt="Delete" width={16} />
             </SpinnerLoader>
           </button>
           <button className={styles.action}>
@@ -84,8 +100,6 @@ const QuestionAnswerEdit = ({
 
 QuestionAnswerEdit.propTypes = {
   answer: PropTypes.object.isRequired,
-  onAnswerChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func,
   onDrag: PropTypes.func,
   questionId: PropTypes.number,
 };

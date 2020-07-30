@@ -6,8 +6,10 @@ import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
 import QuizQuestion from '../components/QuizQuestion';
 
 import styles from './EditQuiz.scss';
+import { QuizModifyContext } from './EditQuizContainer';
 
-const EditQuiz = ({ id, questions, title }) => {
+const EditQuiz = ({ questions, title }) => {
+  const { quizId } = React.useContext(QuizModifyContext);
   const questionList = useSelector(getQuestionsByIdsSelector, questions);
 
   const [currentQuestionId, setCurrentQuestionId] = React.useState(
@@ -23,9 +25,8 @@ const EditQuiz = ({ id, questions, title }) => {
     <div className={styles.root}>
       <div className={styles.sidebar}>
         <QuestionsSidebar
-          currentQuizId={id}
-          currentQuestionId={currentQuestionId}
           questions={questionList}
+          currentQuestionId={currentQuestionId}
           onItemClick={onQuestionSidebarItemClick}
         />
       </div>
@@ -38,7 +39,6 @@ const EditQuiz = ({ id, questions, title }) => {
 };
 
 EditQuiz.propTypes = {
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   questions: PropTypes.arrayOf(PropTypes.number).isRequired,
   title: PropTypes.string.isRequired,
 };

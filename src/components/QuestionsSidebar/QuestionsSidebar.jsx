@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, memo } from 'react';
+import React, { useState, useMemo, useCallback, memo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import checkIcon from 'images/check-icon.svg';
 
@@ -17,15 +17,12 @@ import {
   questionCreatingSuccessSelector,
 } from 'models/tests/questions/selectors';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
+import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuizContainer';
 
 const quizKinds = Object.keys(QUIZ_KINDS);
 
-const QuestionsSidebar = ({
-  questions,
-  currentQuestionId,
-  currentQuizId,
-  onItemClick,
-}) => {
+const QuestionsSidebar = ({ questions, currentQuestionId, onItemClick }) => {
+  const { quizId } = useContext(QuizModifyContext);
   const isQuestionCreating = useSelector(questionCreatingPendingSelector);
   const isQuestionCreated = useSelector(questionCreatingSuccessSelector);
 
@@ -50,10 +47,10 @@ const QuestionsSidebar = ({
           title: newQuestionData.title,
           question_type: newQuestionData.kind,
         },
-        quizId: currentQuizId,
+        quizId,
       });
     },
-    [setNewQuestionData, onQuestionCreate, newQuestionData, currentQuizId]
+    [setNewQuestionData, onQuestionCreate, newQuestionData, quizId]
   );
 
   React.useEffect(() => {
@@ -67,7 +64,7 @@ const QuestionsSidebar = ({
       questions.map((question, index) => (
         <QuestionsSidebarItem
           key={question.id}
-          quizId={currentQuizId}
+          quizId={quizId}
           questionItem={question}
           isActive={currentQuestionId === question.id}
           onClick={onItemClick}
@@ -135,7 +132,6 @@ const QuestionsSidebar = ({
 QuestionsSidebar.propTypes = {
   questions: PropTypes.array.isRequired,
   currentQuestionId: PropTypes.number.isRequired,
-  currentQuizId: PropTypes.number.isRequired,
   onItemClick: PropTypes.func.isRequired,
 };
 

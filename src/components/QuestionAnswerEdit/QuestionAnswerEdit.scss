@@ -37,4 +37,17 @@
   &:hover {
     opacity: 1;
   }
+
+  &Undo {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 0.75rem;
+    }
+  }
 }

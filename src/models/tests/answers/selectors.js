@@ -34,3 +34,8 @@ export const isAnswerDeletingSelector = createSelector(
     return answersDeletingIds.includes(id);
   }
 );
+
+export const isAnswerChangedSelector = createSelector(
+  [answersSelector, (_, id) => id],
+  ({ modifiedById }, id) => !!Object.getOwnPropertyDescriptor(modifiedById, id)
+);
