@@ -112,6 +112,9 @@ const questionsSlice = createSlice({
         payload: { questionId },
       }
     ) {
+      if (state.currentQuestionId === questionId) {
+        state.currentQuestionId = null;
+      }
       removeFromNormalized(state, questionId);
       removeFromArray(state.questionsDeletingIds, questionId);
     },

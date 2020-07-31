@@ -21,22 +21,22 @@ const EditQuiz = ({ questions, title }) => {
   const onQuestionOpen = useAction(questionsActions.openQuestion);
 
   React.useEffect(() => {
-    onQuestionOpen({ id: questions[0] });
-  }, [onQuestionOpen]);
+    if (questions.length) {
+      onQuestionOpen({ id: questions[0] });
+    }
+  }, []);
 
   return (
-    questionId != null && (
-      <div className={styles.root}>
-        <div className={styles.sidebar}>
-          {title}
-          <QuestionsSidebar questions={questionList} />
-        </div>
-
-        <div className={styles.content}>
-          <QuizQuestion />
-        </div>
+    <div className={styles.root}>
+      <div className={styles.sidebar}>
+        {title}
+        <QuestionsSidebar questions={questionList} />
       </div>
-    )
+
+      <div className={styles.content}>
+        {questionId != null && <QuizQuestion />}
+      </div>
+    </div>
   );
 };
 
