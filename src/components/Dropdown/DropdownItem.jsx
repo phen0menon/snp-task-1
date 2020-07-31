@@ -8,7 +8,7 @@ const DropdownItem = ({ children, onClick }) => {
   const handleClick = useCallback(() => {
     close();
     onClick();
-  });
+  }, [close, onClick]);
   return (
     <div className={styles.item} onClick={handleClick}>
       {children}

@@ -16,7 +16,6 @@ const QuizCard = ({ id, title, created_at }) => {
   }, [history, id]);
 
   const displayedDate = useMemo(() => formatDate(new Date(created_at)), [
-    formatDate,
     created_at,
   ]);
 

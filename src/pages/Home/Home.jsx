@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 
 import withAuthentication, {
   AuthenticationStatus,
@@ -20,7 +19,7 @@ const Home = () => {
 
   React.useEffect(() => {
     onFetchQuizzes();
-  }, []);
+  }, [onFetchQuizzes]);
 
   return (
     <div className={styles.root}>

@@ -88,7 +88,7 @@ Modal.Footer = React.memo(({ proceedHandler, children, disabled }) => {
         </Button>
       </>
     );
-  }, [children, proceedHandler, close]);
+  }, [children, proceedHandler, close, disabled]);
 
   return (
     <div className={styles['modal-footer']}>
