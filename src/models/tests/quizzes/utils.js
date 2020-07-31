@@ -1,12 +1,4 @@
-import { normalize, schema } from 'normalizr';
+import { normalize } from 'normalizr';
+import { quizSchema } from '../schemas';
 
-export const normalizeQuizzes = data => {
-  const answer = new schema.Entity('answers');
-  const question = new schema.Entity('questions', {
-    answers: [answer],
-  });
-  const quiz = new schema.Entity('quizzes', {
-    questions: [question],
-  });
-  return normalize(data, [quiz]);
-};
+export const normalizeQuizzes = data => normalize(data, [quizSchema]);
