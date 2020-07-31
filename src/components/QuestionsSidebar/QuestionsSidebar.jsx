@@ -23,7 +23,7 @@ import styles from './QuestionsSidebar.scss';
 
 const quizKinds = Object.keys(QUIZ_KINDS);
 
-const QuestionsSidebar = ({ questions }) => {
+const QuestionsSidebar = ({ questions, title }) => {
   const { quizId } = useContext(QuizModifyContext);
 
   const currentQuestionId = useSelector(getCurrentQuestionIdSelector);
@@ -88,11 +88,12 @@ const QuestionsSidebar = ({ questions }) => {
           {QUIZ_KINDS[kind].label}
         </DropdownItem>
       )),
-    [quizKinds, onDropdownKindSelect]
+    [onDropdownKindSelect]
   );
 
   return (
     <div className={styles.root}>
+      <div className={styles.title}>{title} </div>
       <div className={styles.items}>
         {renderedQuestionList}
 
@@ -133,6 +134,7 @@ const QuestionsSidebar = ({ questions }) => {
 
 QuestionsSidebar.propTypes = {
   questions: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default QuestionsSidebar;

@@ -29,8 +29,7 @@ const EditQuiz = ({ questions, title }) => {
   return (
     <div className={styles.root}>
       <div className={styles.sidebar}>
-        {title}
-        <QuestionsSidebar questions={questionList} />
+        <QuestionsSidebar questions={questionList} title={title} />
       </div>
 
       <div className={styles.content}>
