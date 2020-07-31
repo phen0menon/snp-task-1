@@ -32,9 +32,23 @@ export function* fetchDeleteQuestion({ payload: { quizId, questionId } }) {
   }
 }
 
+export function* fetchSaveQuestionData({ payload: { id, questionData } }) {
+  try {
+    yield call(api.fetchUpdateQuestion, { id, questionData });
+    yield put({
+      type: questionsActions.saveQuestionDataSuccess,
+      payload: { id },
+    });
+  } catch (err) {
+    const { error } = err.response.data;
+    console.error(error);
+  }
+}
+
 export default function*() {
   yield all([
     takeLatest(questionsActions.createQuestion, fetchCreateQuestion),
+    takeLatest(questionsActions.saveQuestionData, fetchSaveQuestionData),
     takeEvery(questionsActions.deleteQuestion, fetchDeleteQuestion),
   ]);
 }

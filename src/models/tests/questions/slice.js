@@ -22,6 +22,8 @@ const questionsSlice = createSlice({
 
     questionCreatingStatus: null,
 
+    questionSavingStatus: null,
+
     currentQuestionId: null,
   },
   reducers: {
@@ -34,7 +36,19 @@ const questionsSlice = createSlice({
       putNormalizedModifications(state, id, restProps);
     },
 
-    saveQuestionData(state, { payload }) {},
+    saveQuestionData(state, { payload }) {
+      state.questionSavingStatus = 'pending';
+    },
+
+    saveQuestionDataSuccess(
+      state,
+      {
+        payload: { id },
+      }
+    ) {
+      delete state.modifiedById[id];
+      state.questionSavingStatus = 'success';
+    },
 
     deleteQuestion(
       state,

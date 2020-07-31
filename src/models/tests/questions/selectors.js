@@ -3,6 +3,11 @@ import { denormalize, schema } from 'normalizr';
 
 import { testsSelector } from 'models/tests/selectors';
 import { getModifiedAnswersIdsSelector } from '../answers/selectors';
+import { QUIZ_SINGLE_KIND } from 'pages/Quiz/constants';
+
+const validationRules = {
+  [QUIZ_SINGLE_KIND]: () => {},
+};
 
 const getId = (_, id) => id;
 
@@ -65,12 +70,22 @@ export const isCurrentQuestionInfoModifiedSelector = createSelector(
     id != null && !!Object.getOwnPropertyDescriptor(modifiedById, id)
 );
 
-export const isCurrentQuestionHasAnswersModifications = createSelector(
+export const getCurrentQuestionAnswersModifications = createSelector(
   [getCurrentQuestionAnswersSelector, getModifiedAnswersIdsSelector],
   (answerIds, modifiedAnswerIds) =>
     answerIds.length
-      ? modifiedAnswerIds.some(id => answerIds.includes(id))
-      : false
+      ? modifiedAnswerIds.filter(id => answerIds.includes(id))
+      : []
+);
+
+export const isCurrentQuestionHasAnswersModifications = createSelector(
+  [getCurrentQuestionAnswersModifications],
+  answerIds => !!answerIds.length
+);
+
+export const getCurrentQuestionSavingStatusSelector = createSelector(
+  [questionsSelector],
+  ({ questionSavingStatus }) => questionSavingStatus
 );
 
 export const isQuestionHasModificationsSelector = createSelector(

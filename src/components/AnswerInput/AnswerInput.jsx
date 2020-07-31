@@ -4,10 +4,10 @@ import classNames from 'classnames';
 
 import globalStyles from 'styles/global.scss';
 
-const AnswerInput = ({ className, ...restProps }) => {
+const AnswerInput = ({ className, type, ...restProps }) => {
   return (
     <input
-      type="text"
+      type={type}
       className={classNames([
         globalStyles.formTextarea,
         globalStyles.formTextareaSmall,
@@ -25,6 +25,7 @@ AnswerInput.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 AnswerInput.defaultProps = {
@@ -32,6 +33,7 @@ AnswerInput.defaultProps = {
   className: null,
   placeholder: '',
   disabled: false,
+  type: 'text',
 };
 
 export default React.memo(AnswerInput);
