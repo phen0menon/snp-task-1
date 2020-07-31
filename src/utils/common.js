@@ -11,3 +11,15 @@ export const toCapitalCase = str => {
   }
   return str.substr(0, 1).toUpperCase() + str.substr(1);
 };
+
+export const formatDate = date => {
+  if (!date.getMonth) {
+    console.error('formatDate: Date is invalid');
+    return date;
+  }
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+};

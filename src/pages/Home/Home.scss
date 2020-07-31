@@ -1,6 +1,8 @@
+@use 'styles/variables/colors' as *;
+
 .root {
-  width: 1200px;
-  margin: 0 auto;
+  background: $dark-accent-2;
+  min-height: inherit;
 }
 
 .header {
@@ -16,10 +18,17 @@
 .title {
   font-size: 2rem;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   font-weight: 500;
+  color: #fff;
 }
 
 .actions {
   display: flex;
+
+  &Create {
+    background: $green;
+    border-color: $green;
+    color: #fff;
+  }
 }

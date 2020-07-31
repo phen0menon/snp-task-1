@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import withAuthentication, {
   AuthenticationStatus,
 } from 'hocs/withAuthentication';
@@ -18,18 +20,22 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={globalStyles.container}>
-      <div className={styles.header}>
-        <div className={styles.headerInner}>
-          <div className={styles.title}>Quizer</div>
-          <div className={styles.actions}>
-            <Button type="button">+ Quiz</Button>
+    <div className={styles.root}>
+      <div className={globalStyles.container}>
+        <div className={styles.header}>
+          <div className={styles.headerInner}>
+            <div className={styles.title}>Quizer</div>
+            <div className={styles.actions}>
+              <Button type="button" className={styles.actionsCreate}>
+                + Quiz
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className={styles.content}>
-        <QuizList />
+        <div className={styles.content}>
+          <QuizList />
+        </div>
       </div>
     </div>
   );
