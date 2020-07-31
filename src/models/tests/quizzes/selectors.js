@@ -27,3 +27,8 @@ export const getQuizDataByIdSelector = createSelector(
   [quizzesByIdSelector, getId],
   (quizzesById, id) => quizzesById[id] || { fetched: false }
 );
+
+export const getQuizCreatingStatus = createSelector(
+  [quizzesSelector],
+  ({ quizCreatingStatus }) => quizCreatingStatus
+);

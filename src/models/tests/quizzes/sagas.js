@@ -15,6 +15,7 @@ export function* fetchQuizzes() {
       meta,
     });
   } catch (err) {
+    console.log(err);
     const { error } = err.response.data;
     yield put({
       type: quizzesActions.fetchQuizzesFailed,
@@ -40,9 +41,26 @@ export function* fetchQuiz({ payload: { id } }) {
   }
 }
 
+export function* createQuiz({ payload: { title } }) {
+  try {
+    const { data: quiz } = yield call(api.createQuiz, { title });
+    yield put({
+      type: quizzesActions.createQuizSuccess,
+      payload: { quiz },
+    });
+  } catch (err) {
+    const { error } = err.response.data;
+    yield put({
+      type: quizzesActions.createQuizFailed,
+      error,
+    });
+  }
+}
+
 export default function*() {
   yield all([
     takeLatest(quizzesActions.fetchQuizzes, fetchQuizzes),
     takeLatest(quizzesActions.fetchQuiz, fetchQuiz),
+    takeLatest(quizzesActions.createQuiz, createQuiz),
   ]);
 }

@@ -12,6 +12,7 @@ const quizzesSlice = createSlice({
     allIds: [],
     meta: {},
     status: null,
+    quizCreatingStatus: null,
   },
   reducers: {
     fetchQuizzes(state) {
@@ -22,6 +23,23 @@ const quizzesSlice = createSlice({
     },
     fetchQuiz(state) {
       state.status = 'pending';
+    },
+
+    createQuiz(state) {
+      state.quizCreatingStatus = 'pending';
+    },
+    createQuizSuccess(
+      state,
+      {
+        payload: { quiz },
+      }
+    ) {
+      state.byId[quiz.id] = quiz;
+      state.allIds.push(quiz.id);
+      state.quizCreatingStatus = 'success';
+    },
+    createQuizFailed(state, { error }) {
+      state.quizCreatingStatus = 'failure';
     },
   },
   extraReducers: {

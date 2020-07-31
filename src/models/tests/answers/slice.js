@@ -60,6 +60,7 @@ const answersSlice = createSlice({
         payload: { answers },
       }
     ) {
+      if (!answers) return;
       state.byId = answers;
       state.allIds = Object.keys(answers);
     },
@@ -70,6 +71,7 @@ const answersSlice = createSlice({
         payload: { answers },
       }
     ) {
+      if (!answers) return;
       state.byId = { ...state.byId, ...answers };
       state.allIds = [...state.allIds, ...Object.keys(answers)];
     },

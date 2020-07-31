@@ -61,15 +61,20 @@ const questionsSlice = createSlice({
         payload: { questions },
       }
     ) {
+      if (!questions) return;
       state.byId = questions;
       state.allIds = Object.keys(questions);
     },
 
-    [testsCommonActions.quizFetched](state, { payload }) {
-      const { questions } = payload;
-      const keys = Object.keys(questions);
+    [testsCommonActions.quizFetched](
+      state,
+      {
+        payload: { questions },
+      }
+    ) {
+      if (!questions) return;
       state.byId = { ...state.byId, ...questions };
-      state.allIds = [...state.allIds, ...keys];
+      state.allIds = [...state.allIds, ...Object.keys(questions)];
     },
 
     [testsCommonActions.answerCreated](

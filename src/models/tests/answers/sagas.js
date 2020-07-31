@@ -24,7 +24,6 @@ export function* fetchDeleteAnswer({ payload: { questionId, id } }) {
       payload: { questionId, id },
     });
   } catch (err) {
-    console.log(err);
     const { error } = err.response.data;
     console.error(error);
   }
