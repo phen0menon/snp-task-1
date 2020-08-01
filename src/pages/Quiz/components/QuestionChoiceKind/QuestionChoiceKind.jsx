@@ -20,7 +20,7 @@ import QuestionAnswerEdit from 'components/QuestionAnswerEdit';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 import styles from '../QuizQuestion/QuizQuestion.scss';
-import { ValidationStrings } from '../../constants';
+import { ValidationStrings, QUIZ_SINGLE_KIND } from '../../constants';
 
 const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
   const [error, setError] = useState(null);
@@ -37,13 +37,24 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
   const onQuestionSave = useAction(questionsActions.saveQuestionData);
 
   React.useEffect(() => {
-    const { NOT_ENOUGH_ANSWERS } = ValidationStrings;
-    if (question.answers.length < 2) {
+    const { NOT_ENOUGH_ANSWERS, ONLY_ONE_RIGHT_ANSWER } = ValidationStrings;
+    const rightAnswersAmount = answers.filter(a => a.is_right).length;
+
+    if (question.question_type === QUIZ_SINGLE_KIND) {
+      if (rightAnswersAmount > 1) {
+        setError(ONLY_ONE_RIGHT_ANSWER);
+        return;
+      } else if (error === ONLY_ONE_RIGHT_ANSWER) {
+        setError(null);
+      }
+    }
+
+    if (answers.length < 2) {
       setError(NOT_ENOUGH_ANSWERS);
     } else if (error === NOT_ENOUGH_ANSWERS) {
       setError(null);
     }
-  }, [error, question.answers, setError]);
+  }, [error, question, answers, setError]);
 
   const saveQuestion = useCallback(() => {
     if (error || parentError) return;
@@ -51,7 +62,7 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
       id: question.id,
       questionData: question,
     });
-  }, [setError, onQuestionSave, question]);
+  }, [setError, onQuestionSave, question, question.answers]);
 
   const [createdAnswerText, setCreatedAnswerText] = useState(null);
   const createdAnswerInputDisplayed = createdAnswerText != null;
@@ -76,8 +87,6 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
           key={answer.id}
           questionId={question.id}
           answer={answer}
-          onDrag={() => console.log('drag')}
-          disabled={formBusy}
         />
       )),
     [answers, question.id]
@@ -119,7 +128,7 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
           <button
             className={styles.btnSave}
             onClick={saveQuestion}
-            disabled={formBusy}
+            disabled={formBusy || error}
           >
             <SpinnerLoader loading={formBusy} size={20}>
               Save

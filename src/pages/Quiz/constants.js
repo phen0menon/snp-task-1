@@ -16,6 +16,7 @@ export const QUIZ_KINDS = {
 
 export const ValidationStrings = {
   NOT_ENOUGH_ANSWERS: `There should be at least 2 questions`,
+  ONLY_ONE_RIGHT_ANSWER: 'There should be only one correct answer',
   TOO_MUCH_RIGHT_ANSWERS: 'There should not be more than one correct answer',
   QUESTION_TITLE_EMPTY: 'Question title should not be empty',
 };

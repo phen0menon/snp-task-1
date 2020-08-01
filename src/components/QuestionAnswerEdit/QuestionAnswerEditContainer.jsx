@@ -37,12 +37,9 @@ const QuestionAnswerEditContainer = ({ answer, questionId }) => {
     onAnswerUndoChanges({ id });
   }, [onAnswerUndoChanges, id]);
 
-  const onCheckboxToggle = React.useCallback(
-    event => {
-      onAnswerChange({ id, is_right: event.target.checked });
-    },
-    [id, onAnswerChange]
-  );
+  const onCheckboxToggle = React.useCallback(() => {
+    onAnswerChange({ id, is_right: !answer.is_right });
+  }, [id, onAnswerChange, answer]);
 
   return (
     <QuestionAnswerEdit

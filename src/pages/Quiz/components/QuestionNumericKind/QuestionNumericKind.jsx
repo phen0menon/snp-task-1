@@ -62,7 +62,11 @@ const QuestionNumericKind = ({ parentError, formBusy, ...question }) => {
       </div>
       <div className={styles.actions}>
         {questionHasModifications && (
-          <button className={styles.btnSave} type="submit" disabled={formBusy}>
+          <button
+            className={styles.btnSave}
+            type="submit"
+            disabled={formBusy || error}
+          >
             <SpinnerLoader loading={formBusy} size={20}>
               Save
             </SpinnerLoader>
