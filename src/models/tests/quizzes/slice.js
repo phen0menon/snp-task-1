@@ -38,7 +38,7 @@ const quizzesSlice = createSlice({
       state.allIds.push(quiz.id);
       state.quizCreatingStatus = 'success';
     },
-    createQuizFailed(state, { error }) {
+    createQuizFailed(state) {
       state.quizCreatingStatus = 'failure';
     },
   },

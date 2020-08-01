@@ -3,11 +3,6 @@ import { denormalize, schema } from 'normalizr';
 
 import { testsSelector } from 'models/tests/selectors';
 import { getModifiedAnswersIdsSelector } from '../answers/selectors';
-import { QUIZ_SINGLE_KIND } from 'pages/Quiz/constants';
-
-const validationRules = {
-  [QUIZ_SINGLE_KIND]: () => {},
-};
 
 const getId = (_, id) => id;
 

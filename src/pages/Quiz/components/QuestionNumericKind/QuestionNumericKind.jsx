@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+
 import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
 
@@ -36,7 +38,8 @@ const QuestionNumericKind = ({ parentError, formBusy, ...question }) => {
       if (error || parentError) return;
 
       if (question.answer == null || !question.answer.toString().length) {
-        return setError('Answer should not be empty');
+        setError('Answer should not be empty');
+        return;
       }
 
       onQuestionSave({ id: question.id, questionData: question });
@@ -68,6 +71,15 @@ const QuestionNumericKind = ({ parentError, formBusy, ...question }) => {
       </div>
     </form>
   );
+};
+
+QuestionNumericKind.propTypes = {
+  formBusy: PropTypes.bool.isRequired,
+  parentError: PropTypes.string,
+};
+
+QuestionNumericKind.defaultProps = {
+  parentError: null,
 };
 
 export default QuestionNumericKind;

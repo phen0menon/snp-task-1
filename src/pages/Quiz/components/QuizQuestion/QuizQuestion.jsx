@@ -6,7 +6,10 @@ import useSelector from 'hooks/useSelector';
 import { QUIZ_NUMBER_KIND, ValidationStrings } from '../../constants';
 
 import { questionsActions } from 'models/tests/questions/slice';
-import { getCurrentQuestionEntity } from 'models/tests/questions/selectors';
+import {
+  getCurrentQuestionEntity,
+  getCurrentQuestionSavingStatusSelector,
+} from 'models/tests/questions/selectors';
 
 import SelectQuizKind from 'components/SelectQuizKind/SelectQuizKind';
 import QuestionNumericKind from '../QuestionNumericKind/QuestionNumericKind';
@@ -15,7 +18,6 @@ import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 import globalStyles from 'styles/global.scss';
 import styles from './QuizQuestion.scss';
-import { getCurrentQuestionSavingStatusSelector } from '../../../../models/tests/questions/selectors';
 
 const QuizQuestion = () => {
   const question = useSelector(getCurrentQuestionEntity);

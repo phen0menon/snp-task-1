@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
@@ -128,6 +129,15 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
       </div>
     </>
   );
+};
+
+QuestionChoiceKind.propTypes = {
+  formBusy: PropTypes.bool.isRequired,
+  parentError: PropTypes.string,
+};
+
+QuestionChoiceKind.defaultProps = {
+  parentError: null,
 };
 
 export default QuestionChoiceKind;

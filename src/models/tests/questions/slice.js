@@ -36,7 +36,7 @@ const questionsSlice = createSlice({
       putNormalizedModifications(state, id, restProps);
     },
 
-    saveQuestionData(state, { payload }) {
+    saveQuestionData(state) {
       state.questionSavingStatus = 'pending';
     },
 

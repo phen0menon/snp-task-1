@@ -19,7 +19,7 @@ const AnswerInput = ({ className, type, ...restProps }) => {
 };
 
 AnswerInput.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func,
   className: PropTypes.string,
@@ -34,6 +34,7 @@ AnswerInput.defaultProps = {
   placeholder: '',
   disabled: false,
   type: 'text',
+  value: '',
 };
 
 export default React.memo(AnswerInput);
