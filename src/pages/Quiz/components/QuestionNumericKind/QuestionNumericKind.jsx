@@ -7,7 +7,7 @@ import useAction from 'hooks/useAction';
 import { questionsActions } from 'models/tests/questions/slice';
 import { isQuestionHasModificationsSelector } from 'models/tests/questions/selectors';
 
-import AnswerInput from 'components/AnswerInput/AnswerInput';
+import QuizInput from 'components/QuizInput/QuizInput';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
@@ -50,7 +50,7 @@ const QuestionNumericKind = ({ parentError, formBusy, ...question }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.answers}>
-        <AnswerInput
+        <QuizInput
           value={question.answer}
           type="number"
           onChange={onChange}

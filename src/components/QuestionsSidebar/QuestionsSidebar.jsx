@@ -5,7 +5,7 @@ import useSelector from 'hooks/useSelector';
 
 import Dropdown from 'components/Dropdown/Dropdown';
 import DropdownItem from 'components/Dropdown/DropdownItem';
-import AnswerInput from 'components/AnswerInput/AnswerInput';
+import QuizInput from 'components/QuizInput/QuizInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 import QuestionsSidebarItem from '../QuestionsSidebarItem';
 import { QUIZ_KINDS } from 'pages/Quiz/constants';
@@ -100,7 +100,7 @@ const QuestionsSidebar = ({ questions, title }) => {
         {newQuestionData != null && (
           <form className={styles.inputGroup} onSubmit={onNewQuestionSubmit}>
             <div className={styles.inputGroupInner}>
-              <AnswerInput
+              <QuizInput
                 value={newQuestionData.title}
                 onChange={onNewQuestionTitleChange}
                 placeholder="Enter new question"

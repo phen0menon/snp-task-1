@@ -1,54 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AnswerInput from 'components/AnswerInput/AnswerInput';
-import { isEnter } from 'utils/common';
+import classNames from 'classnames';
 
-const QuizInput = ({ text, setText, onSubmit, placeholder, created }) => {
-  const onChange = React.useCallback(
-    event => {
-      setText(event.target.value);
-    },
-    [setText]
-  );
+import globalStyles from 'styles/global.scss';
 
-  const onEnterPress = React.useCallback(
-    evt => {
-      if (onSubmit && isEnter(evt) && !!text) {
-        onSubmit();
-      }
-    },
-    [onSubmit, text]
-  );
-
-  React.useEffect(() => {
-    if (created) {
-      setText('');
-    }
-  }, [created, setText]);
-
+const QuizInput = ({ className, type, ...restProps }) => {
   return (
-    <AnswerInput
-      value={text}
-      onChange={onChange}
-      onKeyDown={onEnterPress}
-      placeholder={placeholder}
-      autoFocus
-      required
+    <input
+      type={type}
+      className={classNames([
+        globalStyles.formTextarea,
+        globalStyles.formTextareaSmall,
+        className,
+      ])}
+      {...restProps}
     />
   );
 };
 
 QuizInput.propTypes = {
-  text: PropTypes.string.isRequired,
-  setText: PropTypes.func.isRequired,
-  created: PropTypes.bool.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func,
+  className: PropTypes.string,
   placeholder: PropTypes.string,
-  onSubmit: PropTypes.func,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 QuizInput.defaultProps = {
+  onKeyDown: null,
+  className: null,
   placeholder: '',
-  onSubmit: null,
+  disabled: false,
+  type: 'text',
+  value: '',
 };
 
 export default React.memo(QuizInput);

@@ -8,7 +8,7 @@ import dragIcon from 'images/drag-icon.svg';
 import trashIcon from 'images/trash-icon.svg';
 
 import styles from './QuestionAnswerEdit.scss';
-import AnswerInput from 'components/AnswerInput/AnswerInput';
+import QuizInput from 'components/QuizInput/QuizInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
 const QuestionAnswerEdit = ({
@@ -33,7 +33,7 @@ const QuestionAnswerEdit = ({
       <div
         className={classNames(styles.answerContent, styles.answerContentGutter)}
       >
-        <AnswerInput
+        <QuizInput
           className={styles.input}
           value={answer.text}
           placeholder="Answer text"

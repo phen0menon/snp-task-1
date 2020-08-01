@@ -14,7 +14,7 @@ import { questionsActions } from 'models/tests/questions/slice';
 import { answersActions } from 'models/tests/answers/slice';
 import { isQuestionHasModificationsSelector } from 'models/tests/questions/selectors';
 
-import QuizInput from 'components/QuizInput/QuizInput';
+import QuizAnswerInput from 'components/QuizAnswerInput/QuizAnswerInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 import QuestionAnswerEdit from 'components/QuestionAnswerEdit';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
@@ -103,7 +103,7 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
           {renderedAnswers}
         </div>
         {createdAnswerText != null && (
-          <QuizInput
+          <QuizAnswerInput
             text={createdAnswerText}
             setText={setCreatedAnswerText}
             onSubmit={createOrSubmitInput}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
-import AnswerInput from '../AnswerInput/AnswerInput';
+import QuizInput from '../QuizInput/QuizInput';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 import { quizzesActions } from 'models/tests/quizzes/slice';
@@ -31,7 +31,7 @@ const CreateQuizModal = modalSettings => {
     <Modal {...modalSettings}>
       <Modal.Header>Create new quiz</Modal.Header>
       <Modal.Body>
-        <AnswerInput
+        <QuizInput
           value={quizTitle}
           onChange={onChange}
           placeholder="Enter quiz title"
