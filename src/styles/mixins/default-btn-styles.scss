@@ -1,0 +1,11 @@
+@mixin defaultBtnStyles {
+  font-size: 1.1rem;
+  border-radius: 20px;
+  border-width: 2px;
+  border-style: solid;
+  transition: 0.2s ease-in;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+}

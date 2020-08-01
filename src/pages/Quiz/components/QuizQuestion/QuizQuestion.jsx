@@ -1,41 +1,64 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
+
+import { QUIZ_NUMBER_KIND, ValidationStrings } from '../../constants';
 
 import { questionsActions } from 'models/tests/questions/slice';
 import { getCurrentQuestionEntity } from 'models/tests/questions/selectors';
 
 import SelectQuizKind from 'components/SelectQuizKind/SelectQuizKind';
+import QuestionNumericKind from '../QuestionNumericKind/QuestionNumericKind';
+import QuestionChoiceKind from '../QuestionChoiceKind/QuestionChoiceKind';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 import globalStyles from 'styles/global.scss';
 import styles from './QuizQuestion.scss';
-import { QUIZ_NUMBER_KIND } from '../../constants';
-import QuestionChoiceKind from '../QuestionChoiceKind/QuestionChoiceKind';
-import QuestionNumericKind from '../QuestionNumericKind/QuestionNumericKind';
+import { getCurrentQuestionSavingStatusSelector } from '../../../../models/tests/questions/selectors';
 
 const QuizQuestion = () => {
   const question = useSelector(getCurrentQuestionEntity);
   const { id } = question;
 
+  const questionSavingStatus = useSelector(
+    getCurrentQuestionSavingStatusSelector
+  );
+
+  const questionFormBusy = useMemo(() => questionSavingStatus === 'pending', [
+    questionSavingStatus,
+  ]);
+
   const onQuestionChange = useAction(questionsActions.changeQuestionData);
+
+  const [error, setError] = useState(null);
 
   const onQuestionTitleChange = React.useCallback(
     event => {
-      onQuestionChange({ id, title: event.target.value });
+      const title = event.target.value.trimStart();
+      onQuestionChange({ id, title });
+
+      if (!title.length) {
+        setError(ValidationStrings.QUESTION_TITLE_EMPTY);
+      } else if (error) {
+        setError(null);
+      }
     },
-    [id, onQuestionChange]
+    [id, onQuestionChange, setError, error]
   );
 
-  const renderedQuestionData = useMemo(
-    () =>
-      question.question_type !== QUIZ_NUMBER_KIND ? (
-        <QuestionChoiceKind {...question} />
-      ) : (
-        <QuestionNumericKind {...question} />
-      ),
-    [question]
-  );
+  const renderedQuestionData = useMemo(() => {
+    const injectedProps = {
+      parentError: error,
+      formBusy: questionFormBusy,
+      ...question,
+    };
+    return question.question_type !== QUIZ_NUMBER_KIND ? (
+      <QuestionChoiceKind {...injectedProps} />
+    ) : (
+      <QuestionNumericKind {...injectedProps} />
+    );
+  }, [question, error, questionFormBusy]);
 
   return (
     <div className={styles.root}>
@@ -45,7 +68,9 @@ const QuizQuestion = () => {
             value={question.title}
             className={globalStyles.formTextarea}
             onChange={onQuestionTitleChange}
+            disabled={questionFormBusy}
           />
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </div>
 
         <SelectQuizKind

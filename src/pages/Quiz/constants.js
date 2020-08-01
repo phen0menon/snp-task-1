@@ -13,3 +13,9 @@ export const QUIZ_KINDS = {
     label: 'Numeric',
   },
 };
+
+export const ValidationStrings = {
+  NOT_ENOUGH_ANSWERS: `There should be at least 2 questions`,
+  TOO_MUCH_RIGHT_ANSWERS: 'There should not be more than one correct answer',
+  QUESTION_TITLE_EMPTY: 'Question title should not be empty',
+};

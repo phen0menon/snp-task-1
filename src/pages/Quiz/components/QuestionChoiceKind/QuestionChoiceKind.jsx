@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import classNames from 'classnames';
 
 import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
@@ -15,11 +16,15 @@ import { isQuestionHasModificationsSelector } from 'models/tests/questions/selec
 import QuizInput from 'components/QuizInput/QuizInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 import QuestionAnswerEdit from 'components/QuestionAnswerEdit';
+import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 
 import styles from '../QuizQuestion/QuizQuestion.scss';
+import { ValidationStrings } from '../../constants';
 
-const QuestionChoiceKind = ({ id, answers: answersIds, ...restProps }) => {
-  const answers = useSelector(getAnswersByIdsSelector, answersIds);
+const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
+  const [error, setError] = useState(null);
+
+  const answers = useSelector(getAnswersByIdsSelector, question.answers);
   const isAnswerCreated = useSelector(createdAnswerSuccessSelector);
 
   const createdAnswerLoading = useSelector(createdAnswerLoadingSelector);
@@ -30,16 +35,33 @@ const QuestionChoiceKind = ({ id, answers: answersIds, ...restProps }) => {
   const onAnswerCreate = useAction(answersActions.createNewAnswer);
   const onQuestionSave = useAction(questionsActions.saveQuestionData);
 
+  React.useEffect(() => {
+    const { NOT_ENOUGH_ANSWERS } = ValidationStrings;
+    if (question.answers.length < 2) {
+      setError(NOT_ENOUGH_ANSWERS);
+    } else if (error === NOT_ENOUGH_ANSWERS) {
+      setError(null);
+    }
+  }, [error, question.answers, setError]);
+
+  const saveQuestion = useCallback(() => {
+    if (error || parentError) return;
+    onQuestionSave({
+      id: question.id,
+      questionData: question,
+    });
+  }, [setError, onQuestionSave, question]);
+
   const [createdAnswerText, setCreatedAnswerText] = useState(null);
   const createdAnswerInputDisplayed = createdAnswerText != null;
   const createOrSubmitInput = useCallback(() => {
     if (!createdAnswerText) {
       setCreatedAnswerText('');
     } else if (!createdAnswerLoading) {
-      onAnswerCreate({ questionId: id, text: createdAnswerText });
+      onAnswerCreate({ questionId: question.id, text: createdAnswerText });
     }
   }, [
-    id,
+    question.id,
     createdAnswerText,
     setCreatedAnswerText,
     onAnswerCreate,
@@ -51,18 +73,25 @@ const QuestionChoiceKind = ({ id, answers: answersIds, ...restProps }) => {
       answers.map(answer => (
         <QuestionAnswerEdit
           key={answer.id}
-          questionId={id}
+          questionId={question.id}
           answer={answer}
           onDrag={() => console.log('drag')}
+          disabled={formBusy}
         />
       )),
-    [answers, id]
+    [answers, question.id]
   );
 
   return (
     <>
       <div className={styles.answers}>
-        {renderedAnswers}
+        <div
+          className={classNames(styles.answersContainer, {
+            [styles.answersContainerDisabled]: formBusy,
+          })}
+        >
+          {renderedAnswers}
+        </div>
         {createdAnswerText != null && (
           <QuizInput
             text={createdAnswerText}
@@ -72,6 +101,8 @@ const QuestionChoiceKind = ({ id, answers: answersIds, ...restProps }) => {
             placeholder="Enter new answer"
           />
         )}
+
+        {error && <ErrorMessage>{error}</ErrorMessage>}
       </div>
       <div className={styles.actions}>
         <button
@@ -84,8 +115,14 @@ const QuestionChoiceKind = ({ id, answers: answersIds, ...restProps }) => {
           </SpinnerLoader>
         </button>
         {questionHasModifications && (
-          <button className={styles.btnSave} onClick={onQuestionSave}>
-            Save
+          <button
+            className={styles.btnSave}
+            onClick={saveQuestion}
+            disabled={formBusy}
+          >
+            <SpinnerLoader loading={formBusy} size={20}>
+              Save
+            </SpinnerLoader>
           </button>
         )}
       </div>

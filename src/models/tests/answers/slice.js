@@ -24,6 +24,17 @@ const answersSlice = createSlice({
       state.newAnswerCreatingStatus = 'pending';
     },
 
+    answersUpdates(
+      state,
+      {
+        payload: { ids },
+      }
+    ) {
+      ids.forEach(id => {
+        delete state.modifiedById[id];
+      });
+    },
+
     undoAnswerChanges(
       state,
       {

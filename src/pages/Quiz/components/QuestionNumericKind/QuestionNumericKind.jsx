@@ -3,27 +3,18 @@ import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
 
 import { questionsActions } from 'models/tests/questions/slice';
-import {
-  isQuestionHasModificationsSelector,
-  getCurrentQuestionSavingStatusSelector,
-} from 'models/tests/questions/selectors';
+import { isQuestionHasModificationsSelector } from 'models/tests/questions/selectors';
 
 import AnswerInput from 'components/AnswerInput/AnswerInput';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
 import styles from '../QuizQuestion/QuizQuestion.scss';
 
-const QuestionNumericKind = ({ id, answer, title, question_type }) => {
+const QuestionNumericKind = ({ parentError, formBusy, ...question }) => {
   const questionHasModifications = useSelector(
     isQuestionHasModificationsSelector
   );
-  const questionSavingStatus = useSelector(
-    getCurrentQuestionSavingStatusSelector
-  );
-
-  const questionFormBusy = useMemo(() => questionSavingStatus === 'pending', [
-    questionSavingStatus,
-  ]);
 
   const [error, setError] = React.useState(null);
 
@@ -33,47 +24,45 @@ const QuestionNumericKind = ({ id, answer, title, question_type }) => {
   const onChange = useCallback(
     e => {
       if (error) setError(null);
-      onQuestionChange({ id, answer: e.target.value });
+      onQuestionChange({ id: question.id, answer: e.target.value });
     },
-    [setError, error, onQuestionChange, id]
+    [setError, error, onQuestionChange, question.id]
   );
 
   const handleSubmit = useCallback(
     event => {
       event.preventDefault();
 
-      if (error) return;
+      if (error || parentError) return;
 
-      if (answer == null || !answer.toString().length) {
+      if (question.answer == null || !question.answer.toString().length) {
         return setError('Answer should not be empty');
       }
 
-      onQuestionSave({ id, questionData: { title, answer, question_type } });
+      onQuestionSave({ id: question.id, questionData: question });
     },
-    [answer, setError, onQuestionSave, title, question_type]
+    [setError, onQuestionSave, question, parentError, error]
   );
 
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.answers}>
         <AnswerInput
-          value={answer}
+          value={question.answer}
           type="number"
           onChange={onChange}
           placeholder="Enter numeric answer value"
-          disabled={questionFormBusy}
+          disabled={formBusy}
         />
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
       </div>
       <div className={styles.actions}>
         {questionHasModifications && (
-          <button
-            className={styles.btnSave}
-            type="submit"
-            disabled={questionFormBusy}
-          >
-            Save
+          <button className={styles.btnSave} type="submit" disabled={formBusy}>
+            <SpinnerLoader loading={formBusy} size={20}>
+              Save
+            </SpinnerLoader>
           </button>
         )}
       </div>

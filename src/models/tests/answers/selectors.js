@@ -51,3 +51,11 @@ export const getModifiedAnswersIdsSelector = createSelector(
   modifiedAnswersById =>
     Object.keys(modifiedAnswersById).map(id => parseInt(id, 10))
 );
+
+export const getModifiedAnswersEntitiesByIdsSelector = createSelector(
+  [answersByIdSelector, modifiedAnswersByIdSelector, getId],
+  (answersById, modifiedAnswersById, ids) =>
+    ids
+      .filter(id => Object.getOwnPropertyDescriptor(modifiedAnswersById, id))
+      .map(id => answersById[id])
+);

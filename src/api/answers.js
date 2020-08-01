@@ -10,3 +10,9 @@ export const fetchDeleteAnswer = ({ id }) =>
   Req.DELETE({
     url: `/answers/${id}`,
   });
+
+export const fetchUpdateAnswer = ({ id, data }) =>
+  Req.PATCH({
+    url: `/answers/${id}`,
+    data,
+  });
