@@ -102,7 +102,7 @@ const QuestionsSidebar = ({ questions, title }) => {
     <div className={styles.root}>
       <div className={styles.header}>
         <Link onClick={goBack} className={styles.goBackButton} to="/">
-          <img src={returnIcon} width={14} />
+          <img src={returnIcon} width={14} alt="return" />
           <span>to tests</span>
         </Link>
         <div className={styles.title}>{title}</div>

@@ -36,25 +36,31 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
   const onAnswerCreate = useAction(answersActions.createNewAnswer);
   const onQuestionSave = useAction(questionsActions.saveQuestionData);
 
+  const validateAnswerForm = useCallback(
+    (rule, predicate) => {
+      if (!predicate) {
+        setError(rule);
+        return false;
+      } else if (error === rule) {
+        setError(null);
+      }
+      return true;
+    },
+    [error, setError]
+  );
+
   React.useEffect(() => {
     const { NOT_ENOUGH_ANSWERS, ONLY_ONE_RIGHT_ANSWER } = ValidationStrings;
     const rightAnswersAmount = answers.filter(a => a.is_right).length;
 
-    if (question.question_type === QUIZ_SINGLE_KIND) {
-      if (rightAnswersAmount > 1) {
-        setError(ONLY_ONE_RIGHT_ANSWER);
-        return;
-      } else if (error === ONLY_ONE_RIGHT_ANSWER) {
-        setError(null);
-      }
-    }
+    if (
+      question.question_type === QUIZ_SINGLE_KIND &&
+      !validateAnswerForm(ONLY_ONE_RIGHT_ANSWER, rightAnswersAmount <= 1)
+    )
+      return;
 
-    if (answers.length < 2) {
-      setError(NOT_ENOUGH_ANSWERS);
-    } else if (error === NOT_ENOUGH_ANSWERS) {
-      setError(null);
-    }
-  }, [error, question, answers, setError]);
+    validateAnswerForm(NOT_ENOUGH_ANSWERS, answers.length >= 2);
+  }, [question, answers, validateAnswerForm]);
 
   const saveQuestion = useCallback(() => {
     if (error || parentError) return;
