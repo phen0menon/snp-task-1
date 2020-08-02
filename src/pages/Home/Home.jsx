@@ -12,9 +12,11 @@ import Button from 'components/Button';
 import styles from './Home.scss';
 import globalStyles from 'styles/global.scss';
 import CreateQuizModal from '../../components/CreateQuizModal/CreateQuizModal';
+import { sessionActions } from '../../models/session/slice';
 
 const Home = () => {
   const onFetchQuizzes = useAction(quizzesActions.fetchQuizzes);
+  const onFetchLogout = useAction(sessionActions.fetchLogout);
   const modalSettings = useModal();
 
   React.useEffect(() => {
@@ -34,6 +36,9 @@ const Home = () => {
                 onClick={modalSettings.open}
               >
                 + Quiz
+              </Button>
+              <Button type="button" onClick={onFetchLogout}>
+                Logout
               </Button>
             </div>
           </div>
