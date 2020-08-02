@@ -14,6 +14,9 @@ import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
 import QuizQuestion from '../components/QuizQuestion';
 
 import styles from './EditQuiz.scss';
+import withAuthentication, {
+  AuthenticationStatus,
+} from 'hocs/withAuthentication';
 
 const EditQuiz = ({ questions, title }) => {
   const questionId = useSelector(getCurrentQuestionIdSelector);
@@ -44,4 +47,6 @@ EditQuiz.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default EditQuiz;
+export default withAuthentication(AuthenticationStatus.AUTHENTICATED, true)(
+  EditQuiz
+);

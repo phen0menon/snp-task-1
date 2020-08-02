@@ -1,7 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { isAuthenticatedSelector } from 'models/session/selectors';
+import useSelector from 'hooks/useSelector';
+import {
+  isAuthenticatedSelector,
+  isUserAdminSelector,
+} from 'models/session/selectors';
 
 export const AuthenticationStatus = {
   ANY: 0,
@@ -11,8 +14,13 @@ export const AuthenticationStatus = {
 
 export const REDIRECT_AFTER_ACCESS_LC = 'RA:redirectAfterAccessURL';
 
-const withAuthentication = authenticationStatus => Component => props => {
+const withAuthentication = (
+  authenticationStatus,
+  requireAdminRights = false
+) => Component => props => {
   const authenticated = useSelector(isAuthenticatedSelector);
+  const isAdmin = useSelector(isUserAdminSelector);
+
   switch (authenticationStatus) {
     case AuthenticationStatus.NOT_AUTHENTICATED: {
       if (!authenticated) {
@@ -21,7 +29,7 @@ const withAuthentication = authenticationStatus => Component => props => {
       return <Redirect to="/" />;
     }
     case AuthenticationStatus.AUTHENTICATED: {
-      if (!authenticated) {
+      if (!authenticated || (requireAdminRights ? !isAdmin : false)) {
         window.localStorage.setItem(
           REDIRECT_AFTER_ACCESS_LC,
           window.location.pathname
