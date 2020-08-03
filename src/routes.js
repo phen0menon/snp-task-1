@@ -5,7 +5,11 @@ import Auth from 'pages/Auth';
 import Quiz from 'pages/Quiz';
 
 // TOOD: Move it to AppRouter
-const createRoutePage = (Component, title, additionalProps = {}) => props => (
+export const createRoutePage = (
+  Component,
+  title,
+  additionalProps = {}
+) => props => (
   <Page title={title}>
     <Component {...props} {...additionalProps} />
   </Page>
