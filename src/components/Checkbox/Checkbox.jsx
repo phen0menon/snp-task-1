@@ -63,8 +63,8 @@ const Checkbox = props => {
 };
 
 Checkbox.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
   value: PropTypes.bool.isRequired,
   className: PropTypes.string,
   required: PropTypes.bool,
@@ -75,10 +75,12 @@ Checkbox.propTypes = {
   style: PropTypes.object,
   children: PropTypes.node,
   onClick: PropTypes.func,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 
 Checkbox.defaultProps = {
+  name: '',
+  id: '',
   className: '',
   required: false,
   readOnly: false,
@@ -88,6 +90,7 @@ Checkbox.defaultProps = {
   style: {},
   tabIndex: -1,
   onClick: null,
+  onChange: null,
 };
 
 export default Checkbox;
