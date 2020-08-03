@@ -3,8 +3,9 @@ import withSceneUrl from 'hocs/withSceneUrl';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import EditQuiz from './EditQuiz';
-
-const B = () => 'f';
+// TODO: move it to another module
+import { createRoutePage } from '../../routes';
+import PassQuiz from './PassQuiz';
 
 const Quiz = ({ sceneUrl }) => {
   const {
@@ -17,7 +18,10 @@ const Quiz = ({ sceneUrl }) => {
         path={sceneUrl('edit')}
         render={props => <EditQuiz {...props} id={id} />}
       />
-      <Route path={sceneUrl('')} component={B} />
+      <Route
+        path={sceneUrl('')}
+        render={createRoutePage(PassQuiz, 'Pass quiz', { id })}
+      />
     </Switch>
   );
 };

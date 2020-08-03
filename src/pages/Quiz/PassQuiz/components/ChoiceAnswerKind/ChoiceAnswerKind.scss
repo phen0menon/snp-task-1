@@ -1,0 +1,9 @@
+$gutter: 0.75rem;
+
+.root {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: space-around;
+  height: 100%;
+  margin: 0 -$gutter;
+}

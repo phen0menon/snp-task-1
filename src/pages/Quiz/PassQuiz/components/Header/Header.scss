@@ -1,0 +1,33 @@
+@use 'styles/variables/colors' as *;
+
+.root {
+  padding: 2rem;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+$shared-padding: 0.75rem;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: $shared-padding;
+  border-bottom: 1px solid $dark-accent;
+
+  .title {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}
+
+.caption {
+  padding-top: $shared-padding;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}

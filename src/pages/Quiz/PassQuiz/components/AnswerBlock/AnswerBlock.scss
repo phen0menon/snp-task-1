@@ -1,0 +1,45 @@
+@use 'styles/variables/colors' as *;
+
+$gutter: 0.75rem;
+
+.root {
+  padding: $gutter;
+  flex: 1 1 200px;
+}
+
+.answer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 1.5rem 1rem;
+  background: $green;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: none;
+
+  &Active,
+  &:hover,
+  &:active {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  &Active {
+    background: #009688;
+  }
+
+  &Disabled {
+    pointer-events: none;
+  }
+}
+
+.title {
+  text-align: center;
+  word-break: break-word;
+}
+
+.action {
+  margin-top: 0.75rem;
+  text-align: center;
+}
