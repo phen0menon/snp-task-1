@@ -20,6 +20,7 @@ const Checkbox = props => {
     children,
     onClick,
     onChange,
+    className,
     ...restProps
   } = props;
 
@@ -36,7 +37,7 @@ const Checkbox = props => {
     [restProps]
   );
 
-  const cboxClassNames = classNames(styles.cbox, {
+  const cboxClassNames = classNames(styles.cbox, className, {
     [styles.cboxChecked]: checked,
     [styles.cboxDisabled]: disabled,
   });
@@ -65,6 +66,7 @@ Checkbox.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.bool.isRequired,
+  className: PropTypes.string,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   disabled: PropTypes.bool,
@@ -77,6 +79,7 @@ Checkbox.propTypes = {
 };
 
 Checkbox.defaultProps = {
+  className: '',
   required: false,
   readOnly: false,
   disabled: false,
