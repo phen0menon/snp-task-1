@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
-import { denormalize, schema } from 'normalizr';
+import { denormalize } from 'normalizr';
 import { testsSelector } from 'models/tests/selectors';
+import { answerSchema } from '../schemas';
 
 const getId = (_, id) => id;
 
@@ -17,7 +18,7 @@ export const answersByIdSelector = createSelector(
 export const getAnswersByIdsSelector = createSelector(
   [answersByIdSelector, getId],
   (answersById, ids) =>
-    denormalize(ids, [new schema.Entity('answers')], { answers: answersById })
+    denormalize(ids, [answerSchema], { answers: answersById })
 );
 
 export const createdAnswerSuccessSelector = createSelector(
