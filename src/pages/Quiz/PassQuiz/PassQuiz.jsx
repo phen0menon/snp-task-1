@@ -1,4 +1,4 @@
-import React, { useState, createContext, useMemo, useCallback } from 'react';
+import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './components/Header';
@@ -6,46 +6,23 @@ import Content from './components/Content';
 
 import styles from './PassQuiz.scss';
 
-export const PassQuizContext = createContext({
-  quiz: {},
-  currQuestionId: null,
-  currQuestionIndex: null,
-  setCurrQuestionId: null,
+export const QuizDataContext = createContext({
+  id: null,
+  title: null,
+  created_at: null,
+  questions: [],
 });
 
 const PassQuiz = quiz => {
-  const { id, title, questions } = quiz;
-
-  const [currQuestionId, setCurrQuestionId] = useState(questions[0]);
-
-  const currQuestionIndex = useMemo(() => questions.indexOf(currQuestionId), [
-    questions,
-    currQuestionId,
-  ]);
-
-  const toNextQuestion = useCallback(() => {
-    if (currQuestionIndex === questions.length) {
-      throw new Error('Question index is out of bound');
-    }
-    setCurrQuestionId(questions[currQuestionIndex + 1]);
-  }, [currQuestionIndex, questions, setCurrQuestionId]);
-
   return (
-    <PassQuizContext.Provider
-      value={{
-        quiz,
-        currQuestionId,
-        currQuestionIndex,
-        toNextQuestion,
-      }}
-    >
+    <QuizDataContext.Provider value={quiz}>
       <div className={styles.root}>
         <div className={styles.inner}>
           <Header />
           <Content />
         </div>
       </div>
-    </PassQuizContext.Provider>
+    </QuizDataContext.Provider>
   );
 };
 

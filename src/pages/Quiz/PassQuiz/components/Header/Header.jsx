@@ -1,20 +1,20 @@
 import React, { useContext, useMemo } from 'react';
-import { PassQuizContext } from '../../PassQuiz';
+import { QuizDataContext } from '../../PassQuiz';
 import { formatDate } from 'utils/common';
 import styles from './Header.scss';
 
 const Header = () => {
-  const { quiz } = useContext(PassQuizContext);
+  const { created_at, title } = useContext(QuizDataContext);
 
-  const creationDate = useMemo(() => formatDate(new Date(quiz.created_at)), [
-    quiz.created_at,
+  const creationDate = useMemo(() => formatDate(new Date(created_at)), [
+    created_at,
   ]);
 
   return (
     <div className={styles.root}>
       <div className={styles.inner}>
         <div className={styles.header}>
-          <div className={styles.title}>{quiz.title}</div>
+          <div className={styles.title}>{title}</div>
           <div className={styles.actions}>
             {/* <Button onClick={() => {}}>Finish now</Button> */}
           </div>

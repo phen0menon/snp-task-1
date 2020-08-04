@@ -29,4 +29,8 @@ QuizContainer.propTypes = {
   component: PropTypes.node,
 };
 
+QuizContainer.defaultProps = {
+  component: undefined,
+};
+
 export default QuizContainer;

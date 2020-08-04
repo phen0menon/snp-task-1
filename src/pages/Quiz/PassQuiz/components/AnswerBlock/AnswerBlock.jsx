@@ -11,12 +11,13 @@ const AnswerBlock = ({ onToggle, active, disabled, ...answer }) => {
   }, [onToggle, answer, disabled]);
 
   return (
-    <div className={styles.root} onClick={onClick}>
+    <div className={styles.root}>
       <div
         className={classNames(styles.answer, {
           [styles.answerActive]: active,
           [styles.answerDisabled]: disabled,
         })}
+        onClick={onClick}
       >
         <div className={styles.title}>{answer.text}</div>
         {!disabled && (
