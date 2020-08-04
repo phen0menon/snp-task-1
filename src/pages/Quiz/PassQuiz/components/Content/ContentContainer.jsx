@@ -20,7 +20,11 @@ const ContentContainer = () => {
 
   const finish = useCallback(() => setFinished(true), [setFinished]);
 
-  return <Content addAnswer={addAnswer} finish={finish} />;
+  return !finished ? (
+    <Content addAnswer={addAnswer} finish={finish} />
+  ) : (
+    <FinalStats answers={answersByQuestionId} questions={questions} />
+  );
 };
 
 export default ContentContainer;
