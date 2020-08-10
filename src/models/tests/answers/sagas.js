@@ -29,9 +29,23 @@ export function* fetchDeleteAnswer({ payload: { questionId, id } }) {
   }
 }
 
+export function* fetchMoveAnswer({ payload }) {
+  try {
+    yield call(api.fetchMoveAnswer, payload);
+    yield put({
+      type: testsCommonActions.answerMoved,
+      payload: {},
+    });
+  } catch (err) {
+    const { error } = err.response.data;
+    console.error(error);
+  }
+}
+
 export default function*() {
   yield all([
     takeLatest(answersActions.createNewAnswer, fetchCreateAnswer),
+    takeLatest(answersActions.moveAnswer, fetchMoveAnswer),
     takeEvery(answersActions.deleteAnswer, fetchDeleteAnswer),
   ]);
 }

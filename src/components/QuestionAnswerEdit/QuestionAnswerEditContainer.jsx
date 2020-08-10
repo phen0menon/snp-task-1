@@ -12,7 +12,7 @@ import {
 
 import QuestionAnswerEdit from './QuestionAnswerEdit';
 
-const QuestionAnswerEditContainer = ({ answer, questionId }) => {
+const QuestionAnswerEditContainer = ({ index, answer, questionId }) => {
   const { id } = answer;
 
   const onAnswerChange = useAction(answersActions.changeAnswerData);
@@ -43,6 +43,7 @@ const QuestionAnswerEditContainer = ({ answer, questionId }) => {
 
   return (
     <QuestionAnswerEdit
+      index={index}
       answer={answer}
       isChanged={isAnswerChanged}
       isDeleting={isAnswerDeleting}
@@ -55,6 +56,7 @@ const QuestionAnswerEditContainer = ({ answer, questionId }) => {
 };
 
 QuestionAnswerEditContainer.propTypes = {
+  index: PropTypes.number.isRequired,
   answer: PropTypes.object.isRequired,
   questionId: PropTypes.number.isRequired,
 };

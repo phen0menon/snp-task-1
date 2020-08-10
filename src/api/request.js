@@ -11,7 +11,7 @@ const sidedRequest = opts => {
   const { ownHeaders, ...restOpts } = opts;
 
   const headers = {
-    'scope-key': 'pKWuy7/7=uN3!X.g',
+    'scope-key': 'NaN',
     'Content-Type': 'application/json',
     ...ownHeaders,
   };

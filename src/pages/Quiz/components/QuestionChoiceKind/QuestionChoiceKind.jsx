@@ -16,11 +16,11 @@ import { isQuestionHasModificationsSelector } from 'models/tests/questions/selec
 
 import QuizAnswerInput from 'components/QuizAnswerInput/QuizAnswerInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
-import QuestionAnswerEdit from 'components/QuestionAnswerEdit';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
+import DraggableAnswerList from '../DraggableAnswerList/DraggableAnswerList';
 
-import styles from '../QuizQuestion/QuizQuestion.scss';
 import { ValidationStrings, QUIZ_SINGLE_KIND } from '../../constants';
+import styles from '../QuizQuestion/QuizQuestion.scss';
 
 const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
   const [error, setError] = useState(null);
@@ -86,18 +86,6 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
     createdAnswerLoading,
   ]);
 
-  const renderedAnswers = React.useMemo(
-    () =>
-      answers.map(answer => (
-        <QuestionAnswerEdit
-          key={answer.id}
-          questionId={question.id}
-          answer={answer}
-        />
-      )),
-    [answers, question.id]
-  );
-
   return (
     <>
       <div className={styles.answers}>
@@ -106,7 +94,7 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
             [styles.answersContainerDisabled]: formBusy,
           })}
         >
-          {renderedAnswers}
+          <DraggableAnswerList answers={answers} questionId={question.id} />
         </div>
         {createdAnswerText != null && (
           <QuizAnswerInput
