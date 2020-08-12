@@ -8,6 +8,7 @@ import {
   removeFromNormalized,
 } from 'models/helpers';
 import { testsCommonActions } from 'models/tests/commonActions';
+import { reorderArray } from 'utils/common';
 
 const questionsSlice = createSlice({
   name: 'questions',
@@ -107,6 +108,19 @@ const questionsSlice = createSlice({
       }
     ) {
       removeFromArray(state.byId[questionId].answers, id);
+    },
+
+    [testsCommonActions.answerMoved](
+      state,
+      {
+        payload: { questionId, positionFrom, positionTo },
+      }
+    ) {
+      state.byId[questionId].answers = reorderArray(
+        state.byId[questionId].answers,
+        positionFrom,
+        positionTo
+      );
     },
 
     [testsCommonActions.questionCreated](

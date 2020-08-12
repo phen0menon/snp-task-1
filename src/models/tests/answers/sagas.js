@@ -34,7 +34,7 @@ export function* fetchMoveAnswer({ payload }) {
     yield call(api.fetchMoveAnswer, payload);
     yield put({
       type: testsCommonActions.answerMoved,
-      payload: {},
+      payload,
     });
   } catch (err) {
     const { error } = err.response.data;

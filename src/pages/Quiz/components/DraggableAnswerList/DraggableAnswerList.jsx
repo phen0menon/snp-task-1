@@ -18,23 +18,28 @@ const DraggableAnswerList = ({ answers, questionId }) => {
   const onDragEnd = useCallback(
     result => {
       if (!result.destination) return;
+
       const answer = items[result.source.index];
+      const positionTo = result.destination.index;
+      const positionFrom = result.source.index;
+
       onAnswerMove({
         id: answer.id,
         answer,
-        position: result.destination.index,
+        questionId,
+        positionTo,
+        positionFrom,
       });
-      setItems(
-        reorderArray(items, result.source.index, result.destination.index)
-      );
+
+      setItems(reorderArray(items, positionFrom, positionTo));
     },
-    [items, setItems, onAnswerMove]
+    [items, setItems, onAnswerMove, questionId]
   );
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppableAnswers">
-        {(provided, snapshot) => (
+        {provided => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
             {items.map((item, index) => (
               <QuestionAnswerEdit

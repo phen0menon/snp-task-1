@@ -13,6 +13,12 @@ import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 
 import { Draggable } from 'react-beautiful-dnd';
 
+const getItemStyle = isDragging => ({
+  userSelect: 'none',
+  boxShadow: isDragging ? `rgba(0, 0, 0, 0.15) 0px 3px 7px 0px` : `none`,
+  transform: isDragging ? `scale(1.04)` : 'none',
+});
+
 const QuestionAnswerEdit = ({
   index,
   answer,
@@ -26,53 +32,54 @@ const QuestionAnswerEdit = ({
   return (
     <Draggable key={answer.id} draggableId={answer.id.toString()} index={index}>
       {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          className={styles.answer}
-        >
-          <div className={styles.answerCheckbox}>
-            <Checkbox
-              name="isRight"
-              id="isRight"
-              value={answer.is_right}
-              onChange={onCheckboxToggle}
-            />
-          </div>
+        <div ref={provided.innerRef} {...provided.draggableProps}>
           <div
-            className={classNames(
-              styles.answerContent,
-              styles.answerContentGutter
-            )}
+            className={styles.answer}
+            style={getItemStyle(snapshot.isDragging)}
           >
-            <QuizInput
-              className={styles.input}
-              value={answer.text}
-              placeholder="Answer text"
-              onChange={onInputChange}
-            />
-
-            <div className={styles.actions}>
-              {isChanged && (
-                <button
-                  className={classNames(styles.action, styles.actionUndo)}
-                  onClick={onUndo}
-                >
-                  <img src={timesIcon} alt="Undo" width={16} />
-                  <span>Undo</span>
-                </button>
+            <div className={styles.answerCheckbox}>
+              <Checkbox
+                name="isRight"
+                id="isRight"
+                value={answer.is_right}
+                onChange={onCheckboxToggle}
+              />
+            </div>
+            <div
+              className={classNames(
+                styles.answerContent,
+                styles.answerContentGutter
               )}
-              <button
-                className={styles.action}
-                onClick={onDelete}
-                disabled={isDeleting}
-              >
-                <SpinnerLoader loading={isDeleting} size={18}>
-                  <img src={trashIcon} alt="Delete" width={16} />
-                </SpinnerLoader>
-              </button>
-              <div className={styles.action} {...provided.dragHandleProps}>
-                <img src={dragIcon} alt="Drag" width="20" />
+            >
+              <QuizInput
+                className={styles.input}
+                value={answer.text}
+                placeholder="Answer text"
+                onChange={onInputChange}
+              />
+
+              <div className={styles.actions}>
+                {isChanged && (
+                  <button
+                    className={classNames(styles.action, styles.actionUndo)}
+                    onClick={onUndo}
+                  >
+                    <img src={timesIcon} alt="Undo" width={16} />
+                    <span>Undo</span>
+                  </button>
+                )}
+                <button
+                  className={styles.action}
+                  onClick={onDelete}
+                  disabled={isDeleting}
+                >
+                  <SpinnerLoader loading={isDeleting} size={18}>
+                    <img src={trashIcon} alt="Delete" width={16} />
+                  </SpinnerLoader>
+                </button>
+                <div className={styles.action} {...provided.dragHandleProps}>
+                  <img src={dragIcon} alt="Drag" width="20" />
+                </div>
               </div>
             </div>
           </div>
