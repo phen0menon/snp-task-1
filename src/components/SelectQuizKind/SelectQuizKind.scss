@@ -1,0 +1,26 @@
+@use 'styles/variables/colors' as *;
+
+.root {
+  display: flex;
+}
+
+.kind {
+  color: $secondary;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: 0.25s ease-in;
+  letter-spacing: 0.75px;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  + .kind {
+    margin-left: 1rem;
+  }
+
+  &Active,
+  &:active,
+  &:focus,
+  &:hover {
+    color: $purple;
+  }
+}

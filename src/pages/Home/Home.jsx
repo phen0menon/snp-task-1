@@ -1,34 +1,55 @@
 import React from 'react';
+
 import withAuthentication, {
   AuthenticationStatus,
 } from 'hocs/withAuthentication';
 import useAction from 'hooks/useAction';
-import { sessionActions } from 'models/session/slice';
 import useModal from 'hooks/useModal';
-import Modal from 'components/Modal';
+import { quizzesActions } from 'models/tests/quizzes/slice';
+import QuizList from './QuizList';
 import Button from 'components/Button';
 
-const TestModal = ({ ...restProps }) => {
-  return (
-    <Modal {...restProps}>
-      <Modal.Header>qweq</Modal.Header>
-      <Modal.Body>Body this kis !</Modal.Body>
-      <Modal.Footer></Modal.Footer>
-    </Modal>
-  );
-};
+import styles from './Home.scss';
+import globalStyles from 'styles/global.scss';
+import CreateQuizModal from '../../components/CreateQuizModal/CreateQuizModal';
+import { sessionActions } from '../../models/session/slice';
 
 const Home = () => {
+  const onFetchQuizzes = useAction(quizzesActions.fetchQuizzes);
   const onFetchLogout = useAction(sessionActions.fetchLogout);
+  const modalSettings = useModal();
 
-  const { isOpen, closeModal, openModal } = useModal();
+  React.useEffect(() => {
+    onFetchQuizzes();
+  }, [onFetchQuizzes]);
 
   return (
-    <div>
-      Home
-      <Button onClick={onFetchLogout}>Logout</Button>
-      <Button onClick={openModal}>Open modal...</Button>
-      <TestModal isOpen={isOpen} close={closeModal} open={openModal} />
+    <div className={styles.root}>
+      <div className={globalStyles.container}>
+        <div className={styles.header}>
+          <div className={styles.headerInner}>
+            <div className={styles.title}>Quizer</div>
+            <div className={styles.actions}>
+              <Button
+                type="button"
+                className={styles.actionsCreate}
+                onClick={modalSettings.open}
+              >
+                + Quiz
+              </Button>
+              <Button type="button" onClick={onFetchLogout}>
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.content}>
+          <QuizList />
+        </div>
+      </div>
+
+      <CreateQuizModal {...modalSettings} />
     </div>
   );
 };

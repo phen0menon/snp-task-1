@@ -1,0 +1,82 @@
+@use 'styles/variables/colors' as *;
+
+@import 'styles/mixins/default-btn-styles';
+
+.root {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.inner {
+  flex: 0 0 80%;
+
+  @media screen and (max-width: 991px) {
+    flex: 0 0 100%;
+  }
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.answers {
+  margin-top: 1rem;
+}
+
+.question {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 0.75rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+
+  > * + * {
+    margin-left: 1rem;
+  }
+}
+
+.btnAddAnswer {
+  @include defaultBtnStyles;
+
+  color: #fff;
+  border-color: #fff;
+
+  &:hover {
+    background: #fff;
+    color: #000;
+  }
+}
+
+.floating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.btnSave {
+  @include defaultBtnStyles;
+
+  color: $green;
+  border-color: $green;
+
+  &:hover {
+    background: $green;
+    color: white;
+  }
+}
+
+.answersContainer {
+  &Disabled {
+    pointer-events: none;
+    opacity: 0.9;
+  }
+}

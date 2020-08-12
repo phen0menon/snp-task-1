@@ -1,0 +1,35 @@
+@use 'styles/variables/colors' as *;
+
+.root {
+  z-index: 9999;
+}
+
+.container {
+  display: none;
+  flex-direction: column;
+  background: $purple-dark;
+  border-radius: 12px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.14);
+  padding: 0.75rem 0;
+
+  &Visible {
+    display: flex;
+  }
+}
+
+.item {
+  justify-content: flex-start;
+  padding: 0.5rem 1rem;
+  align-items: center;
+  color: $grey;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(176, 176, 176, 0.5);
+  }
+
+  &:active {
+    font-weight: 700;
+    background: rgba(176, 176, 176, 0.5);
+  }
+}

@@ -68,14 +68,19 @@ Modal.Body.defaultProps = {
   children: '',
 };
 
-Modal.Footer = React.memo(({ proceedHandler, children }) => {
+Modal.Footer = React.memo(({ proceedHandler, children, disabled }) => {
   const { close } = React.useContext(ModalContext);
 
   const contents = React.useMemo(() => {
     if (children) return children;
     return (
       <>
-        <Button type="submit" variant="success" onClick={proceedHandler}>
+        <Button
+          type="submit"
+          variant="success"
+          onClick={proceedHandler}
+          disabled={disabled}
+        >
           Proceed
         </Button>
         <Button type="button" variant="secondary" onClick={close}>
@@ -83,7 +88,7 @@ Modal.Footer = React.memo(({ proceedHandler, children }) => {
         </Button>
       </>
     );
-  }, [children, proceedHandler, close]);
+  }, [children, proceedHandler, close, disabled]);
 
   return (
     <div className={styles['modal-footer']}>
@@ -95,11 +100,13 @@ Modal.Footer = React.memo(({ proceedHandler, children }) => {
 Modal.Footer.propTypes = {
   proceedHandler: PropTypes.func,
   children: PropTypes.node,
+  disabled: PropTypes.bool,
 };
 
 Modal.Footer.defaultProps = {
   proceedHandler: null,
   children: '',
+  disabled: false,
 };
 
 export default Modal;
