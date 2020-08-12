@@ -1,0 +1,62 @@
+@use 'styles/variables/colors' as *;
+
+.root {
+  height: 100%;
+  min-height: 200px;
+  padding: 2rem;
+  background: $dark-accent;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.content {
+  margin-top: 1.5rem;
+}
+
+.question {
+  margin-top: 1.5rem;
+
+  &Title {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+}
+
+.noGutter {
+  margin-top: 0;
+}
+
+.answers {
+  margin-top: 1rem;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+
+  img {
+    margin-left: 0.75rem;
+  }
+
+  .hint {
+    margin-left: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  &Right {
+    color: $green;
+  }
+
+  &NotRight {
+    color: $red;
+  }
+}
+
+.footer {
+  margin-top: 2rem;
+}

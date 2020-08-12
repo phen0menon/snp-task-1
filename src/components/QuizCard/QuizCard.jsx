@@ -15,6 +15,10 @@ const QuizCard = ({ id, title, created_at }) => {
     history.push(`/quiz/${id}/edit`);
   }, [history, id]);
 
+  const redirectToQuiz = useCallback(() => {
+    history.push(`/quiz/${id}`);
+  }, [history, id]);
+
   const displayedDate = useMemo(() => formatDate(new Date(created_at)), [
     created_at,
   ]);
@@ -35,7 +39,7 @@ const QuizCard = ({ id, title, created_at }) => {
           )}
 
           <div>
-            <Button>&gt;</Button>
+            <Button onClick={redirectToQuiz}>&gt;</Button>
           </div>
         </div>
       </div>
