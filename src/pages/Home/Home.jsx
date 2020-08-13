@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import withAuthentication, {
   AuthenticationStatus,
@@ -19,6 +19,8 @@ const Home = () => {
   const onFetchLogout = useAction(sessionActions.fetchLogout);
   const modalSettings = useModal();
 
+  const onLogoutClick = useCallback(() => onFetchLogout(), [onFetchLogout]);
+
   React.useEffect(() => {
     onFetchQuizzes();
   }, [onFetchQuizzes]);
@@ -37,7 +39,7 @@ const Home = () => {
               >
                 + Quiz
               </Button>
-              <Button type="button" onClick={onFetchLogout}>
+              <Button type="button" onClick={onLogoutClick}>
                 Logout
               </Button>
             </div>
