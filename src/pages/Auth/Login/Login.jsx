@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import AuthInputGroup from 'components/AuthInputGroup';
 import authStyles from '../Auth.scss';
-import { useSelector } from 'react-redux';
+import useSelector from 'hooks/useSelector';
 import {
   isLoginFetchingSelector,
   loginErrorSelector,
