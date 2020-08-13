@@ -13,7 +13,7 @@ const Quiz = ({ sceneUrl }) => {
   } = useRouteMatch();
 
   return (
-    <Switch>
+    <>
       <Route
         path={sceneUrl('edit')}
         render={props => <EditQuiz {...props} id={id} />}
@@ -22,7 +22,7 @@ const Quiz = ({ sceneUrl }) => {
         path={sceneUrl('')}
         render={createRoutePage(PassQuiz, 'Pass quiz', { id })}
       />
-    </Switch>
+    </>
   );
 };
 
