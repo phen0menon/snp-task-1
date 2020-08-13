@@ -11,7 +11,7 @@ import { usePopper } from 'react-popper';
 import styles from './Dropdown.scss';
 
 export const DropdownContext = React.createContext({
-  close: () => null,
+  close: null,
 });
 
 const Dropdown = ({
