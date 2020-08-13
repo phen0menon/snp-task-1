@@ -51,7 +51,7 @@ const Login = () => {
           key={input.name}
           id={input.name}
           name={input.name}
-          type={input.text}
+          type={input.type}
           label={input.label}
           onChange={handleChange}
           value={formValues[input.name]}
