@@ -18,8 +18,13 @@ const answersSlice = createSlice({
 
     newAnswerCreatingStatus: null,
     answersDeletingIds: [],
+    answersMovingIds: [],
   },
   reducers: {
+    moveAnswer(state, { id }) {
+      state.answersMovingIds.push(id);
+    },
+
     createNewAnswer(state) {
       state.newAnswerCreatingStatus = 'pending';
     },

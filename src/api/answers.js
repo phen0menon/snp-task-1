@@ -16,3 +16,9 @@ export const fetchUpdateAnswer = ({ id, data }) =>
     url: `/answers/${id}`,
     data,
   });
+
+export const fetchMoveAnswer = ({ id, data, positionTo }) =>
+  Req.PATCH({
+    url: `/answers/${id}/insert_at/${positionTo}`,
+    data,
+  });
