@@ -27,7 +27,7 @@ const EditQuiz = ({ questions, title }) => {
     if (questions.length) {
       onQuestionOpen({ id: questions[0] });
     }
-  }, []);
+  });
 
   return (
     <div className={styles.root}>
