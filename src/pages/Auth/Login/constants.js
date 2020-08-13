@@ -8,7 +8,7 @@ export const loginInputs = [
   },
   {
     name: 'password',
-    type: 'text',
+    type: 'password',
     label: 'Password',
   },
 ];
