@@ -68,7 +68,7 @@ const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
       id: question.id,
       questionData: question,
     });
-  }, [setError, onQuestionSave, question, question.answers]);
+  }, [error, parentError, onQuestionSave, question]);
 
   const [createdAnswerText, setCreatedAnswerText] = useState(null);
   const createdAnswerInputDisplayed = createdAnswerText != null;
