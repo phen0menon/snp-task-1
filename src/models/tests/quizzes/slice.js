@@ -51,9 +51,12 @@ const quizzesSlice = createSlice({
       }
     ) {
       state.status = 'success';
-      state.byId = quizzes;
-      state.allIds = Object.keys(quizzes);
-      state.meta = meta;
+      // Check if normalization returned empty result
+      if (quizzes !== undefined) {
+        state.byId = quizzes;
+        state.allIds = Object.keys(quizzes);
+        state.meta = meta;
+      }
     },
 
     [testsCommonActions.quizFetched](state, { payload }) {
