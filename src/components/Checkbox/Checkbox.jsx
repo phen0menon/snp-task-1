@@ -2,40 +2,30 @@ import React from 'react';
 import styles from './Checkbox.scss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { getControlProps } from 'utils/common';
 
-const Checkbox = props => {
+const Checkbox = ({
+  id,
+  name,
+  required,
+  readOnly,
+  disabled,
+  tabIndex,
+  autoFocus,
+  value,
+  style,
+  value: checked,
+  children,
+  onClick,
+  onChange,
+  className,
+  ...restProps
+}) => {
   const input = React.useRef();
 
-  const {
-    id,
-    name,
-    required,
-    readOnly,
-    disabled,
-    tabIndex,
-    autoFocus,
-    value,
-    style,
-    value: checked,
-    children,
-    onClick,
-    onChange,
-    className,
-    ...restProps
-  } = props;
-
-  const controlProps = React.useMemo(
-    () =>
-      Object.keys(restProps).reduce((result, current) => {
-        const subkey = current.substr(0, 5);
-        if (subkey === 'aria-' || subkey === 'data-' || current === 'role') {
-          // eslint-disable-next-line no-param-reassign
-          result[current] = restProps[current];
-        }
-        return result;
-      }, {}),
-    [restProps]
-  );
+  const controlProps = React.useMemo(() => getControlProps(restProps), [
+    restProps,
+  ]);
 
   const cboxClassNames = classNames(styles.cbox, className, {
     [styles.cboxChecked]: checked,
