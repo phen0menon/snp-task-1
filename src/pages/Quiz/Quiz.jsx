@@ -17,10 +17,12 @@ const Quiz = ({ sceneUrl }) => {
       <Route
         path={sceneUrl('edit')}
         render={props => <EditQuiz {...props} id={id} />}
+        exact
       />
       <Route
         path={sceneUrl('')}
         render={createRoutePage(PassQuiz, 'Pass quiz', { id })}
+        exact
       />
     </>
   );
