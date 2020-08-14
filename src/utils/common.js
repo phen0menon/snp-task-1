@@ -31,3 +31,13 @@ export const reorderArray = (list, startIndex, endIndex) => {
 
   return result;
 };
+
+export const getControlProps = props =>
+  Object.keys(props).reduce((result, current) => {
+    const subkey = current.substr(0, 5);
+    if (subkey === 'aria-' || subkey === 'data-' || current === 'role') {
+      // eslint-disable-next-line no-param-reassign
+      result[current] = props[current];
+    }
+    return result;
+  }, {});
