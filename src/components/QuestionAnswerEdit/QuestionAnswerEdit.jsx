@@ -1,17 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+import QuizInput from 'components/QuizInput/QuizInput';
+import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
+import Radio from 'components/Radio/Radio';
 import Checkbox from 'components/Checkbox';
+import { Draggable } from 'react-beautiful-dnd';
 
 import timesIcon from 'images/times-icon.svg';
 import dragIcon from 'images/drag-icon.svg';
 import trashIcon from 'images/trash-icon.svg';
 
 import styles from './QuestionAnswerEdit.scss';
-import QuizInput from 'components/QuizInput/QuizInput';
-import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
-
-import { Draggable } from 'react-beautiful-dnd';
 
 const getItemStyle = isDragging => ({
   userSelect: 'none',
@@ -22,6 +23,7 @@ const getItemStyle = isDragging => ({
 const QuestionAnswerEdit = ({
   index,
   answer,
+  isSingle,
   isChanged,
   isDeleting,
   onInputChange,
@@ -29,6 +31,7 @@ const QuestionAnswerEdit = ({
   onDelete,
   onUndo,
 }) => {
+  const ActionInput = isSingle ? Radio : Checkbox;
   return (
     <Draggable key={answer.id} draggableId={answer.id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -38,7 +41,7 @@ const QuestionAnswerEdit = ({
             style={getItemStyle(snapshot.isDragging)}
           >
             <div className={styles.answerCheckbox}>
-              <Checkbox
+              <ActionInput
                 name="isRight"
                 id="isRight"
                 value={answer.is_right}
@@ -93,6 +96,7 @@ QuestionAnswerEdit.propTypes = {
   index: PropTypes.number.isRequired,
   answer: PropTypes.object.isRequired,
   isChanged: PropTypes.bool.isRequired,
+  isSingle: PropTypes.bool.isRequired,
   isDeleting: PropTypes.bool.isRequired,
   onCheckboxToggle: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,

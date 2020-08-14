@@ -3,6 +3,7 @@ import { denormalize, schema } from 'normalizr';
 
 import { testsSelector } from 'models/tests/selectors';
 import { getModifiedAnswersIdsSelector } from '../answers/selectors';
+import { QUIZ_SINGLE_KIND } from 'pages/Quiz/constants';
 
 const getId = (_, id) => id;
 
@@ -89,4 +90,9 @@ export const isQuestionHasModificationsSelector = createSelector(
     isCurrentQuestionHasAnswersModifications,
   ],
   (infoModified, answersModified) => infoModified || answersModified
+);
+
+export const isQuestionSingle = createSelector(
+  [questionsByIdSelector, getId],
+  (byId, id) => byId[id].question_type === QUIZ_SINGLE_KIND
 );

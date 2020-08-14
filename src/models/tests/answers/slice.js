@@ -60,6 +60,20 @@ const answersSlice = createSlice({
       putNormalizedModifications(state, id, props);
     },
 
+    setSingleAnswerActive(
+      state,
+      {
+        payload: { id, answers },
+      }
+    ) {
+      if (state.byId[id].is_right) return;
+      state.byId[id].is_right = true;
+      answers.forEach(answerId => {
+        if (id === answerId) return;
+        state.byId[answerId].is_right = false;
+      });
+    },
+
     deleteAnswer(
       state,
       {
