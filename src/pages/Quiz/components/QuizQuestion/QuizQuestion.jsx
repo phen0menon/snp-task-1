@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
@@ -35,18 +35,24 @@ const QuizQuestion = () => {
 
   const [error, setError] = useState(null);
 
-  const onQuestionTitleChange = React.useCallback(
-    event => {
-      const title = event.target.value.trimStart();
-      onQuestionChange({ id, title });
-
+  const validateTitle = useCallback(
+    title => {
       if (!title.length) {
         setError(ValidationStrings.QUESTION_TITLE_EMPTY);
       } else if (error) {
         setError(null);
       }
     },
-    [id, onQuestionChange, setError, error]
+    [error, setError]
+  );
+
+  const onQuestionTitleChange = React.useCallback(
+    event => {
+      const title = event.target.value.trimStart();
+      onQuestionChange({ id, title });
+      validateTitle(title);
+    },
+    [id, onQuestionChange, validateTitle]
   );
 
   const renderedQuestionData = useMemo(() => {
