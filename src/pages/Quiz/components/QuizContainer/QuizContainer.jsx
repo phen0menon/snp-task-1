@@ -4,6 +4,7 @@ import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
 import { getQuizDataByIdSelector } from 'models/tests/quizzes/selectors';
 import { quizzesActions } from 'models/tests/quizzes/slice';
+import InitialLoader from 'components/InitialLoader/InitialLoader';
 
 const QuizContainer = ({ id, component: Component }) => {
   const onFetchQuiz = useAction(quizzesActions.fetchQuiz);
@@ -20,7 +21,7 @@ const QuizContainer = ({ id, component: Component }) => {
     }
   }, [loading, onFetchQuiz, id]);
 
-  return !loading ? <Component {...quiz} /> : 'loading...';
+  return !loading ? <Component {...quiz} /> : <InitialLoader />;
 };
 
 QuizContainer.propTypes = {
