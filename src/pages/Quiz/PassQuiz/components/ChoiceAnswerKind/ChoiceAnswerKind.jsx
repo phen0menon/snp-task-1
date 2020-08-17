@@ -36,7 +36,7 @@ const ChoiceAnswerKind = ({ answers, isSingle }) => {
           />
         );
       }),
-    [answersEntities, userAnswer, setUserAnswer, isSingle, toggleAnswerActive]
+    [answersEntities, userAnswer, isSingle, toggleAnswerActive]
   );
 
   return <div className={styles.root}>{renderedAnswers}</div>;
