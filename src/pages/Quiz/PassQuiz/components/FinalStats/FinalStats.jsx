@@ -1,8 +1,7 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import useSelector from 'hooks/useSelector';
-import { useHistory } from 'react-router-dom';
 
 import Button from 'components/Button/Button';
 import QuestionBlockNumeric from '../QuestionBlockNumeric/QuestionBlockNumeric';
@@ -43,18 +42,15 @@ const FinalStats = ({ answers, questions }) => {
           </div>
         </div>
       )),
-    [questionsEntities]
+    [answers, questionsEntities]
   );
-
-  const history = useHistory();
-  const redirectToHome = useCallback(() => history.push('/'), [history]);
 
   return (
     <div className={styles.root}>
       <div className={styles.title}>RESULTS</div>
       <div className={styles.content}>{renderedQuestions}</div>
       <div className={styles.footer}>
-        <Button variant="success" onClick={redirectToHome}>
+        <Button variant="success" to="/">
           Back to all tests
         </Button>
       </div>

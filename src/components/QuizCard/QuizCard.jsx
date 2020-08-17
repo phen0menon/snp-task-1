@@ -1,23 +1,13 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import useSelector from 'hooks/useSelector';
 import { isUserAdminSelector } from 'models/session/selectors';
 import styles from './QuizCard.scss';
 import Button from 'components/Button/Button';
-import { useHistory } from 'react-router-dom';
 import { formatDate } from '../../utils/common';
 
 const QuizCard = ({ id, title, created_at }) => {
   const isUserAdmin = useSelector(isUserAdminSelector);
-  const history = useHistory();
-
-  const redirectToEdit = useCallback(() => {
-    history.push(`/quiz/${id}/edit`);
-  }, [history, id]);
-
-  const redirectToQuiz = useCallback(() => {
-    history.push(`/quiz/${id}`);
-  }, [history, id]);
 
   const displayedDate = useMemo(() => formatDate(new Date(created_at)), [
     created_at,
@@ -34,12 +24,12 @@ const QuizCard = ({ id, title, created_at }) => {
           {/* Maybe rewrite this into permission module in the future? */}
           {isUserAdmin && (
             <div>
-              <Button onClick={redirectToEdit}>Edit</Button>
+              <Button to={`/quiz/${id}/edit`}>Edit</Button>
             </div>
           )}
 
           <div>
-            <Button onClick={redirectToQuiz}>&gt;</Button>
+            <Button to={`/quiz/${id}`}>&gt;</Button>
           </div>
         </div>
       </div>
