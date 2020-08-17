@@ -3,7 +3,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import useAction from 'hooks/useAction';
 import useSelector from 'hooks/useSelector';
 
-import { QUIZ_NUMBER_KIND, ValidationStrings } from '../../constants';
+import { QUIZ_NUMBER_KIND, ValidationStrings } from '../../../constants';
 
 import { questionsActions } from 'models/tests/questions/slice';
 import {

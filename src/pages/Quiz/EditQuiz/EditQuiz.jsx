@@ -12,7 +12,7 @@ import {
 import { questionsActions } from 'models/tests/questions/slice';
 
 import QuestionsSidebar from 'components/QuestionsSidebar/QuestionsSidebar';
-import QuizQuestion from '../components/QuizQuestion';
+import QuizQuestion from './components/QuizQuestion';
 
 import withAuthentication, {
   AuthenticationStatus,

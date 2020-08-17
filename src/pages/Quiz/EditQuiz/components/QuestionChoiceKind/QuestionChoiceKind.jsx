@@ -19,7 +19,7 @@ import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 import ErrorMessage from 'components/ErrorMessage/ErrorMessage';
 import DraggableAnswerList from '../DraggableAnswerList/DraggableAnswerList';
 
-import { ValidationStrings, QUIZ_SINGLE_KIND } from '../../constants';
+import { ValidationStrings, QUIZ_SINGLE_KIND } from '../../../constants';
 import styles from '../QuizQuestion/QuizQuestion.scss';
 
 const QuestionChoiceKind = ({ parentError, formBusy, ...question }) => {
