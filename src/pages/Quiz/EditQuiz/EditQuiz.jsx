@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
-import useVariable from 'hooks/useVariable';
 
 import {
   getQuestionsByIdsSelector,
@@ -29,29 +28,26 @@ const EditQuiz = ({ id, questions, title }) => {
   const questionList = useSelector(getQuestionsByIdsSelector, questions);
   const onQuestionOpen = useAction(questionsActions.openQuestion);
 
-  const [redirectedAfterRender, setRedirectedAfterRender] = useVariable(false);
+  const [openedAfterRender, setOpenedAfterRender] = useState(false);
 
   React.useEffect(() => {
-    if (questions.length && !redirectedAfterRender) {
+    if (!openedAfterRender) {
       onQuestionOpen({ id: questions[0] });
-      setRedirectedAfterRender(true);
+      setOpenedAfterRender(true);
     }
-  }, [
-    redirectedAfterRender,
-    questions,
-    onQuestionOpen,
-    setRedirectedAfterRender,
-  ]);
+  }, [openedAfterRender, questions, onQuestionOpen, setOpenedAfterRender]);
 
   return (
     <QuizModifyContext.Provider value={{ quizId: id }}>
       <div className={styles.root}>
         <div className={styles.sidebar}>
-          <QuestionsSidebar questions={questionList} title={title} />
+          {openedAfterRender && (
+            <QuestionsSidebar questions={questionList} title={title} />
+          )}
         </div>
 
         <div className={styles.content}>
-          {questionId != null && <QuizQuestion />}
+          {questionId != null && openedAfterRender && <QuizQuestion />}
         </div>
       </div>
     </QuizModifyContext.Provider>
