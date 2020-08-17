@@ -13,18 +13,16 @@ export const QuizDataContext = createContext({
   questions: [],
 });
 
-const PassQuiz = quiz => {
-  return (
-    <QuizDataContext.Provider value={quiz}>
-      <div className={styles.root}>
-        <div className={styles.inner}>
-          <Header />
-          <Content />
-        </div>
+const PassQuiz = ({ id, title, questions }) => (
+  <QuizDataContext.Provider value={{ quiz: { id, title, questions } }}>
+    <div className={styles.root}>
+      <div className={styles.inner}>
+        <Header />
+        <Content />
       </div>
-    </QuizDataContext.Provider>
-  );
-};
+    </div>
+  </QuizDataContext.Provider>
+);
 
 PassQuiz.propTypes = {
   id: PropTypes.number.isRequired,
