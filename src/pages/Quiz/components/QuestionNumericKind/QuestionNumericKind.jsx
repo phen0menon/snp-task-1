@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import useSelector from 'hooks/useSelector';
@@ -18,7 +18,7 @@ const QuestionNumericKind = ({ parentError, formBusy, ...question }) => {
     isQuestionHasModificationsSelector
   );
 
-  const [error, setError] = React.useState(null);
+  const [error, setError] = useState(null);
 
   const onQuestionChange = useAction(questionsActions.changeQuestionData);
   const onQuestionSave = useAction(questionsActions.saveQuestionData);
