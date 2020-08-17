@@ -25,7 +25,7 @@ const QuizContainer = ({ id, component: Component }) => {
 
 QuizContainer.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  component: PropTypes.node,
+  component: PropTypes.func,
 };
 
 QuizContainer.defaultProps = {
