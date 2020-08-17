@@ -20,7 +20,11 @@ import withAuthentication, {
 
 import styles from './EditQuiz.scss';
 
-const EditQuiz = ({ questions, title }) => {
+export const QuizModifyContext = React.createContext({
+  quizId: null,
+});
+
+const EditQuiz = ({ id, questions, title }) => {
   const questionId = useSelector(getCurrentQuestionIdSelector);
   const questionList = useSelector(getQuestionsByIdsSelector, questions);
   const onQuestionOpen = useAction(questionsActions.openQuestion);
@@ -40,20 +44,23 @@ const EditQuiz = ({ questions, title }) => {
   ]);
 
   return (
-    <div className={styles.root}>
-      <div className={styles.sidebar}>
-        <QuestionsSidebar questions={questionList} title={title} />
-      </div>
+    <QuizModifyContext.Provider value={{ quizId: id }}>
+      <div className={styles.root}>
+        <div className={styles.sidebar}>
+          <QuestionsSidebar questions={questionList} title={title} />
+        </div>
 
-      <div className={styles.content}>
-        {questionId != null && <QuizQuestion />}
+        <div className={styles.content}>
+          {questionId != null && <QuizQuestion />}
+        </div>
       </div>
-    </div>
+    </QuizModifyContext.Provider>
   );
 };
 
 EditQuiz.propTypes = {
   questions: PropTypes.arrayOf(PropTypes.number).isRequired,
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };
 

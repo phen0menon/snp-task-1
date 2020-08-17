@@ -5,7 +5,6 @@ import useAction from 'hooks/useAction';
 import { getQuizDataByIdSelector } from 'models/tests/quizzes/selectors';
 import { quizzesActions } from 'models/tests/quizzes/slice';
 
-// TODO: Maybe rewrite this to a HOC?
 const QuizContainer = ({ id, component: Component }) => {
   const onFetchQuiz = useAction(quizzesActions.fetchQuiz);
   const quiz = useSelector(getQuizDataByIdSelector, id);

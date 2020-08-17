@@ -10,7 +10,7 @@ import DropdownItem from 'components/Dropdown/DropdownItem';
 
 import { questionsActions } from 'models/tests/questions/slice';
 import { isQuestionDeletingSelector } from 'models/tests/questions/selectors';
-import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuizContainer';
+import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuiz';
 
 import styles from './QuestionsSidebarItem.scss';
 

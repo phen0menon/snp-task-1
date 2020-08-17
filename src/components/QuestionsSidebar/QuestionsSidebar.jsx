@@ -9,7 +9,7 @@ import QuizInput from 'components/QuizInput/QuizInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 import QuestionsSidebarItem from '../QuestionsSidebarItem';
 import { QUIZ_KINDS } from 'pages/Quiz/constants';
-import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuizContainer';
+import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuiz';
 
 import {
   questionCreatingPendingSelector,
