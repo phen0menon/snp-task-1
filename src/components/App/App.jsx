@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppRouter from 'components/AppRouter';
 import Loading from 'components/Loading/Loading';
-import { useSelector } from 'react-redux';
+import useSelector from 'hooks/useSelector';
 import { isInitialSessionFetchingSelector } from 'models/session/selectors';
 import InitialLoader from 'components/InitialLoader/InitialLoader';
 

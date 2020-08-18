@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import AuthInputGroup from 'components/AuthInputGroup';
 import authStyles from '../Auth.scss';
-import { useSelector } from 'react-redux';
+import useSelector from 'hooks/useSelector';
 import {
   isLoginFetchingSelector,
   loginErrorSelector,
@@ -51,7 +51,7 @@ const Login = () => {
           key={input.name}
           id={input.name}
           name={input.name}
-          type={input.text}
+          type={input.type}
           label={input.label}
           onChange={handleChange}
           value={formValues[input.name]}

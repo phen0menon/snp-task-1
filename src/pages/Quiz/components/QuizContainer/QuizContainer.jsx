@@ -4,8 +4,8 @@ import useSelector from 'hooks/useSelector';
 import useAction from 'hooks/useAction';
 import { getQuizDataByIdSelector } from 'models/tests/quizzes/selectors';
 import { quizzesActions } from 'models/tests/quizzes/slice';
+import InitialLoader from 'components/InitialLoader/InitialLoader';
 
-// TODO: Maybe rewrite this to a HOC?
 const QuizContainer = ({ id, component: Component }) => {
   const onFetchQuiz = useAction(quizzesActions.fetchQuiz);
   const quiz = useSelector(getQuizDataByIdSelector, id);
@@ -21,12 +21,12 @@ const QuizContainer = ({ id, component: Component }) => {
     }
   }, [loading, onFetchQuiz, id]);
 
-  return !loading ? <Component {...quiz} /> : 'loading...';
+  return !loading ? <Component {...quiz} /> : <InitialLoader />;
 };
 
 QuizContainer.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  component: PropTypes.node,
+  component: PropTypes.func,
 };
 
 QuizContainer.defaultProps = {

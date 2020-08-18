@@ -1,10 +1,12 @@
-import React from 'react';
-import styles from './Checkbox.scss';
-import classNames from 'classnames';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import checkboxStyles from '../Checkbox/Checkbox.scss';
+import styles from './Radio.scss';
 import { getControlProps } from 'utils/common';
 
-const Checkbox = ({
+const Radio = ({
   id,
   name,
   required,
@@ -23,36 +25,40 @@ const Checkbox = ({
 }) => {
   const input = React.useRef();
 
-  const controlProps = React.useMemo(() => getControlProps(restProps), [
-    restProps,
-  ]);
+  const controlProps = useMemo(() => getControlProps(restProps), [restProps]);
 
-  const cboxClassNames = classNames(styles.cbox, className, {
-    [styles.cboxChecked]: checked,
-    [styles.cboxDisabled]: disabled,
-  });
+  const radioClassNames = classNames(
+    checkboxStyles.cbox,
+    className,
+    styles.radio,
+    {
+      [checkboxStyles.cboxChecked]: checked,
+      [checkboxStyles.cboxDisabled]: disabled,
+    }
+  );
 
   return (
-    <label className={styles.cboxWrapper} style={style}>
-      <span className={cboxClassNames}>
+    <label className={checkboxStyles.cboxWrapper} style={style}>
+      <span className={radioClassNames}>
         <input
-          name={name}
           id={id}
-          type="checkbox"
+          ref={input}
+          name={name}
+          type="radio"
           required={required}
           onChange={onChange}
-          ref={input}
-          className={styles.cboxInput}
+          className={checkboxStyles.cboxInput}
+          checked={checked}
           {...controlProps}
         />
-        <span className={styles.cboxInner} />
+        <span className={classNames(checkboxStyles.cboxInner, styles.inner)} />
       </span>
       {children && <span>{children}</span>}
     </label>
   );
 };
 
-Checkbox.propTypes = {
+Radio.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.bool.isRequired,
@@ -68,7 +74,7 @@ Checkbox.propTypes = {
   onChange: PropTypes.func,
 };
 
-Checkbox.defaultProps = {
+Radio.defaultProps = {
   name: '',
   id: '',
   className: '',
@@ -83,4 +89,4 @@ Checkbox.defaultProps = {
   onChange: null,
 };
 
-export default Checkbox;
+export default Radio;

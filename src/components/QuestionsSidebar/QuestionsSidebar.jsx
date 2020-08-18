@@ -9,7 +9,7 @@ import QuizInput from 'components/QuizInput/QuizInput';
 import SpinnerLoader from 'components/SpinnerLoader/SpinnerLoader';
 import QuestionsSidebarItem from '../QuestionsSidebarItem';
 import { QUIZ_KINDS } from 'pages/Quiz/constants';
-import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuizContainer';
+import { QuizModifyContext } from 'pages/Quiz/EditQuiz/EditQuiz';
 
 import {
   questionCreatingPendingSelector,
@@ -21,7 +21,7 @@ import { questionsActions } from 'models/tests/questions/slice';
 import checkIcon from 'images/check-icon.svg';
 import returnIcon from 'images/return-icon.svg';
 import styles from './QuestionsSidebar.scss';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const quizKinds = Object.keys(QUIZ_KINDS);
 
@@ -93,15 +93,10 @@ const QuestionsSidebar = ({ questions, title }) => {
     [onDropdownKindSelect]
   );
 
-  const history = useHistory();
-  const goBack = useCallback(() => {
-    history.goBack();
-  }, [history]);
-
   return (
     <div className={styles.root}>
       <div className={styles.header}>
-        <Link onClick={goBack} className={styles.goBackButton} to="/">
+        <Link className={styles.goBackButton} to="/">
           <img src={returnIcon} width={14} alt="return" />
           <span>to tests</span>
         </Link>

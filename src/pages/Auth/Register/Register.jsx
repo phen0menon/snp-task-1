@@ -4,7 +4,7 @@ import authStyles from '../Auth.scss';
 import { Link } from 'react-router-dom';
 import useAction from 'hooks/useAction';
 import { sessionActions } from 'models/session/slice';
-import { useSelector } from 'react-redux';
+import useSelector from 'hooks/useSelector';
 import { registerErrorsSelector } from 'models/session/selectors';
 import {
   registerFormInitialState,
